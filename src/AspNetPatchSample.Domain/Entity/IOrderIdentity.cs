@@ -7,7 +7,7 @@ namespace AspNetPatchSample.Domain.Entity
   /// <summary>Represents an order identity.</summary>
   public interface IOrderIdentity
   {
-    /// <summary>Gets/sets an object that represents an ID of an order.</summary>
-    public Guid OrderId { get; set; }
+    /// <summary>Gets an object that represents an ID of an order.</summary>
+    public Guid OrderId { get; }
   }
 }
