@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Domain.Repository
-{
-  using AspNetPatchSample.Domain.Entity;
+using AspNetPatchSample.Domain.Entity;
 
-  /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Domain.Entity.IOrderEntity"/>.</summary>
-  public interface IOrderRepository
+namespace AspNetPatchSample.Domain.Service
+{
+  /// <summary>Represents a simple API to operate instances of the <see cref="AspNetPatchSample.Domain.Entity.IOrderEntity"/>.</summary>
+  public interface IOrderService
   {
     /// <summary>Gets an order.</summary>
     /// <param name="orderIdentity">An object that represents an order identity.</param>
