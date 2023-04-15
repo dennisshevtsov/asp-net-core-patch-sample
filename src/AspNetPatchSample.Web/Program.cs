@@ -3,6 +3,7 @@
 // See LICENSE in the project root for license information.
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+builder.Services.SetUpInfrastructure();
 
+var app = builder.Build();
 app.Run();
