@@ -6,7 +6,7 @@ namespace AspNetPatchSample.Infrastructure.Entity
 {
   using AspNetPatchSample.Domain.Entity;
 
-  /// <summary>Reprents an order entity.</summary>
+  /// <summary>Represents an order entity.</summary>
   public sealed class OrderEntity : IOrderEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Entity.OrderEntity"/> class.</summary>

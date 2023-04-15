@@ -61,5 +61,24 @@ namespace AspNetPatchSample.Infrastructure.Repository
       await _dbContext.SaveChangesAsync(cancellationToken);
       dbOrderEntityEntry.State = EntityState.Detached;
     }
+
+    /// <summary>Updates an order.</summary>
+    /// <param name="orderEntity">An object that represents an order entity.</param>
+    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation.</returns>
+    public async Task UpdateOrderAsync(IOrderEntity orderEntity, string[] properties, CancellationToken cancellationToken)
+    {
+      var dbOrderEntity = new OrderEntity(orderEntity);
+      var dbOrderEntityEntry = _dbContext.Entry(dbOrderEntity);
+
+      for (int i = 0; i < properties.Length; i++)
+      {
+        dbOrderEntityEntry.Property(properties[i]).IsModified = true;
+      }
+
+      await _dbContext.SaveChangesAsync(cancellationToken);
+      dbOrderEntityEntry.State = EntityState.Detached;
+    }
   }
 }
