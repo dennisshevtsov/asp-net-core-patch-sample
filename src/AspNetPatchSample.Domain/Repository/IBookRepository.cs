@@ -7,31 +7,31 @@ namespace AspNetPatchSample.Domain.Repository
   using AspNetPatchSample.Domain.Entity;
 
   /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</summary>
-  public interface IOrderRepository
+  public interface IBookRepository
   {
-    /// <summary>Gets an order.</summary>
-    /// <param name="orderIdentity">An object that represents an order identity.</param>
+    /// <summary>Gets a book.</summary>
+    /// <param name="bookIdentity">An object that represents an order identity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>. The result can be null.</returns>
-    public Task<IBookEntity?> GetOrderAsync(IBookIdentity orderIdentity, CancellationToken cancellationToken);
+    public Task<IBookEntity?> GetBookAsync(IBookIdentity bookIdentity, CancellationToken cancellationToken);
 
-    /// <summary>Adds an order.</summary>
-    /// <param name="orderData">An object that reprents order data.</param>
+    /// <summary>Adds a book.</summary>
+    /// <param name="bookData">An object that reprents book data.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</returns>
-    public Task<IBookEntity> AddOrderAsync(IBookData orderData, CancellationToken cancellationToken);
+    public Task<IBookEntity> AddBookAsync(IBookData bookData, CancellationToken cancellationToken);
 
-    /// <summary>Updates an order.</summary>
-    /// <param name="orderEntity">An object that represents an order entity.</param>
+    /// <summary>Updates a book.</summary>
+    /// <param name="bookEntity">An object that represents a book entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task UpdateOrderAsync(IBookEntity orderEntity, CancellationToken cancellationToken);
+    public Task UpdateBookAsync(IBookEntity bookEntity, CancellationToken cancellationToken);
 
-    /// <summary>Updates an order.</summary>
-    /// <param name="orderEntity">An object that represents an order entity.</param>
+    /// <summary>Updates a book.</summary>
+    /// <param name="bookEntity">An object that represents a book entity.</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task UpdateOrderAsync(IBookEntity orderEntity, string[] properties, CancellationToken cancellationToken);
+    public Task UpdateBookAsync(IBookEntity bookEntity, string[] properties, CancellationToken cancellationToken);
   }
 }

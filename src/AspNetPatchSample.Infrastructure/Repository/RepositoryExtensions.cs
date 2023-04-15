@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <returns>An object that specifies the contract for a collection of service descriptors.</returns>
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-      services.AddScoped<IOrderRepository, OrderRepository>();
+      services.AddScoped<IBookRepository, BookRepository>();
 
       return services;
     }
