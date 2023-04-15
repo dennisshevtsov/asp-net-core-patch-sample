@@ -8,7 +8,7 @@ namespace AspNetPatchSample.Infrastructure
 
   using AspNetPatchSample.Infrastructure.Entity;
 
-  /// <summary>A DbContext instance represents a session with the database and can be used to query and save instances of your entities.</summary>
+  /// <summary>Represents a session with the database and can be used to query and save instances of your entities.</summary>
   public sealed class AppDbContext : DbContext
   {
     /// <summary>Configures the model.</summary>
