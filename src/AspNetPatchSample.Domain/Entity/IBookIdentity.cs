@@ -4,8 +4,10 @@
 
 namespace AspNetPatchSample.Domain.Entity
 {
-  /// <summary>Represents an order entity.</summary>
-  public interface IOrderEntity : IOrderIdentity, IOrderData
+  /// <summary>Represents an identity of a book.</summary>
+  public interface IBookIdentity
   {
+    /// <summary>Gets an object that represents an ID of a book.</summary>
+    public Guid BookId { get; }
   }
 }

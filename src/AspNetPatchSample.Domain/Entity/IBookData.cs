@@ -4,13 +4,13 @@
 
 namespace AspNetPatchSample.Domain.Entity
 {
-  /// <summary>Represents order data.</summary>
-  public interface IOrderData
+  /// <summary>Represents book data.</summary>
+  public interface IBookData
   {
-    /// <summary>Gets an object that represents an order name.</summary>
+    /// <summary>Gets an object that represents a name of a book.</summary>
     public string Name { get; }
 
-    /// <summary>Gets an object that represents an order description.</summary>
+    /// <summary>Gets an object that represents a description of a book.</summary>
     public string? Description { get; }
   }
 }

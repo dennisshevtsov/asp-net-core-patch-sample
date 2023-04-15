@@ -8,17 +8,17 @@ namespace AspNetPatchSample.Infrastructure.Entity
   using Microsoft.EntityFrameworkCore.Metadata.Builders;
   using Microsoft.EntityFrameworkCore.ValueGeneration;
 
-  /// <summary>Defines an entity type configuration for the <see cref="AspNetPatchSample.Infrastructure.Entity.OrderEntity"/>.</summary>
-  public sealed class OrderEntityTypeConfiguration : IEntityTypeConfiguration<OrderEntity>
+  /// <summary>Defines an entity type configuration for the <see cref="AspNetPatchSample.Infrastructure.Entity.BookEntity"/>.</summary>
+  public sealed class BookEntityTypeConfiguration : IEntityTypeConfiguration<BookEntity>
   {
-    /// <summary>Configures the entity of type <see cref="AspNetPatchSample.Infrastructure.Entity.OrderEntity"/>.</summary>
+    /// <summary>Configures the entity of type <see cref="AspNetPatchSample.Infrastructure.Entity.BookEntity"/>.</summary>
     /// <param name="builder">An object that provides a simple API for configuring an <see cref="Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType" />.</param>
-    public void Configure(EntityTypeBuilder<OrderEntity> builder)
+    public void Configure(EntityTypeBuilder<BookEntity> builder)
     {
-      builder.ToTable("orders");
-      builder.HasKey(entity => entity.OrderId);
+      builder.ToTable("books");
+      builder.HasKey(entity => entity.BookId);
 
-      builder.Property(entity => entity.OrderId)
+      builder.Property(entity => entity.BookId)
              .HasColumnName("id")
              .IsRequired()
              .ValueGeneratedOnAdd()

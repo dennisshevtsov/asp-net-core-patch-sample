@@ -10,7 +10,7 @@ namespace AspNetPatchSample.Infrastructure.Repository
   using AspNetPatchSample.Domain.Repository;
   using AspNetPatchSample.Infrastructure.Entity;
 
-  /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Domain.Entity.IOrderEntity"/>.</summary>
+  /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</summary>
   public sealed class OrderRepository : IOrderRepository
   {
     private readonly DbContext _dbContext;
@@ -25,20 +25,20 @@ namespace AspNetPatchSample.Infrastructure.Repository
     /// <summary>Gets an order.</summary>
     /// <param name="orderIdentity">An object that represents an order identity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
-    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IOrderEntity"/>. The result can be null.</returns>
-    public async Task<IOrderEntity?> GetOrderAsync(IOrderIdentity orderIdentity, CancellationToken cancellationToken)
-      => await _dbContext.Set<OrderEntity>()
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>. The result can be null.</returns>
+    public async Task<IBookEntity?> GetOrderAsync(IBookIdentity orderIdentity, CancellationToken cancellationToken)
+      => await _dbContext.Set<BookEntity>()
                          .AsNoTracking()
-                         .Where(entity => entity.OrderId == orderIdentity.OrderId)
+                         .Where(entity => entity.BookId == orderIdentity.BookId)
                          .FirstOrDefaultAsync(cancellationToken);
 
     /// <summary>Adds an order.</summary>
     /// <param name="orderData">An object that reprents order data.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
-    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IOrderEntity"/>.</returns>
-    public async Task<IOrderEntity> AddOrderAsync(IOrderData orderData, CancellationToken cancellationToken)
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</returns>
+    public async Task<IBookEntity> AddOrderAsync(IBookData orderData, CancellationToken cancellationToken)
     {
-      var dbOrderEntity = new OrderEntity(orderData);
+      var dbOrderEntity = new BookEntity(orderData);
       var dbOrderEntityEntry = _dbContext.Entry(dbOrderEntity);
 
       dbOrderEntityEntry.State = EntityState.Added;
@@ -52,9 +52,9 @@ namespace AspNetPatchSample.Infrastructure.Repository
     /// <param name="orderEntity">An object that reprents an order entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public async Task UpdateOrderAsync(IOrderEntity orderEntity, CancellationToken cancellationToken)
+    public async Task UpdateOrderAsync(IBookEntity orderEntity, CancellationToken cancellationToken)
     {
-      var dbOrderEntity = new OrderEntity(orderEntity);
+      var dbOrderEntity = new BookEntity(orderEntity);
       var dbOrderEntityEntry = _dbContext.Entry(dbOrderEntity);
 
       dbOrderEntityEntry.State = EntityState.Modified;
@@ -67,9 +67,9 @@ namespace AspNetPatchSample.Infrastructure.Repository
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public async Task UpdateOrderAsync(IOrderEntity orderEntity, string[] properties, CancellationToken cancellationToken)
+    public async Task UpdateOrderAsync(IBookEntity orderEntity, string[] properties, CancellationToken cancellationToken)
     {
-      var dbOrderEntity = new OrderEntity(orderEntity);
+      var dbOrderEntity = new BookEntity(orderEntity);
       var dbOrderEntityEntry = _dbContext.Entry(dbOrderEntity);
 
       for (int i = 0; i < properties.Length; i++)
