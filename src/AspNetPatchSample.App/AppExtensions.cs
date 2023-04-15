@@ -4,20 +4,15 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-  using Microsoft.EntityFrameworkCore;
-
-  using AspNetPatchSample.Infrastructure;
-
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
-  public static class InfrastructureExtensions
+  public static class AppExtensions
   {
-    /// <summary>Sets up the infrastructure.</summary>
+    /// <summary>Sets up the app.</summary>
     /// <param name="services">An object that specifies the contract for a collection of service descriptors.</param>
     /// <returns>An object that specifies the contract for a collection of service descriptors.</returns>
-    public static IServiceCollection SetUpInfrastructure(this IServiceCollection services)
+    public static IServiceCollection SetUpApp(this IServiceCollection services)
     {
-      services.AddRepositories();
-      services.AddDbContext<DbContext, AppDbContext>();
+      services.AddServices();
 
       return services;
     }
