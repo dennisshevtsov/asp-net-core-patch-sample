@@ -15,7 +15,7 @@ namespace AspNetPatchSample.Infrastructure.Entity
     /// <param name="builder">An object that provides a simple API for configuring an <see cref="Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType" />.</param>
     public void Configure(EntityTypeBuilder<BookEntity> builder)
     {
-      builder.ToTable("books");
+      builder.ToTable("book");
       builder.HasKey(entity => entity.BookId);
 
       builder.Property(entity => entity.BookId)
@@ -29,9 +29,19 @@ namespace AspNetPatchSample.Infrastructure.Entity
              .IsRequired()
              .HasMaxLength(256);
 
+      builder.Property(entity => entity.Author)
+             .HasColumnName("author")
+             .IsRequired()
+             .HasMaxLength(256);
+
       builder.Property(entity => entity.Description)
              .HasColumnName("description")
+             .IsRequired()
              .HasMaxLength(256);
+
+      builder.Property(entity => entity.Pages)
+             .HasColumnName("pages")
+             .IsRequired();
     }
   }
 }

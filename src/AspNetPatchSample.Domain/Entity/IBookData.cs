@@ -11,6 +11,12 @@ namespace AspNetPatchSample.Domain.Entity
     public string Name { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public string? Description { get; }
+    public string Author { get; }
+
+    /// <summary>Gets an object that represents a description of a book.</summary>
+    public string Description { get; }
+
+    /// <summary>Gets an object that represents a description of a book.</summary>
+    public int Pages { get; }
   }
 }
