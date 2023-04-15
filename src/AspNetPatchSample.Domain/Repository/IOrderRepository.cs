@@ -22,9 +22,16 @@ namespace AspNetPatchSample.Domain.Repository
     public Task<IOrderEntity> AddOrderAsync(IOrderData orderData, CancellationToken cancellationToken);
 
     /// <summary>Updates an order.</summary>
-    /// <param name="orderEntity">An object that reprents an order entity.</param>
+    /// <param name="orderEntity">An object that represents an order entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
     public Task UpdateOrderAsync(IOrderEntity orderEntity, CancellationToken cancellationToken);
+
+    /// <summary>Updates an order.</summary>
+    /// <param name="orderEntity">An object that represents an order entity.</param>
+    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation.</returns>
+    public Task UpdateOrderAsync(IOrderEntity orderEntity, string[] properties, CancellationToken cancellationToken);
   }
 }

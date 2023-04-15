@@ -4,7 +4,7 @@
 
 namespace AspNetPatchSample.Domain.Entity
 {
-  /// <summary>Reprents an order entity.</summary>
+  /// <summary>Represents an order entity.</summary>
   public interface IOrderEntity : IOrderIdentity, IOrderData
   {
   }
