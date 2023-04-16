@@ -11,10 +11,10 @@ namespace AspNetPatchSample.WebApi.Dtos
   using AspNetPatchSample.Domain.Entity;
 
   /// <summary>Represents data to update a book.</summary>
-  public sealed class UpdateBookRequestDto : IBookEntity
+  public sealed class PutBookRequestDto : IBookEntity
   {
-    /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.UpdateBookRequestDto"/> class.</summary>
-    public UpdateBookRequestDto()
+    /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.PutBookRequestDto"/> class.</summary>
+    public PutBookRequestDto()
     {
       Name        = string.Empty;
       Author      = string.Empty;

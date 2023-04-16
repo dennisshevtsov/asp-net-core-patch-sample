@@ -64,17 +64,17 @@ namespace AspNetPatchSample.Infrastructure.Repository
 
     /// <summary>Updates a book.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
-    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <param name="patchable">An object that represents an entity that can be updated partially.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public async Task UpdateBookAsync(IBookEntity bookEntity, string[] properties, CancellationToken cancellationToken)
+    public async Task UpdateBookAsync(IBookEntity bookEntity, IPatchable patchable, CancellationToken cancellationToken)
     {
       var dbOrderEntity = new BookEntity(bookEntity);
       var dbOrderEntityEntry = _dbContext.Entry(dbOrderEntity);
 
-      for (int i = 0; i < properties.Length; i++)
+      for (int i = 0; i < patchable.Properties.Length; i++)
       {
-        dbOrderEntityEntry.Property(properties[i]).IsModified = true;
+        dbOrderEntityEntry.Property(patchable.Properties[i]).IsModified = true;
       }
 
       await _dbContext.SaveChangesAsync(cancellationToken);
