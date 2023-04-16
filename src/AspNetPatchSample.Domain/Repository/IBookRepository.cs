@@ -29,9 +29,9 @@ namespace AspNetPatchSample.Domain.Repository
 
     /// <summary>Updates a book.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
-    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <param name="patchable">An object that represents an entity that can be updated partially.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task UpdateBookAsync(IBookEntity bookEntity, string[] properties, CancellationToken cancellationToken);
+    public Task UpdateBookAsync(IBookEntity bookEntity, IPatchable patchable, CancellationToken cancellationToken);
   }
 }
