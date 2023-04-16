@@ -29,7 +29,7 @@ namespace AspNetPatchSample.WebApi.Controllers
     /// <summary>Handles the get book query request.</summary>
     /// <param name="requestDto">An object that represents a condition to query a book.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
-    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.NotFoundResult"/> or the <see cref="Microsoft.AspNetCore.Mvc.OkObjectResult"/>.</returns>
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
     [HttpGet("{bookId}", Name = nameof(BookController.GetBook))]
     [ProducesResponseType(typeof(GetBookResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,6 +43,23 @@ namespace AspNetPatchSample.WebApi.Controllers
       }
 
       return Ok(new GetBookResponseDto(bookEntity));
+    }
+
+    /// <summary>Handles the add book command request.</summary>
+    /// <param name="requestDto">An object that represents data to add a book.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+    [HttpPost(Name = nameof(BookController.AddBook))]
+    [ProducesResponseType(typeof(GetBookResponseDto), StatusCodes.Status201Created)]
+    [Consumes(typeof(AddBookRequestDto), "application/json")]
+    public async Task<IActionResult> AddBook(AddBookRequestDto requestDto, CancellationToken cancellationToken)
+    {
+      var bookEntity = await _bookService.AddBookAsync(requestDto, cancellationToken);
+
+      return CreatedAtRoute(
+        nameof(BookController.GetBook),
+        new GetBookRequestDto(bookEntity),
+        new GetBookResponseDto(bookEntity));
     }
   }
 }
