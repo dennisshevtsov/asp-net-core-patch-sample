@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspNetPatchSample.App\AspNetPatchSample.App.csproj" />
+    <ProjectReference Include="..\AspNetPatchSample.Application\AspNetPatchSample.Application.csproj" />
     <ProjectReference Include="..\AspNetPatchSample.Infrastructure\AspNetPatchSample.Infrastructure.csproj" />
   </ItemGroup>
 

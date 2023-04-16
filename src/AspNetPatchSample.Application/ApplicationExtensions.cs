@@ -5,12 +5,12 @@
 namespace Microsoft.Extensions.DependencyInjection
 {
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
-  public static class AppExtensions
+  public static class ApplicationExtensions
   {
-    /// <summary>Sets up the app.</summary>
+    /// <summary>Sets up the application.</summary>
     /// <param name="services">An object that specifies the contract for a collection of service descriptors.</param>
     /// <returns>An object that specifies the contract for a collection of service descriptors.</returns>
-    public static IServiceCollection SetUpApp(this IServiceCollection services)
+    public static IServiceCollection SetUpApplication(this IServiceCollection services)
     {
       services.AddServices();
 

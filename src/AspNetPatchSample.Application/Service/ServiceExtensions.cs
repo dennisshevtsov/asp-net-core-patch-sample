@@ -4,7 +4,7 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-  using AspNetPatchSample.App.Service;
+  using AspNetPatchSample.Application.Service;
   using AspNetPatchSample.Domain.Service;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>

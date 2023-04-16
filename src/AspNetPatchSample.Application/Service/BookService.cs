@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.App.Service
+namespace AspNetPatchSample.Application.Service
 {
   using System;
 
@@ -15,7 +15,7 @@ namespace AspNetPatchSample.App.Service
   {
     private readonly IBookRepository _bookRepository;
 
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.App.Service.BookService"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Application.Service.BookService"/> class.</summary>
     /// <param name="bookRepository">An object that provides a simple API to store instances of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</param>
     public BookService(IBookRepository bookRepository)
     {
