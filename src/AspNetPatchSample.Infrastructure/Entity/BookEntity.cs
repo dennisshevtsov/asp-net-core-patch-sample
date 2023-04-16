@@ -39,18 +39,18 @@ namespace AspNetPatchSample.Infrastructure.Entity
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
-    public Guid BookId { get; set; }
+    public Guid BookId { get; }
 
     /// <summary>Gets an object that represents a name of a book.</summary>
     public string Name { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Author { get; set; }
+    public string Author { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Description { get; set; }
+    public string Description { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public int Pages { get; set; }
+    public int Pages { get; }
   }
 }
