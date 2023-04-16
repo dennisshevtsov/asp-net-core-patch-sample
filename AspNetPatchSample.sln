@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Web", "src\AspNetPatchSample.Web\AspNetPatchSample.Web.csproj", "{4A2009EC-4336-4D4D-B77C-C132E9E920D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.WebApi", "src\AspNetPatchSample.WebApi\AspNetPatchSample.WebApi.csproj", "{4A2009EC-4336-4D4D-B77C-C132E9E920D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Domain", "src\AspNetPatchSample.Domain\AspNetPatchSample.Domain.csproj", "{0FD098BC-DDFF-46A8-A02A-22CFEC6D7CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.App", "src\AspNetPatchSample.App\AspNetPatchSample.App.csproj", "{9A895584-6E2F-4B71-866E-4777EC86E5BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Application", "src\AspNetPatchSample.Application\AspNetPatchSample.Application.csproj", "{9A895584-6E2F-4B71-866E-4777EC86E5BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Infrastructure", "src\AspNetPatchSample.Infrastructure\AspNetPatchSample.Infrastructure.csproj", "{B8D1EF5D-E340-415F-BFD8-D88CC7E636AC}"
 EndProject

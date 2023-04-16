@@ -3,8 +3,17 @@
 // See LICENSE in the project root for license information.
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.SetUpApp();
+
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+builder.Services.SetUpApplication();
 builder.Services.SetUpInfrastructure();
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseRouting();
+app.MapControllers();
+
 app.Run();
