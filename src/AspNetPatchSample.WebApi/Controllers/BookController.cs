@@ -61,5 +61,19 @@ namespace AspNetPatchSample.WebApi.Controllers
         new GetBookRequestDto(bookEntity),
         new GetBookResponseDto(bookEntity));
     }
+
+    /// <summary>Handles the update book command request.</summary>
+    /// <param name="requestDto">An object that represents data to update a book.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+    [HttpPost(Name = nameof(BookController.UpdateBook))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Consumes(typeof(UpdateBookRequestDto), "application/json")]
+    public async Task<IActionResult> UpdateBook(UpdateBookRequestDto requestDto, CancellationToken cancellationToken)
+    {
+      await _bookService.UpdateBookAsync(requestDto, cancellationToken);
+
+      return NoContent();
+    }
   }
 }
