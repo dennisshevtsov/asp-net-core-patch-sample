@@ -9,10 +9,10 @@ namespace AspNetPatchSample.WebApi.Dtos
   using AspNetPatchSample.Domain.Entity;
 
   /// <summary>Represents data to add a book.</summary>
-  public sealed class AddBookRequestDto : IBookData
+  public sealed class PostBookRequestDto : IBookData
   {
-    /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.AddBookRequestDto"/> class.</summary>
-    public AddBookRequestDto()
+    /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.PostBookRequestDto"/> class.</summary>
+    public PostBookRequestDto()
     {
       Name        = string.Empty;
       Author      = string.Empty;
