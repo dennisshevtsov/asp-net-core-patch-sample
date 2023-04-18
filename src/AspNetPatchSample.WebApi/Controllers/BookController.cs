@@ -85,7 +85,7 @@ namespace AspNetPatchSample.WebApi.Controllers
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
     public async Task<IActionResult> PatchBook(PatchBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      await _bookService.UpdateBookAsync(requestDto, requestDto, cancellationToken);
+      await _bookService.UpdateBookAsync(requestDto, requestDto.Properties, cancellationToken);
 
       return NoContent();
     }
