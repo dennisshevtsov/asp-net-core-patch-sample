@@ -6,6 +6,7 @@ namespace AspNetPatchSample.Application.Service
 {
   using System;
 
+  using AspNetPatchSample.Application.Entity;
   using AspNetPatchSample.Domain.Entity;
   using AspNetPatchSample.Domain.Repository;
   using AspNetPatchSample.Domain.Service;
@@ -34,14 +35,14 @@ namespace AspNetPatchSample.Application.Service
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</returns>
     public Task<IBookEntity> AddBookAsync(IBookData bookData, CancellationToken cancellationToken)
-      => _bookRepository.AddAsync(bookData, cancellationToken);
+      => _bookRepository.AddAsync(new BookEntity(bookData), cancellationToken);
 
     /// <summary>Updates a book.</summary>
     /// <param name="bookEntity">An object that reprents a book entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
     public Task UpdateBookAsync(IBookEntity bookEntity, CancellationToken cancellationToken)
-      => _bookRepository.UpdateAsync(bookEntity, cancellationToken);
+      => _bookRepository.UpdateAsync(bookEntity, Array.Empty<string>(), cancellationToken);
 
     /// <summary>Updates a book.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
@@ -49,6 +50,6 @@ namespace AspNetPatchSample.Application.Service
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
     public Task UpdateBookAsync(IBookEntity bookEntity, IPatchable patchable, CancellationToken cancellationToken)
-      => _bookRepository.UpdateAsync(bookEntity, patchable, cancellationToken);
+      => _bookRepository.UpdateAsync(bookEntity, patchable.Properties, cancellationToken);
   }
 }
