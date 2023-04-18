@@ -24,14 +24,14 @@ namespace AspNetPatchSample.Domain.Service
     /// <summary>Updates a book.</summary>
     /// <param name="bookEntity">An object that reprents a book entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
-    /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task UpdateBookAsync(IBookEntity bookEntity, CancellationToken cancellationToken);
+    /// <returns>An object that represents an asynchronous operation. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</returns>
+    public Task<IBookEntity?> UpdateBookAsync(IBookEntity bookEntity, CancellationToken cancellationToken);
 
     /// <summary>Updates a book.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
-    /// <param name="patchable">An object that represents an entity that can be updated partially.</param>
+    /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
-    /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task UpdateBookAsync(IBookEntity bookEntity, IPatchable patchable, CancellationToken cancellationToken);
+    /// <returns>An object that represents an asynchronous operation. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</returns>
+    public Task<IBookEntity?> UpdateBookAsync(IBookEntity bookEntity, string[] properties, CancellationToken cancellationToken);
   }
 }
