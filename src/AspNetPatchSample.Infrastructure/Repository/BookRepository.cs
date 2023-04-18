@@ -26,7 +26,7 @@ namespace AspNetPatchSample.Infrastructure.Repository
     /// <param name="bookIdentity">An object that represents a book identity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>. The result can be null.</returns>
-    public async Task<IBookEntity?> GetBookAsync(IBookIdentity bookIdentity, CancellationToken cancellationToken)
+    public async Task<IBookEntity?> GetAsync(IBookIdentity bookIdentity, CancellationToken cancellationToken)
       => await _dbContext.Set<BookEntity>()
                          .AsNoTracking()
                          .Where(entity => entity.BookId == bookIdentity.BookId)
@@ -36,7 +36,7 @@ namespace AspNetPatchSample.Infrastructure.Repository
     /// <param name="bookData">An object that reprents book data.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</returns>
-    public async Task<IBookEntity> AddBookAsync(IBookData bookData, CancellationToken cancellationToken)
+    public async Task<IBookEntity> AddAsync(IBookData bookData, CancellationToken cancellationToken)
     {
       var dbOrderEntity = new BookEntity(bookData);
       var dbOrderEntityEntry = _dbContext.Entry(dbOrderEntity);
@@ -52,7 +52,7 @@ namespace AspNetPatchSample.Infrastructure.Repository
     /// <param name="bookEntity">An object that represents a book entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public async Task UpdateBookAsync(IBookEntity bookEntity, CancellationToken cancellationToken)
+    public async Task UpdateAsync(IBookEntity bookEntity, CancellationToken cancellationToken)
     {
       var dbOrderEntity = new BookEntity(bookEntity);
       var dbOrderEntityEntry = _dbContext.Entry(dbOrderEntity);
@@ -67,7 +67,7 @@ namespace AspNetPatchSample.Infrastructure.Repository
     /// <param name="patchable">An object that represents an entity that can be updated partially.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public async Task UpdateBookAsync(IBookEntity bookEntity, IPatchable patchable, CancellationToken cancellationToken)
+    public async Task UpdateAsync(IBookEntity bookEntity, IPatchable patchable, CancellationToken cancellationToken)
     {
       var dbOrderEntity = new BookEntity(bookEntity);
       var dbOrderEntityEntry = _dbContext.Entry(dbOrderEntity);
