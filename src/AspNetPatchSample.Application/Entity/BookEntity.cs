@@ -4,9 +4,9 @@
 
 namespace AspNetPatchSample.Application.Entity
 {
-  using AspNetPatchSample.Domain.Entity;
+    using AspNetPatchSample.Domain.Book;
 
-  public sealed class BookEntity : IBookEntity
+    public sealed class BookEntity : IBookEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Application.Entity.BookEntity"/> class.</summary>
     /// <param name="bookData">An object that represents book data.</param>

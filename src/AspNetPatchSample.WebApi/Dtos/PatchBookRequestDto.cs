@@ -4,14 +4,13 @@
 
 namespace AspNetPatchSample.WebApi.Dtos
 {
-  using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-  using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
+    using AspNetPatchSample.Domain.Book;
 
-  using AspNetPatchSample.Domain.Entity;
-
-  /// <summary>Represents data to update a book parially.</summary>
-  public sealed class PatchBookRequestDto : IBookEntity, IPatchable
+    /// <summary>Represents data to update a book parially.</summary>
+    public sealed class PatchBookRequestDto : IBookEntity, IPatchable
   {
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.PatchBookRequestDto"/> class.</summary>
     public PatchBookRequestDto()

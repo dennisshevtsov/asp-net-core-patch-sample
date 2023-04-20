@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Domain.Repository
+namespace AspNetPatchSample.Domain
 {
   /// <summary>Provides a simple API to store instances of the <see cref="TEntity"/>.</summary>
   /// <typeparam name="TEntity">Type of an entity.</typeparam>

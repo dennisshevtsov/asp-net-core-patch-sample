@@ -4,10 +4,10 @@
 
 namespace AspNetPatchSample.Infrastructure.Entity
 {
-  using AspNetPatchSample.Domain.Entity;
+    using AspNetPatchSample.Domain.Author;
 
-  /// <summary>Represents an author entity.</summary>
-  public sealed class AuthorEntity : IAuthorEntity
+    /// <summary>Represents an author entity.</summary>
+    public sealed class AuthorEntity : IAuthorEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Entity.AuthorEntity"/> class.</summary>
     public AuthorEntity()

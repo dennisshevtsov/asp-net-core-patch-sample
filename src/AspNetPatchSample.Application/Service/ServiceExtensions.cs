@@ -4,11 +4,11 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-  using AspNetPatchSample.Application.Service;
-  using AspNetPatchSample.Domain.Service;
+    using AspNetPatchSample.Application.Service;
+    using AspNetPatchSample.Domain.Book;
 
-  /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
-  public static class ServiceExtensions
+    /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
+    public static class ServiceExtensions
   {
     /// <summary>Registers services in a DI container.</summary>
     /// <param name="services">An object that specifies the contract for a collection of service descriptors.</param>

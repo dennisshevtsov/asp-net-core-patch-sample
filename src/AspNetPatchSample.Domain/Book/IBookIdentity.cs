@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Domain.Entity
+namespace AspNetPatchSample.Domain.Book
 {
   /// <summary>Represents an identity of a book.</summary>
   public interface IBookIdentity

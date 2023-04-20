@@ -1,8 +1,8 @@
-﻿using AspNetPatchSample.Domain.Entity;
+﻿using AspNetPatchSample.Domain.Book;
 
 namespace AspNetPatchSample.WebApi.Dtos
 {
-  public sealed class GetBookResponseDto : IBookEntity
+    public sealed class GetBookResponseDto : IBookEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.GetBookResponseDto"/> class.</summary>
     /// <param name="orderEntity">An object that represents a book entity.</param>

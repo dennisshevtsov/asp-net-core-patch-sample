@@ -4,10 +4,10 @@
 
 namespace AspNetPatchSample.Infrastructure.Entity
 {
-  using AspNetPatchSample.Domain.Entity;
+    using AspNetPatchSample.Domain.Book;
 
-  /// <summary>Represents a book entity.</summary>
-  public sealed class BookEntity : IBookEntity
+    /// <summary>Represents a book entity.</summary>
+    public sealed class BookEntity : IBookEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Entity.BookEntity"/> class.</summary>
     public BookEntity()

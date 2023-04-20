@@ -4,15 +4,15 @@
 
 namespace AspNetPatchSample.WebApi.Controllers
 {
-  using System;
+    using System;
 
-  using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
-  using AspNetPatchSample.WebApi.Dtos;
-  using AspNetPatchSample.Domain.Service;
+    using AspNetPatchSample.WebApi.Dtos;
+    using AspNetPatchSample.Domain.Book;
 
-  /// <summary>Provides a simple API to handle HTTP request.</summary>
-  [ApiController]
+    /// <summary>Provides a simple API to handle HTTP request.</summary>
+    [ApiController]
   [Route("api/book")]
   [Produces("application/json")]
   public sealed class BookController : ControllerBase
@@ -20,7 +20,7 @@ namespace AspNetPatchSample.WebApi.Controllers
     private readonly IBookService _bookService;
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.WebApi.Controllers.BookController"/> class.</summary>
-    /// <param name="bookService">An object that represents a simple API to operate instances of the <see cref="AspNetPatchSample.Domain.Entity.IBookEntity"/>.</param>
+    /// <param name="bookService">An object that represents a simple API to operate instances of the <see cref="Domain.Book.IBookEntity"/>.</param>
     public BookController(IBookService bookService)
     {
       _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
