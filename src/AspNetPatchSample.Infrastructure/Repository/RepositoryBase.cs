@@ -14,14 +14,14 @@ namespace AspNetPatchSample.Infrastructure.Repository
     where TImplementation : TInterface
     where TInterface      : class
   {
-    private readonly DbContext _dbContext;
-
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Repository.RepositoryBase{TEntity}"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
     public RepositoryBase(DbContext dbContext)
     {
-      _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+      DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
+
+    protected DbContext DbContext { get; }
 
     /// <summary>Adds an entity.</summary>
     /// <param name="entity">An object that reprents an entity.</param>
@@ -30,10 +30,10 @@ namespace AspNetPatchSample.Infrastructure.Repository
     public virtual async Task<TInterface> AddAsync(TInterface entity, CancellationToken cancellationToken)
     {
       var dbEntity = Create(entity);
-      var dbEntityEntry = _dbContext.Entry(dbEntity);
+      var dbEntityEntry = DbContext.Entry(dbEntity);
 
       dbEntityEntry.State = EntityState.Added;
-      await _dbContext.SaveChangesAsync(cancellationToken);
+      await DbContext.SaveChangesAsync(cancellationToken);
       dbEntityEntry.State = EntityState.Detached;
 
       return dbEntity;
@@ -47,14 +47,14 @@ namespace AspNetPatchSample.Infrastructure.Repository
     public virtual async Task UpdateAsync(TInterface entity, string[] properties, CancellationToken cancellationToken)
     {
       var dbEntity = Create(entity);
-      var dbEntityEntry = _dbContext.Entry(dbEntity);
+      var dbEntityEntry = DbContext.Entry(dbEntity);
 
       for (int i = 0; i < properties.Length; i++)
       {
         dbEntityEntry.Property(properties[i]).IsModified = true;
       }
 
-      await _dbContext.SaveChangesAsync(cancellationToken);
+      await DbContext.SaveChangesAsync(cancellationToken);
       dbEntityEntry.State = EntityState.Detached;
     }
 
