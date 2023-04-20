@@ -15,6 +15,7 @@ namespace AspNetPatchSample.Infrastructure
     /// <param name="modelBuilder">An object provides a simple API surface for configuring a <see cref="Microsoft.EntityFrameworkCore.Metadata.IMutableModel" />.</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      modelBuilder.ApplyConfiguration(new AuthorEntityTypeConfiguration());
       modelBuilder.ApplyConfiguration(new BookEntityTypeConfiguration());
     }
   }
