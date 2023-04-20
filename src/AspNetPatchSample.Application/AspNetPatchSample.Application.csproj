@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Author\" />
     <Folder Include="Entity\" />
     <Folder Include="Service\" />
   </ItemGroup>
