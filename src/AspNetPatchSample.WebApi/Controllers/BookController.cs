@@ -9,7 +9,7 @@ namespace AspNetPatchSample.WebApi.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     using AspNetPatchSample.WebApi.Dtos;
-    using AspNetPatchSample.Domain.Book;
+    using AspNetPatchSample.Book;
 
     /// <summary>Provides a simple API to handle HTTP request.</summary>
     [ApiController]

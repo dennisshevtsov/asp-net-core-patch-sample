@@ -1,4 +1,4 @@
-﻿using AspNetPatchSample.Domain.Book;
+﻿using AspNetPatchSample.Book;
 
 namespace AspNetPatchSample.WebApi.Dtos
 {

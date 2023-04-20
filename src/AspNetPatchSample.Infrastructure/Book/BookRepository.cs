@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.Infrastructure.Book
 {
   using Microsoft.EntityFrameworkCore;
-  using AspNetPatchSample.Domain.Book;
+  using AspNetPatchSample.Book;
   using AspNetPatchSample.Infrastructure;
 
   /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Domain.Book..IBookEntity"/>.</summary>

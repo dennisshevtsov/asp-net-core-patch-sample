@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.WebApi.Dtos
 {
     using Microsoft.AspNetCore.Mvc;
-    using AspNetPatchSample.Domain.Book;
+    using AspNetPatchSample.Book;
 
     /// <summary>Represents a condition to query a book.</summary>
     public sealed class GetBookRequestDto : IBookIdentity

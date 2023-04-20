@@ -6,7 +6,7 @@ namespace AspNetPatchSample.Application.Book
 {
   using System;
 
-  using AspNetPatchSample.Domain.Book;
+  using AspNetPatchSample.Book;
 
   /// <summary>Represents a simple API to operate instances of the <see cref="AspNetPatchSample.Domain.Book.IBookEntity"/>.</summary>
   public sealed class BookService : IBookService

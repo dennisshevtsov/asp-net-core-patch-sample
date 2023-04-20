@@ -5,7 +5,8 @@
 namespace AspNetPatchSample.Infrastructure
 {
   using Microsoft.EntityFrameworkCore;
-  using AspNetPatchSample.Domain;
+  
+  using AspNetPatchSample;
 
   /// <summary>Provides a simple API to store instances of the <see cref="TInterface"/>.</summary>
   /// <typeparam name="TInterface">Type of an entity.</typeparam>

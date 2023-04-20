@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.Infrastructure.Author
 {
   using Microsoft.EntityFrameworkCore;
-  using AspNetPatchSample.Domain.Author;
+  using AspNetPatchSample.Author;
   using AspNetPatchSample.Infrastructure;
 
   /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Domain.Author.IAuthorEntity"/>.</summary>

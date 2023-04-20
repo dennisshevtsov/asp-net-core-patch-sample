@@ -4,8 +4,8 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-  using AspNetPatchSample.Domain.Author;
-  using AspNetPatchSample.Domain.Book;
+  using AspNetPatchSample.Author;
+  using AspNetPatchSample.Book;
 
   using AspNetPatchSample.Infrastructure.Author;
   using AspNetPatchSample.Infrastructure.Book;

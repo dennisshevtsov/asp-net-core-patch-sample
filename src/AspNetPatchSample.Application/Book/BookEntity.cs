@@ -4,7 +4,7 @@
 
 namespace AspNetPatchSample.Application.Book
 {
-  using AspNetPatchSample.Domain.Book;
+  using AspNetPatchSample.Book;
 
   public sealed class BookEntity : IBookEntity
   {

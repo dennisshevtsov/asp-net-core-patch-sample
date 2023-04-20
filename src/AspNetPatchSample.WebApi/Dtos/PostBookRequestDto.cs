@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.WebApi.Dtos
 {
     using System.ComponentModel.DataAnnotations;
-    using AspNetPatchSample.Domain.Book;
+    using AspNetPatchSample.Book;
 
     /// <summary>Represents data to add a book.</summary>
     public sealed class PostBookRequestDto : IBookData

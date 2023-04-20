@@ -11,12 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspNetPatchSample.Domain\AspNetPatchSample.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Entity\" />
-    <Folder Include="Service\" />
+    <ProjectReference Include="..\AspNetPatchSample\AspNetPatchSample.csproj" />
   </ItemGroup>
 
 </Project>

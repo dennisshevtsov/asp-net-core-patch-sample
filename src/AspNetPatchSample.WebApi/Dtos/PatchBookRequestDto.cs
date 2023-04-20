@@ -7,7 +7,7 @@ namespace AspNetPatchSample.WebApi.Dtos
     using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Mvc;
-    using AspNetPatchSample.Domain.Book;
+    using AspNetPatchSample.Book;
 
     /// <summary>Represents data to update a book parially.</summary>
     public sealed class PatchBookRequestDto : IBookEntity, IPatchable

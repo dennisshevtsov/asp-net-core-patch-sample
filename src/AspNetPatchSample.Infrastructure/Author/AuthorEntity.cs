@@ -4,7 +4,7 @@
 
 namespace AspNetPatchSample.Infrastructure.Author
 {
-  using AspNetPatchSample.Domain.Author;
+  using AspNetPatchSample.Author;
 
   /// <summary>Represents an author entity.</summary>
   public sealed class AuthorEntity : IAuthorEntity

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Domain.Book
+namespace AspNetPatchSample.Book
 {
   /// <summary>Represents a simple API to operate instances of the <see cref="IBookEntity"/>.</summary>
   public interface IBookService
