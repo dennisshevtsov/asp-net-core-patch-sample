@@ -2,20 +2,20 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Application.Entity
+namespace AspNetPatchSample.Application.Book
 {
-    using AspNetPatchSample.Domain.Book;
+  using AspNetPatchSample.Domain.Book;
 
-    public sealed class BookEntity : IBookEntity
+  public sealed class BookEntity : IBookEntity
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Application.Entity.BookEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Domain.Book.BookEntity"/> class.</summary>
     /// <param name="bookData">An object that represents book data.</param>
     public BookEntity(IBookData bookData)
     {
-      Name        = bookData.Name;
-      Author      = bookData.Author;
+      Name = bookData.Name;
+      Author = bookData.Author;
       Description = bookData.Description;
-      Pages       = bookData.Pages;
+      Pages = bookData.Pages;
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
@@ -37,10 +37,10 @@ namespace AspNetPatchSample.Application.Entity
     /// <param name="bookData">An object that represents book data.</param>
     public void Update(IBookData bookData)
     {
-      Name        = bookData.Name;
-      Author      = bookData.Author;
+      Name = bookData.Name;
+      Author = bookData.Author;
       Description = bookData.Description;
-      Pages       = bookData.Pages;
+      Pages = bookData.Pages;
     }
 
     /// <summary>Updates this book.</summary>

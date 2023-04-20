@@ -14,4 +14,10 @@
     <ProjectReference Include="..\AspNetPatchSample.Domain\AspNetPatchSample.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Author\" />
+    <Folder Include="Entity\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
 </Project>
