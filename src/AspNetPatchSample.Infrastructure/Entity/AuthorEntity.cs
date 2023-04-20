@@ -15,6 +15,21 @@ namespace AspNetPatchSample.Infrastructure.Entity
       Name = string.Empty;
     }
 
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Entity.AuthorEntity"/> class.</summary>
+    /// <param name="authorData">An object that represents author data.</param>
+    public AuthorEntity(IAuthorData authorData)
+    {
+      Name = authorData.Name;
+    }
+
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Entity.AuthorEntity"/> class.</summary>
+    /// <param name="authorEntity">An object that represents an author entity.</param>
+    public AuthorEntity(IAuthorEntity authorEntity)
+    {
+      AuthorId = authorEntity.AuthorId;
+      Name     = authorEntity.Name;
+    }
+
     /// <summary>Gets an object that represents an ID of author.</summary>
     public Guid AuthorId { get; }
 
