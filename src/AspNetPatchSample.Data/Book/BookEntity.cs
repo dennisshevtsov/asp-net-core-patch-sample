@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Book.Infrastructure
+namespace AspNetPatchSample.Book.Data
 {
   using AspNetPatchSample.Book;
 
   /// <summary>Represents a book entity.</summary>
   public sealed class BookEntity : IBookEntity
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Infrastructure.BookEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
     public BookEntity()
     {
       Name        = string.Empty;
@@ -17,7 +17,7 @@ namespace AspNetPatchSample.Book.Infrastructure
       Description = string.Empty;
     }
 
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Infrastructure.BookEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
     /// <param name="bookData">An object that represents book data.</param>
     public BookEntity(IBookData bookData)
     {
@@ -27,7 +27,7 @@ namespace AspNetPatchSample.Book.Infrastructure
       Pages       = bookData.Pages;
     }
 
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Infrastructure.BookEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
     /// <param name="orderEntity">An object that represents a book entity.</param>
     public BookEntity(IBookEntity orderEntity) : this((IBookData)orderEntity)
     {

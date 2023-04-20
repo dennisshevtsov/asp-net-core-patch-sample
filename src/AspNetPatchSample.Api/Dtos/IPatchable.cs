@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.WebApi.Dtos
+namespace AspNetPatchSample.Api.Dtos
 {
   /// <summary>Represents an entity that can be updated partially.</summary>
   public interface IPatchable

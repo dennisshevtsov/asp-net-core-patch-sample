@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Infrastructure
+namespace AspNetPatchSample.Data
 {
   using Microsoft.EntityFrameworkCore;
   
@@ -14,7 +14,7 @@ namespace AspNetPatchSample.Infrastructure
   where TImplementation : TInterface
   where TInterface : class
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.RepositoryBase{TInterface, TImplementation}"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Data.RepositoryBase{TInterface, TImplementation}"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
     public RepositoryBase(DbContext dbContext)
     {

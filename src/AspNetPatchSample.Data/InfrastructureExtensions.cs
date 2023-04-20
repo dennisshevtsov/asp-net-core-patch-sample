@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     using Microsoft.EntityFrameworkCore;
 
-    using AspNetPatchSample.Infrastructure;
+    using AspNetPatchSample.Data;
 
     /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
     public static class InfrastructureExtensions
