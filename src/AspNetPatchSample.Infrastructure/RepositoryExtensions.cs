@@ -4,17 +4,21 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    using AspNetPatchSample.Domain.Book;
-    using AspNetPatchSample.Infrastructure.Repository;
+  using AspNetPatchSample.Domain.Author;
+  using AspNetPatchSample.Domain.Book;
 
-    /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
-    public static class RepositoryExtensions
+  using AspNetPatchSample.Infrastructure.Author;
+  using AspNetPatchSample.Infrastructure.Book;
+
+  /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
+  public static class RepositoryExtensions
   {
     /// <summary>Registers repositories in a DI container.</summary>
     /// <param name="services">An object that specifies the contract for a collection of service descriptors.</param>
     /// <returns>An object that specifies the contract for a collection of service descriptors.</returns>
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
+      services.AddScoped<IAuthorRepository, AuthorRepository>();
       services.AddScoped<IBookRepository, BookRepository>();
 
       return services;

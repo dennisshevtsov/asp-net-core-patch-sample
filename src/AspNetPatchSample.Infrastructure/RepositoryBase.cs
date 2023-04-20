@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Infrastructure.Repository
+namespace AspNetPatchSample.Infrastructure
 {
-    using Microsoft.EntityFrameworkCore;
-    using AspNetPatchSample.Domain;
+  using Microsoft.EntityFrameworkCore;
+  using AspNetPatchSample.Domain;
 
-    /// <summary>Provides a simple API to store instances of the <see cref="TInterface"/>.</summary>
-    /// <typeparam name="TInterface">Type of an entity.</typeparam>
-    public abstract class RepositoryBase<TInterface, TImplementation> : IRepository<TInterface>
-    where TImplementation : TInterface
-    where TInterface      : class
+  /// <summary>Provides a simple API to store instances of the <see cref="TInterface"/>.</summary>
+  /// <typeparam name="TInterface">Type of an entity.</typeparam>
+  public abstract class RepositoryBase<TInterface, TImplementation> : IRepository<TInterface>
+  where TImplementation : TInterface
+  where TInterface : class
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Repository.RepositoryBase{TEntity}"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.RepositoryBase{TInterface, TImplementation}"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
     public RepositoryBase(DbContext dbContext)
     {

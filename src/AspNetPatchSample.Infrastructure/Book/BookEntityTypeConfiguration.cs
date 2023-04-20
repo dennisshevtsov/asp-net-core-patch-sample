@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Infrastructure.Entity
+namespace AspNetPatchSample.Infrastructure.Book
 {
   using Microsoft.EntityFrameworkCore;
   using Microsoft.EntityFrameworkCore.Metadata.Builders;
   using Microsoft.EntityFrameworkCore.ValueGeneration;
 
-  /// <summary>Defines an entity type configuration for the <see cref="AspNetPatchSample.Infrastructure.Entity.BookEntity"/>.</summary>
+  /// <summary>Defines an entity type configuration for the <see cref="AspNetPatchSample.Infrastructure.Book.BookEntity"/>.</summary>
   public sealed class BookEntityTypeConfiguration : IEntityTypeConfiguration<BookEntity>
   {
-    /// <summary>Configures the entity of type <see cref="AspNetPatchSample.Infrastructure.Entity.BookEntity"/>.</summary>
+    /// <summary>Configures the entity of type <see cref="AspNetPatchSample.Infrastructure.Book.BookEntity"/>.</summary>
     /// <param name="builder">An object that provides a simple API for configuring an <see cref="Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType" />.</param>
     public void Configure(EntityTypeBuilder<BookEntity> builder)
     {
