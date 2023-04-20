@@ -2,32 +2,29 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Infrastructure.Author
+namespace AspNetPatchSample.Author.Infrastructure
 {
-  using AspNetPatchSample.Author;
-
   /// <summary>Represents an author entity.</summary>
   public sealed class AuthorEntity : IAuthorEntity
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Author.AuthorEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Infrastructure.AuthorEntity"/> class.</summary>
     public AuthorEntity()
     {
       Name = string.Empty;
     }
 
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Author.AuthorEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Infrastructure.AuthorEntity"/> class.</summary>
     /// <param name="authorData">An object that represents author data.</param>
     public AuthorEntity(IAuthorData authorData)
     {
       Name = authorData.Name;
     }
 
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Author.AuthorEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Infrastructure.AuthorEntity"/> class.</summary>
     /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity)
+    public AuthorEntity(IAuthorEntity authorEntity) : this((IAuthorData)authorEntity)
     {
       AuthorId = authorEntity.AuthorId;
-      Name = authorEntity.Name;
     }
 
     /// <summary>Gets an object that represents an ID of author.</summary>

@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Application.Book
+namespace AspNetPatchSample.Book.Application
 {
-  using AspNetPatchSample.Book;
-
+  /// <summary>Represents a book entity.</summary>
   public sealed class BookEntity : IBookEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Domain.Book.BookEntity"/> class.</summary>

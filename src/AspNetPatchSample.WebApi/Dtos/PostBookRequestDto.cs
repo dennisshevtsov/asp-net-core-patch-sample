@@ -4,11 +4,12 @@
 
 namespace AspNetPatchSample.WebApi.Dtos
 {
-    using System.ComponentModel.DataAnnotations;
-    using AspNetPatchSample.Book;
+  using System.ComponentModel.DataAnnotations;
 
-    /// <summary>Represents data to add a book.</summary>
-    public sealed class PostBookRequestDto : IBookData
+  using AspNetPatchSample.Book;
+
+  /// <summary>Represents data to add a book.</summary>
+  public sealed class PostBookRequestDto : IBookData
   {
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.PostBookRequestDto"/> class.</summary>
     public PostBookRequestDto()

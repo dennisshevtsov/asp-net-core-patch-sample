@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Application.Book
+namespace AspNetPatchSample.Book.Application
 {
   using System;
-
-  using AspNetPatchSample.Book;
 
   /// <summary>Represents a simple API to operate instances of the <see cref="AspNetPatchSample.Domain.Book.IBookEntity"/>.</summary>
   public sealed class BookService : IBookService
@@ -32,7 +30,7 @@ namespace AspNetPatchSample.Application.Book
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="IBookEntity"/>.</returns>
     public Task<IBookEntity> AddBookAsync(IBookData bookData, CancellationToken cancellationToken)
-  => _bookRepository.AddAsync(new BookEntity(bookData), cancellationToken);
+      => _bookRepository.AddAsync(new BookEntity(bookData), cancellationToken);
 
     /// <summary>Updates a book.</summary>
     /// <param name="bookEntity">An object that reprents a book entity.</param>

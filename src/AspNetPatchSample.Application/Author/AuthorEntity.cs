@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Application.Author
+namespace AspNetPatchSample.Author.Application
 {
-  using AspNetPatchSample.Author;
-
   /// <summary>Represents an author entity.</summary>
   public sealed class AuthorEntity : IAuthorEntity
   {

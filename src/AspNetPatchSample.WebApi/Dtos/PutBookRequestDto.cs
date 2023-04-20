@@ -4,19 +4,19 @@
 
 namespace AspNetPatchSample.WebApi.Dtos
 {
-    using System.ComponentModel.DataAnnotations;
+  using System.ComponentModel.DataAnnotations;
 
-    using Microsoft.AspNetCore.Mvc;
-    using AspNetPatchSample.Book;
+  using Microsoft.AspNetCore.Mvc;
+  using AspNetPatchSample.Book;
 
-    /// <summary>Represents data to update a book.</summary>
-    public sealed class PutBookRequestDto : IBookEntity
+  /// <summary>Represents data to update a book.</summary>
+  public sealed class PutBookRequestDto : IBookEntity
   {
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.PutBookRequestDto"/> class.</summary>
     public PutBookRequestDto()
     {
-      Name        = string.Empty;
-      Author      = string.Empty;
+      Name = string.Empty;
+      Author = string.Empty;
       Description = string.Empty;
     }
 

@@ -6,8 +6,8 @@ namespace AspNetPatchSample.Infrastructure
 {
   using Microsoft.EntityFrameworkCore;
 
-  using AspNetPatchSample.Infrastructure.Author;
-  using AspNetPatchSample.Infrastructure.Book;
+  using AspNetPatchSample.Author.Infrastructure;
+  using AspNetPatchSample.Book.Infrastructure;
 
   /// <summary>Represents a session with the database and can be used to query and save instances of your entities.</summary>
   public sealed class AppDbContext : DbContext

@@ -2,16 +2,17 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Infrastructure.Book
+namespace AspNetPatchSample.Book.Infrastructure
 {
   using Microsoft.EntityFrameworkCore;
+
   using AspNetPatchSample.Book;
   using AspNetPatchSample.Infrastructure;
 
-  /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Domain.Book..IBookEntity"/>.</summary>
+  /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</summary>
   public sealed class BookRepository : RepositoryBase<IBookEntity, BookEntity>, IBookRepository
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Book.BookRepository"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Infrastructure.BookRepository"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
     public BookRepository(DbContext dbContext) : base(dbContext) { }
 

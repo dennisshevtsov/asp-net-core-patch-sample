@@ -7,8 +7,8 @@ namespace Microsoft.Extensions.DependencyInjection
   using AspNetPatchSample.Author;
   using AspNetPatchSample.Book;
 
-  using AspNetPatchSample.Infrastructure.Author;
-  using AspNetPatchSample.Infrastructure.Book;
+  using AspNetPatchSample.Author.Infrastructure;
+  using AspNetPatchSample.Book.Infrastructure;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
   public static class RepositoryExtensions

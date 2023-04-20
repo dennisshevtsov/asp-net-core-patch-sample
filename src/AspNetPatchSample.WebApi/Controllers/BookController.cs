@@ -4,15 +4,15 @@
 
 namespace AspNetPatchSample.WebApi.Controllers
 {
-    using System;
+  using System;
 
-    using Microsoft.AspNetCore.Mvc;
+  using Microsoft.AspNetCore.Mvc;
 
-    using AspNetPatchSample.WebApi.Dtos;
-    using AspNetPatchSample.Book;
+  using AspNetPatchSample.WebApi.Dtos;
+  using AspNetPatchSample.Book;
 
-    /// <summary>Provides a simple API to handle HTTP request.</summary>
-    [ApiController]
+  /// <summary>Provides a simple API to handle HTTP request.</summary>
+  [ApiController]
   [Route("api/book")]
   [Produces("application/json")]
   public sealed class BookController : ControllerBase

@@ -2,40 +2,36 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Infrastructure.Book
+namespace AspNetPatchSample.Book.Infrastructure
 {
   using AspNetPatchSample.Book;
 
   /// <summary>Represents a book entity.</summary>
   public sealed class BookEntity : IBookEntity
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Infrastructure.Book.BookEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Infrastructure.BookEntity"/> class.</summary>
     public BookEntity()
     {
-      Name = string.Empty;
-      Author = string.Empty;
+      Name        = string.Empty;
+      Author      = string.Empty;
       Description = string.Empty;
     }
 
-    /// <summary>Initializes a new instance of the <see cref="BookEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Infrastructure.BookEntity"/> class.</summary>
     /// <param name="bookData">An object that represents book data.</param>
     public BookEntity(IBookData bookData)
     {
-      Name = bookData.Name;
-      Author = bookData.Author;
+      Name        = bookData.Name;
+      Author      = bookData.Author;
       Description = bookData.Description;
-      Pages = bookData.Pages;
+      Pages       = bookData.Pages;
     }
 
-    /// <summary>Initializes a new instance of the <see cref="BookEntity"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Infrastructure.BookEntity"/> class.</summary>
     /// <param name="orderEntity">An object that represents a book entity.</param>
-    public BookEntity(IBookEntity orderEntity)
+    public BookEntity(IBookEntity orderEntity) : this((IBookData)orderEntity)
     {
       BookId = orderEntity.BookId;
-      Name = orderEntity.Name;
-      Author = orderEntity.Author;
-      Description = orderEntity.Description;
-      Pages = orderEntity.Pages;
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>

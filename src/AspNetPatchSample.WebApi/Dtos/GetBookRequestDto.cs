@@ -4,11 +4,12 @@
 
 namespace AspNetPatchSample.WebApi.Dtos
 {
-    using Microsoft.AspNetCore.Mvc;
-    using AspNetPatchSample.Book;
+  using Microsoft.AspNetCore.Mvc;
 
-    /// <summary>Represents a condition to query a book.</summary>
-    public sealed class GetBookRequestDto : IBookIdentity
+  using AspNetPatchSample.Book;
+
+  /// <summary>Represents a condition to query a book.</summary>
+  public sealed class GetBookRequestDto : IBookIdentity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.WebApi.Dtos.GetBookRequestDto"/> class.</summary>
     public GetBookRequestDto() { }

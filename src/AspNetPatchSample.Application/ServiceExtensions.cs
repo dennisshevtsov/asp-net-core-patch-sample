@@ -4,8 +4,8 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-  using AspNetPatchSample.Application.Book;
   using AspNetPatchSample.Book;
+  using AspNetPatchSample.Book.Application;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
   public static class ServiceExtensions
