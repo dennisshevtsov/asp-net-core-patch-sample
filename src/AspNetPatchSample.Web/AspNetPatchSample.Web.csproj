@@ -15,4 +15,9 @@
     <ProjectReference Include="..\AspNetPatchSample.Data\AspNetPatchSample.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Dtos\" />
+  </ItemGroup>
+
 </Project>

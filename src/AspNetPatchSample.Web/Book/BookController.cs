@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Web.Controllers
+namespace AspNetPatchSample.Book.Web
 {
   using System;
 
   using Microsoft.AspNetCore.Mvc;
-
-  using AspNetPatchSample.Web.Dtos;
-  using AspNetPatchSample.Book;
 
   /// <summary>Provides a simple API to handle HTTP request.</summary>
   [ApiController]

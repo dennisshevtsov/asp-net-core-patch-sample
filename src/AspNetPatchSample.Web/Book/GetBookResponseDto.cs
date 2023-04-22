@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Web.Dtos
+namespace AspNetPatchSample.Book.Web
 {
-  using AspNetPatchSample.Book;
-
   /// <summary>Represents a book entity.</summary>
   public sealed class GetBookResponseDto : IBookEntity
   {
