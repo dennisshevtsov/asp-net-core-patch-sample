@@ -8,6 +8,8 @@ namespace AspNetPatchSample.Book.Web
 
   using Microsoft.AspNetCore.Mvc;
 
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents data to update a book parially.</summary>
   public sealed class PatchBookRequestDto : IBookEntity, IPatchable
   {
