@@ -5,11 +5,11 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample", "src\AspNetPatchSample\AspNetPatchSample.csproj", "{0FD098BC-DDFF-46A8-A02A-22CFEC6D7CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Api", "src\AspNetPatchSample.Api\AspNetPatchSample.Api.csproj", "{4A2009EC-4336-4D4D-B77C-C132E9E920D6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Appl", "src\AspNetPatchSample.App\AspNetPatchSample.App.csproj", "{9A895584-6E2F-4B71-866E-4777EC86E5BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Data", "src\AspNetPatchSample.Data\AspNetPatchSample.Data.csproj", "{B8D1EF5D-E340-415F-BFD8-D88CC7E636AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Web", "src\AspNetPatchSample.Web\AspNetPatchSample.Web.csproj", "{4A2009EC-4336-4D4D-B77C-C132E9E920D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetPatchSample.Test", "test\AspNetPatchSample.Test\AspNetPatchSample.Test.csproj", "{4C0C8840-4674-4998-871D-27EFDC449BC4}"
 EndProject

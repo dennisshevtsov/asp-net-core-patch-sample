@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Api.Controllers
+namespace AspNetPatchSample.Book.Web
 {
   using System;
 
   using Microsoft.AspNetCore.Mvc;
-
-  using AspNetPatchSample.Api.Dtos;
-  using AspNetPatchSample.Book;
 
   /// <summary>Provides a simple API to handle HTTP request.</summary>
   [ApiController]
@@ -19,7 +16,7 @@ namespace AspNetPatchSample.Api.Controllers
   {
     private readonly IBookService _bookService;
 
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Api.Controllers.BookController"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Web.Controllers.BookController"/> class.</summary>
     /// <param name="bookService">An object that represents a simple API to operate instances of the <see cref="Domain.Book.IBookEntity"/>.</param>
     public BookController(IBookService bookService)
     {
@@ -66,7 +63,7 @@ namespace AspNetPatchSample.Api.Controllers
     /// <param name="requestDto">An object that represents data to update a book.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
-    [HttpPost(Name = nameof(BookController.PutBook))]
+    [HttpPut(Name = nameof(BookController.PutBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [Consumes(typeof(PutBookRequestDto), "application/json")]
     public async Task<IActionResult> PutBook(PutBookRequestDto requestDto, CancellationToken cancellationToken)
@@ -80,7 +77,7 @@ namespace AspNetPatchSample.Api.Controllers
     /// <param name="requestDto">An object that represents data to update a book partially.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
-    [HttpPost(Name = nameof(BookController.PatchBook))]
+    [HttpPatch(Name = nameof(BookController.PatchBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
     public async Task<IActionResult> PatchBook(PatchBookRequestDto requestDto, CancellationToken cancellationToken)

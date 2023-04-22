@@ -2,14 +2,12 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Api.Dtos
+namespace AspNetPatchSample.Book.Web
 {
-  using AspNetPatchSample.Book;
-
   /// <summary>Represents a book entity.</summary>
   public sealed class GetBookResponseDto : IBookEntity
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Api.Dtos.GetBookResponseDto"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.GetBookResponseDto"/> class.</summary>
     /// <param name="orderEntity">An object that represents a book entity.</param>
     public GetBookResponseDto(IBookEntity orderEntity)
     {

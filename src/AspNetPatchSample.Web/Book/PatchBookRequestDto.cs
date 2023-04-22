@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Api.Dtos
+namespace AspNetPatchSample.Book.Web
 {
   using System.ComponentModel.DataAnnotations;
 
   using Microsoft.AspNetCore.Mvc;
 
-  using AspNetPatchSample.Book;
+  using AspNetPatchSample.Web;
 
   /// <summary>Represents data to update a book parially.</summary>
   public sealed class PatchBookRequestDto : IBookEntity, IPatchable
   {
-    /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Api.Dtos.PatchBookRequestDto"/> class.</summary>
+    /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PatchBookRequestDto"/> class.</summary>
     public PatchBookRequestDto()
     {
       Name        = string.Empty;

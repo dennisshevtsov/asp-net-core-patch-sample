@@ -2,16 +2,14 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Api.Dtos
+namespace AspNetPatchSample.Book.Web
 {
   using System.ComponentModel.DataAnnotations;
-
-  using AspNetPatchSample.Book;
 
   /// <summary>Represents data to add a book.</summary>
   public sealed class PostBookRequestDto : IBookData
   {
-    /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Api.Dtos.PostBookRequestDto"/> class.</summary>
+    /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PostBookRequestDto"/> class.</summary>
     public PostBookRequestDto()
     {
       Name        = string.Empty;
