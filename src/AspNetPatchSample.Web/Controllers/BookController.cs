@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Api.Controllers
+namespace AspNetPatchSample.Web.Controllers
 {
   using System;
 
   using Microsoft.AspNetCore.Mvc;
 
-  using AspNetPatchSample.Api.Dtos;
+  using AspNetPatchSample.Web.Dtos;
   using AspNetPatchSample.Book;
 
   /// <summary>Provides a simple API to handle HTTP request.</summary>
@@ -19,7 +19,7 @@ namespace AspNetPatchSample.Api.Controllers
   {
     private readonly IBookService _bookService;
 
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Api.Controllers.BookController"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Web.Controllers.BookController"/> class.</summary>
     /// <param name="bookService">An object that represents a simple API to operate instances of the <see cref="Domain.Book.IBookEntity"/>.</param>
     public BookController(IBookService bookService)
     {
