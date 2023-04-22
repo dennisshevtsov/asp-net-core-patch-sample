@@ -36,5 +36,17 @@ namespace AspNetPatchSample.Web.Author
     {
       return Task.FromResult<IActionResult>(Ok());
     }
+
+    /// <summary>Handles the POST author request.</summary>
+    /// <param name="requestDto">An object that represents the POST author request data.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+    [HttpPost(Name = nameof(AuthorController.PostAuthor))]
+    [ProducesResponseType(typeof(GetAuthorResponseDto), StatusCodes.Status201Created)]
+    [Consumes(typeof(PostAuthorRequestDto), "application/json")]
+    public Task<IActionResult> PostAuthor(PostAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    {
+      return Task.FromResult<IActionResult>(NoContent());
+    }
   }
 }
