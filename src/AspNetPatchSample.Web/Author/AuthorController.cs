@@ -19,39 +19,22 @@ namespace AspNetPatchSample.Web.Author
     [HttpGet("{authorId}", Name = nameof(AuthorController.GetAuthor))]
     [ProducesResponseType(typeof(GetAuthorResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public Task<IActionResult> GetAuthor(GetAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
       return Task.FromResult<IActionResult>(Ok());
     }
 
-    [HttpGet]
-    public Task<IActionResult> GetAuthors(CancellationToken cancellationToken)
+    /// <summary>Handles the GET authors request.</summary>
+    /// <param name="requestDto">An object that represents the GET authors request data.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+    [HttpGet(Name = nameof(AuthorController.GetAuthors))]
+    [ProducesResponseType(typeof(GetAuthorsResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public Task<IActionResult> GetAuthors(GetAuthorsRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(NoContent());
-    }
-
-    [HttpPost]
-    public Task<IActionResult> PostAuthor(CancellationToken cancellationToken)
-    {
-      return Task.FromResult<IActionResult>(NoContent());
-    }
-
-    [HttpPut]
-    public Task<IActionResult> PutAuthor(CancellationToken cancellationToken)
-    {
-      return Task.FromResult<IActionResult>(NoContent());
-    }
-
-    [HttpPatch]
-    public Task<IActionResult> PatchAuthor(CancellationToken cancellationToken)
-    {
-      return Task.FromResult<IActionResult>(NoContent());
-    }
-
-    [HttpDelete]
-    public Task<IActionResult> DeleteAuthor(CancellationToken cancellationToken)
-    {
-      return Task.FromResult<IActionResult>(NoContent());
+      return Task.FromResult<IActionResult>(Ok());
     }
   }
 }
