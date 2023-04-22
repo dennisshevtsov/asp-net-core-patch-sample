@@ -63,7 +63,7 @@ namespace AspNetPatchSample.Book.Web
     /// <param name="requestDto">An object that represents data to update a book.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
-    [HttpPost(Name = nameof(BookController.PutBook))]
+    [HttpPut(Name = nameof(BookController.PutBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [Consumes(typeof(PutBookRequestDto), "application/json")]
     public async Task<IActionResult> PutBook(PutBookRequestDto requestDto, CancellationToken cancellationToken)
@@ -77,7 +77,7 @@ namespace AspNetPatchSample.Book.Web
     /// <param name="requestDto">An object that represents data to update a book partially.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
-    [HttpPost(Name = nameof(BookController.PatchBook))]
+    [HttpPatch(Name = nameof(BookController.PatchBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
     public async Task<IActionResult> PatchBook(PatchBookRequestDto requestDto, CancellationToken cancellationToken)
