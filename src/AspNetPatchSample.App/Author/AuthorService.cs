@@ -54,14 +54,15 @@ namespace AspNetPatchSample.Author.App
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task<IAuthorEntity?> UpdateAuthorAsync(
+    public Task UpdateAuthorAsync(
       IAuthorEntity originalAuthorEntity,
       IAuthorEntity newAuthorEntity,
       string[] properties,
       CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
+      => _authorRepository.UpdateAsync(
+        new AuthorEntity(originalAuthorEntity).Update(newAuthorEntity),
+        properties,
+        cancellationToken);
 
     /// <summary>Deletes an author.</summary>
     /// <param name="identity">An object that represents an author identity to delete.</param>
