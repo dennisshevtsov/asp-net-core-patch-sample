@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Web.Author
+namespace AspNetPatchSample.Author.Web
 {
+  using System;
+
   using Microsoft.AspNetCore.Mvc;
 
   /// <summary>Provides a simple API to handle HTTP request.</summary>
@@ -12,6 +14,15 @@ namespace AspNetPatchSample.Web.Author
   [Produces("application/json")]
   public sealed class AuthorController : ControllerBase
   {
+    private readonly IAuthorService _authorService;
+
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.AuthorController"/> class.</summary>
+    /// <param name="authorService">An object that provides a simple API to execute a task with an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</param>
+    public AuthorController(IAuthorService authorService)
+    {
+      _authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
+    }
+
     /// <summary>Handles the GET author request.</summary>
     /// <param name="requestDto">An object that represents the GET author request data.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
@@ -19,10 +30,16 @@ namespace AspNetPatchSample.Web.Author
     [HttpGet("{authorId}", Name = nameof(AuthorController.GetAuthor))]
     [ProducesResponseType(typeof(GetAuthorResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IActionResult> GetAuthor(GetAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAuthor(GetAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(Ok());
+      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+
+      if (authorEntity == null)
+      {
+        return NotFound();
+      }
+
+      return Ok(new GetAuthorResponseDto(authorEntity));
     }
 
     /// <summary>Handles the GET authors request.</summary>
