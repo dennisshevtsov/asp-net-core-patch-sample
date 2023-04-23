@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.Book
 {
   /// <summary>Represents an identity of a book.</summary>
-  public interface IBookIdentity
+  public interface IBookIdentity : IIdentity
   {
     /// <summary>Gets an object that represents an ID of a book.</summary>
     public Guid BookId { get; }

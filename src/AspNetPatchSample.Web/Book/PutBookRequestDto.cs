@@ -42,5 +42,9 @@ namespace AspNetPatchSample.Book.Web
     [Required]
     [FromBody]
     public int Pages { get; set; }
+
+    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
+    /// <returns>An object that represents a Globally Unique Identifier.</returns>
+    public Guid ToGuid() => BookId;
   }
 }

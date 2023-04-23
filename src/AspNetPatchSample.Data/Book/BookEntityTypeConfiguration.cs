@@ -16,9 +16,9 @@ namespace AspNetPatchSample.Book.Data
     public void Configure(EntityTypeBuilder<BookEntity> builder)
     {
       builder.ToTable("book");
-      builder.HasKey(entity => entity.BookId);
+      builder.HasKey(entity => entity.Id);
 
-      builder.Property(entity => entity.BookId)
+      builder.Property(entity => entity.Id)
              .HasColumnName("id")
              .IsRequired()
              .ValueGeneratedOnAdd()
@@ -42,6 +42,8 @@ namespace AspNetPatchSample.Book.Data
       builder.Property(entity => entity.Pages)
              .HasColumnName("pages")
              .IsRequired();
+
+      builder.Ignore(entity => entity.BookId);
     }
   }
 }

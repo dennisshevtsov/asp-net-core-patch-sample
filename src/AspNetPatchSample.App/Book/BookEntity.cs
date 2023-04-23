@@ -32,14 +32,18 @@ namespace AspNetPatchSample.Book.App
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; private set; }
 
+    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
+    /// <returns>An object that represents a Globally Unique Identifier.</returns>
+    public Guid ToGuid() => BookId;
+
     /// <summary>Updates this book.</summary>
     /// <param name="bookData">An object that represents book data.</param>
     public void Update(IBookData bookData)
     {
-      Name = bookData.Name;
-      Author = bookData.Author;
+      Name        = bookData.Name;
+      Author      = bookData.Author;
       Description = bookData.Description;
-      Pages = bookData.Pages;
+      Pages       = bookData.Pages;
     }
 
     /// <summary>Updates this book.</summary>

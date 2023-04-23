@@ -48,5 +48,9 @@ namespace AspNetPatchSample.Book.Web
 
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
     public string[] Properties { get; set; }
+
+    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
+    /// <returns>An object that represents a Globally Unique Identifier.</returns>
+    public Guid ToGuid() => BookId;
   }
 }
