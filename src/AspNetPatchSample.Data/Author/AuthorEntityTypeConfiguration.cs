@@ -16,9 +16,9 @@ namespace AspNetPatchSample.Author.Data
     public void Configure(EntityTypeBuilder<AuthorEntity> builder)
     {
       builder.ToTable("author");
-      builder.HasKey(entity => entity.AuthorId);
+      builder.HasKey(entity => entity.Id);
 
-      builder.Property(entity => entity.AuthorId)
+      builder.Property(entity => entity.Id)
              .HasColumnName("id")
              .IsRequired()
              .ValueGeneratedOnAdd()
@@ -28,6 +28,8 @@ namespace AspNetPatchSample.Author.Data
              .HasColumnName("name")
              .IsRequired()
              .HasMaxLength(256);
+
+      builder.Ignore(entity => entity.AuthorId);
     }
   }
 }

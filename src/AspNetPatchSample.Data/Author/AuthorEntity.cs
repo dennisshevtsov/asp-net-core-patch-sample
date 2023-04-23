@@ -4,8 +4,10 @@
 
 namespace AspNetPatchSample.Author.Data
 {
+  using AspNetPatchSample.Data;
+
   /// <summary>Represents an author entity.</summary>
-  public sealed class AuthorEntity : IAuthorEntity
+  public sealed class AuthorEntity : EntityBase, IAuthorEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/> class.</summary>
     public AuthorEntity()
@@ -28,13 +30,9 @@ namespace AspNetPatchSample.Author.Data
     }
 
     /// <summary>Gets an object that represents an ID of author.</summary>
-    public Guid AuthorId { get; }
+    public Guid AuthorId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
     public string Name { get; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => AuthorId;
   }
 }
