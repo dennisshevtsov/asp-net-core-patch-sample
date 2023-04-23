@@ -14,5 +14,13 @@ namespace AspNetPatchSample.Author
     public Task<IAuthorEntity?> GetAuthorAsync(
       IAuthorIdentity identity,
       CancellationToken cancellationToken);
+
+    /// <summary>Adds a new author.</summary>
+    /// <param name="authorData">An object that represents author data from that a new author should be created.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</returns>
+    public Task<IAuthorEntity> AddAuthorAsync(
+      IAuthorData authorData,
+      CancellationToken cancellationToken);
   }
 }
