@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.Author
 {
   /// <summary>Represents an author identity.</summary>
-  public interface IAuthorIdentity
+  public interface IAuthorIdentity : IIdentity
   {
     /// <summary>Gets an object that represents an ID of author.</summary>
     public Guid AuthorId { get; }
