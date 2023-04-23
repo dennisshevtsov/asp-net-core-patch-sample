@@ -4,10 +4,10 @@
 
 namespace AspNetPatchSample.Book.Data
 {
-  using AspNetPatchSample.Book;
+  using AspNetPatchSample.Data;
 
   /// <summary>Represents a book entity.</summary>
-  public sealed class BookEntity : IBookEntity
+  public sealed class BookEntity : EntityBase, IBookEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
     public BookEntity()
@@ -35,7 +35,7 @@ namespace AspNetPatchSample.Book.Data
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
-    public Guid BookId { get; }
+    public Guid BookId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a name of a book.</summary>
     public string Name { get; }
@@ -48,9 +48,5 @@ namespace AspNetPatchSample.Book.Data
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => BookId;
   }
 }
