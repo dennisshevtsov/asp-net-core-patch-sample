@@ -22,5 +22,9 @@ namespace AspNetPatchSample.Book.Web
     /// <summary>Gets an object that represents an ID of a book.</summary>
     [FromRoute]
     public Guid BookId { get; }
+
+    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
+    /// <returns>An object that represents a Globally Unique Identifier.</returns>
+    public Guid ToGuid() => BookId;
   }
 }

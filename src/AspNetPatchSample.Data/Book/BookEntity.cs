@@ -48,5 +48,9 @@ namespace AspNetPatchSample.Book.Data
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; }
+
+    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
+    /// <returns>An object that represents a Globally Unique Identifier.</returns>
+    public Guid ToGuid() => BookId;
   }
 }
