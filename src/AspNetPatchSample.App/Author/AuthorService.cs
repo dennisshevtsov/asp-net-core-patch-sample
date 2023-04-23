@@ -7,6 +7,15 @@ namespace AspNetPatchSample.Author.App
   /// <summary>Provides a simple API to execute a task with an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</summary>
   public sealed class AuthorService : IAuthorService
   {
+    private readonly IAuthorRepository _authorRepository;
+
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorService"/> class.</summary>
+    /// <param name="authorRepository">An object that provides a simple API to store instances of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</param>
+    public AuthorService(IAuthorRepository authorRepository)
+    {
+      _authorRepository = authorRepository ?? throw new ArgumentNullException(nameof(authorRepository));
+    }
+
     /// <summary>Gets a new author.</summary>
     /// <param name="identity">An object that represents an author identity to get.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
@@ -14,9 +23,7 @@ namespace AspNetPatchSample.Author.App
     public Task<IAuthorEntity?> GetAuthorAsync(
       IAuthorIdentity identity,
       CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
+      => _authorRepository.GetAsync(identity, cancellationToken);
 
     /// <summary>Adds a new author.</summary>
     /// <param name="authorData">An object that represents author data from that a new author should be created.</param>
