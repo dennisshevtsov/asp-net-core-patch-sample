@@ -78,9 +78,18 @@ namespace AspNetPatchSample.Author.Web
     [HttpPut(Name = nameof(AuthorController.PutAuthor))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [Consumes(typeof(PutAuthorRequestDto), "application/json")]
-    public Task<IActionResult> PutAuthor(PutAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> PutAuthor(PutAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(NoContent());
+      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+
+      if (authorEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _authorService.UpdateAuthorAsync(authorEntity, requestDto, cancellationToken);
+
+      return NoContent();
     }
 
     /// <summary>Handles the PATCH author request.</summary>
