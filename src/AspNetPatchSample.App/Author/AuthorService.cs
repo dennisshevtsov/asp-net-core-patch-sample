@@ -32,9 +32,7 @@ namespace AspNetPatchSample.Author.App
     public Task<IAuthorEntity> AddAuthorAsync(
       IAuthorData authorData,
       CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
+      => _authorRepository.AddAsync(new AuthorEntity(authorData), cancellationToken);
 
     /// <summary>Updates an author.</summary>
     /// <param name="originalAuthorEntity">An object that represents an author entity to update.</param>
