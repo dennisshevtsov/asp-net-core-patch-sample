@@ -61,9 +61,14 @@ namespace AspNetPatchSample.Author.Web
     [HttpPost(Name = nameof(AuthorController.PostAuthor))]
     [ProducesResponseType(typeof(GetAuthorResponseDto), StatusCodes.Status201Created)]
     [Consumes(typeof(PostAuthorRequestDto), "application/json")]
-    public Task<IActionResult> PostAuthor(PostAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> PostAuthor(PostAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(NoContent());
+      var authorEntity = await _authorService.AddAuthorAsync(requestDto, cancellationToken);
+
+      return CreatedAtRoute(
+        nameof(AuthorController.GetAuthor),
+        new GetAuthorRequestDto(authorEntity),
+        new GetAuthorResponseDto(authorEntity));
     }
 
     /// <summary>Handles the PUT author request.</summary>

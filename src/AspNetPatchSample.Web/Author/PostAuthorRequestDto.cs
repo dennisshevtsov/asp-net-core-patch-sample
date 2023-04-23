@@ -5,7 +5,15 @@
 namespace AspNetPatchSample.Author.Web
 {
   /// <summary>Represents the POST author request data.</summary>
-  public sealed class PostAuthorRequestDto
+  public sealed class PostAuthorRequestDto : IAuthorData
   {
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.PostAuthorRequestDto"/> class.</summary>
+    public PostAuthorRequestDto()
+    {
+      Name = string.Empty;
+    }
+
+    /// <summary>Gets/sets an object that represents a name of an author.</summary>
+    public string Name { get; set; }
   }
 }

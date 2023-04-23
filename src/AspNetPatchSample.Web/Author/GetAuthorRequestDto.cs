@@ -7,7 +7,17 @@ namespace AspNetPatchSample.Author.Web
   /// <summary>Represents the GET author request data.</summary>
   public sealed class GetAuthorRequestDto : IAuthorIdentity
   {
-    /// <summary>Gets an object that represents an ID of author.</summary>
-    public Guid AuthorId { get; }
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.GetAuthorRequestDto"/> class.</summary>
+    public GetAuthorRequestDto() {}
+
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.GetAuthorRequestDto"/> class.</summary>
+    /// <param name="authorIdentity">An object that represents an author identity.</param>
+    public GetAuthorRequestDto(IAuthorIdentity authorIdentity)
+    {
+      AuthorId = authorIdentity.AuthorId;
+    }
+
+    /// <summary>Gets/sets an object that represents an ID of author.</summary>
+    public Guid AuthorId { get; set; }
   }
 }
