@@ -11,8 +11,8 @@ namespace AspNetPatchSample.Data
   /// <summary>Provides a simple API to store instances of the <see cref="TInterface"/>.</summary>
   /// <typeparam name="TInterface">Type of an entity.</typeparam>
   public abstract class RepositoryBase<TInterface, TImplementation> : IRepository<TInterface>
-    where TImplementation : TInterface
-    where TInterface : class
+    where TImplementation : EntityBase, TInterface
+    where TInterface      : class
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Data.RepositoryBase{TInterface, TImplementation}"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
@@ -27,9 +27,14 @@ namespace AspNetPatchSample.Data
     /// <param name="identity">An object that represents an identity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="TEntity"/>. The result can be null.</returns>
-    public virtual Task<TInterface?> GetAsync(IIdentity identity, CancellationToken cancellationToken)
+    public virtual async Task<TInterface?> GetAsync(IIdentity identity, CancellationToken cancellationToken)
     {
-      throw new NotImplementedException();
+      var identityValue = identity.ToGuid();
+
+      return await DbContext.Set<TImplementation>()
+                            .AsNoTracking()
+                            .Where(entity => entity.Id == identityValue)
+                            .SingleOrDefaultAsync(cancellationToken);
     }
 
     /// <summary>Adds an entity.</summary>
