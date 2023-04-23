@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Web.Author
+namespace AspNetPatchSample.Author.Web
 {
+  using System;
+
   using Microsoft.AspNetCore.Mvc;
 
   /// <summary>Provides a simple API to handle HTTP request.</summary>
@@ -12,6 +14,15 @@ namespace AspNetPatchSample.Web.Author
   [Produces("application/json")]
   public sealed class AuthorController : ControllerBase
   {
+    private readonly IAuthorService _authorService;
+
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.AuthorController"/> class.</summary>
+    /// <param name="authorService">An object that provides a simple API to execute a task with an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</param>
+    public AuthorController(IAuthorService authorService)
+    {
+      _authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
+    }
+
     /// <summary>Handles the GET author request.</summary>
     /// <param name="requestDto">An object that represents the GET author request data.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
@@ -19,10 +30,16 @@ namespace AspNetPatchSample.Web.Author
     [HttpGet("{authorId}", Name = nameof(AuthorController.GetAuthor))]
     [ProducesResponseType(typeof(GetAuthorResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IActionResult> GetAuthor(GetAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAuthor(GetAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(Ok());
+      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+
+      if (authorEntity == null)
+      {
+        return NotFound();
+      }
+
+      return Ok(new GetAuthorResponseDto(authorEntity));
     }
 
     /// <summary>Handles the GET authors request.</summary>
@@ -44,9 +61,14 @@ namespace AspNetPatchSample.Web.Author
     [HttpPost(Name = nameof(AuthorController.PostAuthor))]
     [ProducesResponseType(typeof(GetAuthorResponseDto), StatusCodes.Status201Created)]
     [Consumes(typeof(PostAuthorRequestDto), "application/json")]
-    public Task<IActionResult> PostAuthor(PostAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> PostAuthor(PostAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(NoContent());
+      var authorEntity = await _authorService.AddAuthorAsync(requestDto, cancellationToken);
+
+      return CreatedAtRoute(
+        nameof(AuthorController.GetAuthor),
+        new GetAuthorRequestDto(authorEntity),
+        new GetAuthorResponseDto(authorEntity));
     }
 
     /// <summary>Handles the PUT author request.</summary>
@@ -55,10 +77,20 @@ namespace AspNetPatchSample.Web.Author
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
     [HttpPut(Name = nameof(AuthorController.PutAuthor))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(PutAuthorRequestDto), "application/json")]
-    public Task<IActionResult> PutAuthor(PutAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> PutAuthor(PutAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(NoContent());
+      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+
+      if (authorEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _authorService.UpdateAuthorAsync(authorEntity, requestDto, cancellationToken);
+
+      return NoContent();
     }
 
     /// <summary>Handles the PATCH author request.</summary>
@@ -67,10 +99,21 @@ namespace AspNetPatchSample.Web.Author
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
     [HttpPatch(Name = nameof(AuthorController.PatchAuthor))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(PatchAuthorRequestDto), "application/json")]
-    public Task<IActionResult> PatchAuthor(PatchAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> PatchAuthor(PatchAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(NoContent());
+      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+
+      if (authorEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _authorService.UpdateAuthorAsync(
+        authorEntity, requestDto, requestDto.Properties, cancellationToken);
+
+      return NoContent();
     }
 
     /// <summary>Handles the DELETE author request.</summary>
@@ -79,10 +122,20 @@ namespace AspNetPatchSample.Web.Author
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
     [HttpDelete(Name = nameof(AuthorController.DeleteAuthor))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(DeleteAuthorRequestDto), "application/json")]
-    public Task<IActionResult> DeleteAuthor(DeleteAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAuthor(DeleteAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(NoContent());
+      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+
+      if (authorEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _authorService.DeleteAuthorAsync(requestDto, cancellationToken);
+
+      return NoContent();
     }
   }
 }
