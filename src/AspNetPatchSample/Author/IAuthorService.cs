@@ -22,5 +22,27 @@ namespace AspNetPatchSample.Author
     public Task<IAuthorEntity> AddAuthorAsync(
       IAuthorData authorData,
       CancellationToken cancellationToken);
+
+    /// <summary>Updates an author.</summary>
+    /// <param name="originalAuthorEntity">An object that represents an author entity to update.</param>
+    /// <param name="newAuthorEntity">An object that represents an author entity from that the original one should be updated.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation.</returns>
+    public Task UpdateAuthorAsync(
+      IAuthorEntity originalAuthorEntity,
+      IAuthorEntity newAuthorEntity,
+      CancellationToken cancellationToken);
+
+    /// <summary>Updates an author partially.</summary>
+    /// <param name="originalAuthorEntity">An object that represents an author entity to update.</param>
+    /// <param name="newAuthorEntity">An object that represents an author entity from that the original one should be updated.</param>
+    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation.</returns>
+    public Task<IAuthorEntity?> UpdateAuthorAsync(
+      IAuthorEntity originalAuthorEntity,
+      IAuthorEntity newAuthorEntity,
+      string[] properties,
+      CancellationToken cancellationToken);
   }
 }
