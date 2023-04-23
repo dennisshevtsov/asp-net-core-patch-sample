@@ -44,5 +44,13 @@ namespace AspNetPatchSample.Author
       IAuthorEntity newAuthorEntity,
       string[] properties,
       CancellationToken cancellationToken);
+
+    /// <summary>Deletes an author.</summary>
+    /// <param name="identity">An object that represents an author identity to delete.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation.</returns>
+    public Task DeleteAuthorAsync(
+      IAuthorIdentity identity,
+      CancellationToken cancellationToken);
   }
 }
