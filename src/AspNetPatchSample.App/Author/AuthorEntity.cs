@@ -31,10 +31,17 @@ namespace AspNetPatchSample.Author.App
     public Guid AuthorId { get; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
-    public string Name { get; }
+    public string Name { get; private set; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
     public Guid ToGuid() => AuthorId;
+
+    public AuthorEntity Update(IAuthorEntity newAuthorEntity)
+    {
+      Name = newAuthorEntity.Name;
+
+      return this;
+    }
   }
 }

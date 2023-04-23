@@ -43,9 +43,10 @@ namespace AspNetPatchSample.Author.App
       IAuthorEntity originalAuthorEntity,
       IAuthorEntity newAuthorEntity,
       CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
+      => _authorRepository.UpdateAsync(
+        new AuthorEntity(originalAuthorEntity).Update(newAuthorEntity),
+        Array.Empty<string>(),
+        cancellationToken);
 
     /// <summary>Updates an author partially.</summary>
     /// <param name="originalAuthorEntity">An object that represents an author entity to update.</param>
