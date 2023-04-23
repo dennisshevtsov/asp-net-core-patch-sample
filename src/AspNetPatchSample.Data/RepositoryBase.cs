@@ -72,6 +72,25 @@ namespace AspNetPatchSample.Data
       dbEntityEntry.State = EntityState.Detached;
     }
 
+    /// <summary>Deletes an entity by its ID.</summary>
+    /// <param name="identity">An object that represents an identity.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation.</returns>
+    public async Task DeleteAsync(IIdentity identity, CancellationToken cancellationToken)
+    {
+      var identityValue = identity.ToGuid();
+
+      var entity = await DbContext.Set<TImplementation>()
+                                  .Where(entity => entity.Id == identityValue)
+                                  .SingleOrDefaultAsync(cancellationToken);
+
+      if (entity != null)
+      {
+        DbContext.Entry(entity).State = EntityState.Deleted;
+        await DbContext.SaveChangesAsync(cancellationToken);
+      }
+    }
+
     protected virtual TImplementation Create(TInterface entity)
       => (TImplementation)Activator.CreateInstance(typeof(TImplementation), entity)!;
   }
