@@ -99,9 +99,19 @@ namespace AspNetPatchSample.Author.Web
     [HttpPatch(Name = nameof(AuthorController.PatchAuthor))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [Consumes(typeof(PatchAuthorRequestDto), "application/json")]
-    public Task<IActionResult> PatchAuthor(PatchAuthorRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> PatchAuthor(PatchAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      return Task.FromResult<IActionResult>(NoContent());
+      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+
+      if (authorEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _authorService.UpdateAuthorAsync(
+        authorEntity, requestDto, requestDto.Properties, cancellationToken);
+
+      return NoContent();
     }
 
     /// <summary>Handles the DELETE author request.</summary>
