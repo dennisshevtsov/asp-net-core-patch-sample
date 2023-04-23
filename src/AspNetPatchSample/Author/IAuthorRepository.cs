@@ -4,7 +4,7 @@
 
 namespace AspNetPatchSample.Author
 {
-  /// <summary>Provides a simple API to store instances of the <see cref="Domain.Entity.IAuthorEntity"/>.</summary>
+  /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</summary>
   public interface IAuthorRepository : IRepository<IAuthorEntity>
   {
   }

@@ -39,7 +39,7 @@ namespace AspNetPatchSample.Author
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task<IAuthorEntity?> UpdateAuthorAsync(
+    public Task UpdateAuthorAsync(
       IAuthorEntity originalAuthorEntity,
       IAuthorEntity newAuthorEntity,
       string[] properties,
