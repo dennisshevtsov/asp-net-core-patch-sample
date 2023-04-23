@@ -71,8 +71,6 @@ namespace AspNetPatchSample.Author.App
     public Task DeleteAuthorAsync(
       IAuthorIdentity identity,
       CancellationToken cancellationToken)
-    {
-      throw new NotImplementedException();
-    }
+      => _authorRepository.DeleteAsync(identity, cancellationToken);
   }
 }
