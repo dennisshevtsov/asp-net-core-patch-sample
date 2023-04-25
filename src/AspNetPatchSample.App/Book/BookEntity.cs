@@ -38,6 +38,7 @@ namespace AspNetPatchSample.Book.App
 
     /// <summary>Updates this book.</summary>
     /// <param name="bookData">An object that represents book data.</param>
+    /// <returns>A reference to this book.</returns>
     public BookEntity Update(IBookData bookData)
     {
       Name        = bookData.Name;
@@ -51,18 +52,27 @@ namespace AspNetPatchSample.Book.App
     /// <summary>Updates this book.</summary>
     /// <param name="bookData">An object that represents book data.</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <returns>A reference to this book.</returns>
     public BookEntity Update(IBookData bookData, string[] properties)
     {
-      for (int i = 0; i < properties.Length; ++i)
+      if (properties.Contains(nameof(Name)))
       {
-        var property = typeof(IBookData).GetProperty(properties[i]);
+        Name = bookData.Name;
+      }
 
-        if (property != null)
-        {
-          var value = property.GetValue(bookData);
+      if (properties.Contains(nameof(Author)))
+      {
+        Author = bookData.Author;
+      }
 
-          property.SetValue(this, value);
-        }
+      if (properties.Contains(nameof(Description)))
+      {
+        Description = bookData.Description;
+      }
+
+      if (properties.Contains(nameof(Pages)))
+      {
+        Pages = bookData.Pages;
       }
 
       return this;

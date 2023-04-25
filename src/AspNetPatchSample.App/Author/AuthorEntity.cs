@@ -37,9 +37,26 @@ namespace AspNetPatchSample.Author.App
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
     public Guid ToGuid() => AuthorId;
 
+    /// <summary>Updates this author.</summary>
+    /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>
+    /// <returns>A reference of this author.</returns>
     public AuthorEntity Update(IAuthorEntity newAuthorEntity)
     {
       Name = newAuthorEntity.Name;
+
+      return this;
+    }
+
+    /// <summary>Updates this author.</summary>
+    /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>
+    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <returns>A reference of this author.</returns>
+    public AuthorEntity Update(IAuthorEntity newAuthorEntity, string[] properties)
+    {
+      if (properties.Contains(nameof(Name)))
+      {
+        Name = newAuthorEntity.Name;
+      }
 
       return this;
     }
