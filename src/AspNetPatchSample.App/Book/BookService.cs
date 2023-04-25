@@ -22,21 +22,21 @@ namespace AspNetPatchSample.Book.App
     /// <param name="bookIdentity">An object that represents a book identity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="IBookEntity"/>. The result can be null.</returns>
-    public Task<IBookEntity?> GetBookAsync(IBookIdentity bookIdentity, CancellationToken cancellationToken)
+    public Task<IBookEntity?> GetAsync(IBookIdentity bookIdentity, CancellationToken cancellationToken)
   => _bookRepository.GetAsync(bookIdentity, cancellationToken);
 
     /// <summary>Adds a book.</summary>
     /// <param name="bookData">An object that reprents book data.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="IBookEntity"/>.</returns>
-    public Task<IBookEntity> AddBookAsync(IBookData bookData, CancellationToken cancellationToken)
+    public Task<IBookEntity> AddAsync(IBookData bookData, CancellationToken cancellationToken)
       => _bookRepository.AddAsync(new BookEntity(bookData), cancellationToken);
 
     /// <summary>Updates a book.</summary>
     /// <param name="bookEntity">An object that reprents a book entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation. The result is an instance of the <see cref="IBookEntity"/>.</returns>
-    public async Task<IBookEntity?> UpdateBookAsync(IBookEntity bookEntity, CancellationToken cancellationToken)
+    public async Task<IBookEntity?> UpdateAsync(IBookEntity bookEntity, CancellationToken cancellationToken)
     {
       var dbBookEntity = await _bookRepository.GetAsync(bookEntity, cancellationToken);
 
@@ -59,7 +59,7 @@ namespace AspNetPatchSample.Book.App
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation. The result is an instance of the <see cref="IBookEntity"/>.</returns>
-    public async Task<IBookEntity?> UpdateBookAsync(IBookEntity bookEntity, string[] properties, CancellationToken cancellationToken)
+    public async Task<IBookEntity?> UpdateAsync(IBookEntity bookEntity, string[] properties, CancellationToken cancellationToken)
     {
       var dbBookEntity = await _bookRepository.GetAsync(bookEntity, cancellationToken);
 

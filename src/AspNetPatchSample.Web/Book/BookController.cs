@@ -32,7 +32,7 @@ namespace AspNetPatchSample.Book.Web
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetBook(GetBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.GetBookAsync(requestDto, cancellationToken);
+      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
 
       if (bookEntity == null)
       {
@@ -51,7 +51,7 @@ namespace AspNetPatchSample.Book.Web
     [Consumes(typeof(PostBookRequestDto), "application/json")]
     public async Task<IActionResult> PostBook(PostBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.AddBookAsync(requestDto, cancellationToken);
+      var bookEntity = await _bookService.AddAsync(requestDto, cancellationToken);
 
       return CreatedAtRoute(
         nameof(BookController.GetBook),
@@ -68,7 +68,7 @@ namespace AspNetPatchSample.Book.Web
     [Consumes(typeof(PutBookRequestDto), "application/json")]
     public async Task<IActionResult> PutBook(PutBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      await _bookService.UpdateBookAsync(requestDto, cancellationToken);
+      await _bookService.UpdateAsync(requestDto, cancellationToken);
 
       return NoContent();
     }
@@ -82,7 +82,7 @@ namespace AspNetPatchSample.Book.Web
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
     public async Task<IActionResult> PatchBook(PatchBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      await _bookService.UpdateBookAsync(requestDto, requestDto.Properties, cancellationToken);
+      await _bookService.UpdateAsync(requestDto, requestDto.Properties, cancellationToken);
 
       return NoContent();
     }
