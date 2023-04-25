@@ -16,7 +16,7 @@ namespace AspNetPatchSample.Book
       CancellationToken cancellationToken);
 
     /// <summary>Adds a book.</summary>
-    /// <param name="bookData">An object that reprents book data.</param>
+    /// <param name="bookData">An object that reprents book data to add.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</returns>
     public Task<IBookEntity> AddAsync(
@@ -24,20 +24,23 @@ namespace AspNetPatchSample.Book
       CancellationToken cancellationToken);
 
     /// <summary>Updates a book.</summary>
-    /// <param name="bookEntity">An object that reprents a book entity.</param>
+    /// <param name="originalBookEntity">An object that reprents a book entity to update.</param>
+    /// <param name="newBookEntity">An object that reprents a book entity from whick an original one should be updated.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
     public Task UpdateAsync(
-      IBookEntity bookEntity,
+      IBookEntity originalBookEntity,
+      IBookEntity newBookEntity,
       CancellationToken cancellationToken);
 
     /// <summary>Updates a book.</summary>
-    /// <param name="bookEntity">An object that represents a book entity.</param>
-    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <param name="originalBookEntity">An object that reprents a book entity to update.</param>
+    /// <param name="newBookEntity">An object that reprents a book entity from whick an original one should be updated.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
     public Task UpdateAsync(
-      IBookEntity bookEntity,
+      IBookEntity originalBookEntity,
+      IBookEntity newBookEntity,
       string[] properties,
       CancellationToken cancellationToken);
   }

@@ -65,10 +65,18 @@ namespace AspNetPatchSample.Book.Web
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
     [HttpPut(Name = nameof(BookController.PutBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(PutBookRequestDto), "application/json")]
     public async Task<IActionResult> PutBook(PutBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      await _bookService.UpdateAsync(requestDto, cancellationToken);
+      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+
+      if (bookEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _bookService.UpdateAsync(bookEntity, requestDto, cancellationToken);
 
       return NoContent();
     }
@@ -79,10 +87,18 @@ namespace AspNetPatchSample.Book.Web
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
     [HttpPatch(Name = nameof(BookController.PatchBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
     public async Task<IActionResult> PatchBook(PatchBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      await _bookService.UpdateAsync(requestDto, requestDto.Properties, cancellationToken);
+      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+
+      if (bookEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _bookService.UpdateAsync(bookEntity, requestDto, requestDto.Properties, cancellationToken);
 
       return NoContent();
     }
