@@ -8,16 +8,17 @@ namespace AspNetPatchSample.App
   /// <typeparam name="TIdentity">An identity type.</typeparam>
   /// <typeparam name="TData">An data type.</typeparam>
   /// <typeparam name="TEntity">An entity type.</typeparam>
-  public abstract class ServiceBase<TIdentity, TData, TEntity>
-    : IService<TIdentity, TData, TEntity>
-    where TIdentity : IIdentity
-    where TEntity   : class, IUpdatable<TEntity>
+  public abstract class ServiceBase<TIdentity, TData, TDomainEntity, TBusinessEntity>
+    : IService<TIdentity, TData, TDomainEntity>
+    where TIdentity       : IIdentity
+    where TDomainEntity   : class
+    where TBusinessEntity : TDomainEntity, IUpdatable<TDomainEntity>
   {
-    private readonly IRepository<TEntity> _repository;
+    private readonly IRepository<TDomainEntity> _repository;
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.App.ServiceBase{TEntity, TData, TEntity}"/> class.</summary>
     /// <param name="repository">An object that provides a simple API to store instances of the <see cref="TEntity"/>.</param>
-    protected ServiceBase(IRepository<TEntity> repository)
+    protected ServiceBase(IRepository<TDomainEntity> repository)
     {
       _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
@@ -26,24 +27,24 @@ namespace AspNetPatchSample.App
     /// <param name="identity">An object that represents an identity to get.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>. The result can be null.</returns>
-    public Task<TEntity?> GetAsync(TIdentity identity, CancellationToken cancellationToken)
+    public virtual Task<TDomainEntity?> GetAsync(TIdentity identity, CancellationToken cancellationToken)
       => _repository.GetAsync(identity, cancellationToken);
 
     /// <summary>Adds an entity.</summary>
     /// <param name="data">An object that represents data from that a new entity should be created.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</returns>
-    public Task<TEntity> AddAsync(TData data, CancellationToken cancellationToken)
-      => _repository.AddAsync((TEntity)Activator.CreateInstance(typeof(TEntity), data)!, cancellationToken);
+    public virtual Task<TDomainEntity> AddAsync(TData data, CancellationToken cancellationToken)
+      => _repository.AddAsync((TBusinessEntity)Activator.CreateInstance(typeof(TBusinessEntity), data)!, cancellationToken);
 
     /// <summary>Updates an entity.</summary>
     /// <param name="originalEntity">An object that represents an entity to update.</param>
     /// <param name="newEntity">An object that represents an entity from that the original one should be updated.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task UpdateAsync(TEntity originalEntity, TEntity newEntity, CancellationToken cancellationToken)
+    public virtual Task UpdateAsync(TDomainEntity originalEntity, TDomainEntity newEntity, CancellationToken cancellationToken)
     {
-      var buisinessEntity = (TEntity)Activator.CreateInstance(typeof(TEntity), originalEntity)!;
+      var buisinessEntity = (TBusinessEntity)Activator.CreateInstance(typeof(TBusinessEntity), originalEntity)!;
       buisinessEntity.Update(newEntity);
 
       return _repository.UpdateAsync(buisinessEntity, Array.Empty<string>(), cancellationToken);
@@ -55,20 +56,19 @@ namespace AspNetPatchSample.App
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task UpdateAsync(TEntity originalEntity, TEntity newEntity, string[] properties, CancellationToken cancellationToken)
+    public virtual Task UpdateAsync(TDomainEntity originalEntity, TDomainEntity newEntity, string[] properties, CancellationToken cancellationToken)
     {
-      var buisinessEntity = (TEntity)Activator.CreateInstance(typeof(TEntity), originalEntity)!;
+      var buisinessEntity = (TBusinessEntity)Activator.CreateInstance(typeof(TBusinessEntity), originalEntity)!;
       buisinessEntity.Update(newEntity, properties);
 
       return _repository.UpdateAsync(buisinessEntity, properties, cancellationToken);
     }
 
-
     /// <summary>Deletes an entity.</summary>
     /// <param name="identity">An object that represents an identity to delete.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task DeleteAsync(TIdentity identity, CancellationToken cancellationToken)
+    public virtual Task DeleteAsync(TIdentity identity, CancellationToken cancellationToken)
       => _repository.DeleteAsync(identity, cancellationToken);
   }
 }
