@@ -4,8 +4,10 @@
 
 namespace AspNetPatchSample.Book.App
 {
+  using AspNetPatchSample.App;
+
   /// <summary>Represents a book entity.</summary>
-  public sealed class BookEntity : IBookEntity
+  public sealed class BookEntity : IBookEntity, IUpdatable<IBookEntity>
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
     /// <param name="bookData">An object that represents book data.</param>
@@ -37,31 +39,45 @@ namespace AspNetPatchSample.Book.App
     public Guid ToGuid() => BookId;
 
     /// <summary>Updates this book.</summary>
-    /// <param name="bookData">An object that represents book data.</param>
-    public void Update(IBookData bookData)
+    /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
+    /// <returns>A reference to this book.</returns>
+    public IBookEntity Update(IBookEntity bookEntity)
     {
-      Name        = bookData.Name;
-      Author      = bookData.Author;
-      Description = bookData.Description;
-      Pages       = bookData.Pages;
+      Name        = bookEntity.Name;
+      Author      = bookEntity.Author;
+      Description = bookEntity.Description;
+      Pages       = bookEntity.Pages;
+
+      return this;
     }
 
     /// <summary>Updates this book.</summary>
-    /// <param name="bookData">An object that represents book data.</param>
+    /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
-    public void Update(IBookData bookData, string[] properties)
+    /// <returns>A reference to this book.</returns>
+    public IBookEntity Update(IBookEntity bookEntity, string[] properties)
     {
-      for (int i = 0; i < properties.Length; ++i)
+      if (properties.Contains(nameof(Name)))
       {
-        var property = typeof(IBookData).GetProperty(properties[i]);
-
-        if (property != null)
-        {
-          var value = property.GetValue(bookData);
-
-          property.SetValue(this, value);
-        }
+        Name = bookEntity.Name;
       }
+
+      if (properties.Contains(nameof(Author)))
+      {
+        Author = bookEntity.Author;
+      }
+
+      if (properties.Contains(nameof(Description)))
+      {
+        Description = bookEntity.Description;
+      }
+
+      if (properties.Contains(nameof(Pages)))
+      {
+        Pages = bookEntity.Pages;
+      }
+
+      return this;
     }
   }
 }

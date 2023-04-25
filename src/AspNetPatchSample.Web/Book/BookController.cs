@@ -32,7 +32,7 @@ namespace AspNetPatchSample.Book.Web
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetBook(GetBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.GetBookAsync(requestDto, cancellationToken);
+      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
 
       if (bookEntity == null)
       {
@@ -51,7 +51,7 @@ namespace AspNetPatchSample.Book.Web
     [Consumes(typeof(PostBookRequestDto), "application/json")]
     public async Task<IActionResult> PostBook(PostBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.AddBookAsync(requestDto, cancellationToken);
+      var bookEntity = await _bookService.AddAsync(requestDto, cancellationToken);
 
       return CreatedAtRoute(
         nameof(BookController.GetBook),
@@ -65,10 +65,18 @@ namespace AspNetPatchSample.Book.Web
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
     [HttpPut(Name = nameof(BookController.PutBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(PutBookRequestDto), "application/json")]
     public async Task<IActionResult> PutBook(PutBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      await _bookService.UpdateBookAsync(requestDto, cancellationToken);
+      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+
+      if (bookEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _bookService.UpdateAsync(bookEntity, requestDto, cancellationToken);
 
       return NoContent();
     }
@@ -79,10 +87,18 @@ namespace AspNetPatchSample.Book.Web
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
     [HttpPatch(Name = nameof(BookController.PatchBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
     public async Task<IActionResult> PatchBook(PatchBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      await _bookService.UpdateBookAsync(requestDto, requestDto.Properties, cancellationToken);
+      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+
+      if (bookEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _bookService.UpdateAsync(bookEntity, requestDto, requestDto.Properties, cancellationToken);
 
       return NoContent();
     }

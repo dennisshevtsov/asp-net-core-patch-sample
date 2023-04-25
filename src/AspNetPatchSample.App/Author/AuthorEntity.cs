@@ -4,8 +4,10 @@
 
 namespace AspNetPatchSample.Author.App
 {
+  using AspNetPatchSample.App;
+
   /// <summary>Represents an author entity.</summary>
-  public sealed class AuthorEntity : IAuthorEntity
+  public sealed class AuthorEntity : IAuthorEntity, IUpdatable<IAuthorEntity>
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
     public AuthorEntity()
@@ -37,9 +39,26 @@ namespace AspNetPatchSample.Author.App
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
     public Guid ToGuid() => AuthorId;
 
-    public AuthorEntity Update(IAuthorEntity newAuthorEntity)
+    /// <summary>Updates this author.</summary>
+    /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>
+    /// <returns>A reference of this entity.</returns>
+    public IAuthorEntity Update(IAuthorEntity newAuthorEntity)
     {
       Name = newAuthorEntity.Name;
+
+      return this;
+    }
+
+    /// <summary>Updates this author.</summary>
+    /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>
+    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    /// <returns>A reference of this entity.</returns>
+    public IAuthorEntity Update(IAuthorEntity newAuthorEntity, string[] properties)
+    {
+      if (properties.Contains(nameof(Name)))
+      {
+        Name = newAuthorEntity.Name;
+      }
 
       return this;
     }
