@@ -32,7 +32,7 @@ namespace AspNetPatchSample.Author.Web
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAuthor(GetAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+      var authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
 
       if (authorEntity == null)
       {
@@ -63,7 +63,7 @@ namespace AspNetPatchSample.Author.Web
     [Consumes(typeof(PostAuthorRequestDto), "application/json")]
     public async Task<IActionResult> PostAuthor(PostAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.AddAuthorAsync(requestDto, cancellationToken);
+      var authorEntity = await _authorService.AddAsync(requestDto, cancellationToken);
 
       return CreatedAtRoute(
         nameof(AuthorController.GetAuthor),
@@ -81,14 +81,14 @@ namespace AspNetPatchSample.Author.Web
     [Consumes(typeof(PutAuthorRequestDto), "application/json")]
     public async Task<IActionResult> PutAuthor(PutAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+      var authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
 
       if (authorEntity == null)
       {
         return NotFound();
       }
 
-      await _authorService.UpdateAuthorAsync(authorEntity, requestDto, cancellationToken);
+      await _authorService.UpdateAsync(authorEntity, requestDto, cancellationToken);
 
       return NoContent();
     }
@@ -103,14 +103,14 @@ namespace AspNetPatchSample.Author.Web
     [Consumes(typeof(PatchAuthorRequestDto), "application/json")]
     public async Task<IActionResult> PatchAuthor(PatchAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+      var authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
 
       if (authorEntity == null)
       {
         return NotFound();
       }
 
-      await _authorService.UpdateAuthorAsync(
+      await _authorService.UpdateAsync(
         authorEntity, requestDto, requestDto.Properties, cancellationToken);
 
       return NoContent();
@@ -126,14 +126,14 @@ namespace AspNetPatchSample.Author.Web
     [Consumes(typeof(DeleteAuthorRequestDto), "application/json")]
     public async Task<IActionResult> DeleteAuthor(DeleteAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.GetAuthorAsync(requestDto, cancellationToken);
+      var authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
 
       if (authorEntity == null)
       {
         return NotFound();
       }
 
-      await _authorService.DeleteAuthorAsync(requestDto, cancellationToken);
+      await _authorService.DeleteAsync(requestDto, cancellationToken);
 
       return NoContent();
     }
