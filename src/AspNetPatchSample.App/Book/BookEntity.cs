@@ -4,8 +4,10 @@
 
 namespace AspNetPatchSample.Book.App
 {
+  using AspNetPatchSample.App;
+
   /// <summary>Represents a book entity.</summary>
-  public sealed class BookEntity : IBookEntity
+  public sealed class BookEntity : IBookEntity, IUpdatable<IBookEntity>
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
     /// <param name="bookData">An object that represents book data.</param>
@@ -37,42 +39,42 @@ namespace AspNetPatchSample.Book.App
     public Guid ToGuid() => BookId;
 
     /// <summary>Updates this book.</summary>
-    /// <param name="bookData">An object that represents book data.</param>
+    /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
     /// <returns>A reference to this book.</returns>
-    public BookEntity Update(IBookData bookData)
+    public IBookEntity Update(IBookEntity bookEntity)
     {
-      Name        = bookData.Name;
-      Author      = bookData.Author;
-      Description = bookData.Description;
-      Pages       = bookData.Pages;
+      Name        = bookEntity.Name;
+      Author      = bookEntity.Author;
+      Description = bookEntity.Description;
+      Pages       = bookEntity.Pages;
 
       return this;
     }
 
     /// <summary>Updates this book.</summary>
-    /// <param name="bookData">An object that represents book data.</param>
+    /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <returns>A reference to this book.</returns>
-    public BookEntity Update(IBookData bookData, string[] properties)
+    public IBookEntity Update(IBookEntity bookEntity, string[] properties)
     {
       if (properties.Contains(nameof(Name)))
       {
-        Name = bookData.Name;
+        Name = bookEntity.Name;
       }
 
       if (properties.Contains(nameof(Author)))
       {
-        Author = bookData.Author;
+        Author = bookEntity.Author;
       }
 
       if (properties.Contains(nameof(Description)))
       {
-        Description = bookData.Description;
+        Description = bookEntity.Description;
       }
 
       if (properties.Contains(nameof(Pages)))
       {
-        Pages = bookData.Pages;
+        Pages = bookEntity.Pages;
       }
 
       return this;
