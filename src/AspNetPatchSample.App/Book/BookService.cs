@@ -37,21 +37,11 @@ namespace AspNetPatchSample.Book.App
     /// <param name="newBookEntity">An object that reprents a book entity from whick an original one should be updated.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public async Task UpdateAsync(IBookEntity originalBookEntity, IBookEntity newBookEntity, CancellationToken cancellationToken)
-    {
-      var dbBookEntity = await _bookRepository.GetAsync(originalBookEntity, cancellationToken);
-
-      if (dbBookEntity == null)
-      {
-        return;
-      }
-
-      var businessBookEntity = new BookEntity(dbBookEntity);
-      businessBookEntity.Update(originalBookEntity);
-
-      await _bookRepository.UpdateAsync(
-        businessBookEntity, Array.Empty<string>(), cancellationToken);
-    }
+    public Task UpdateAsync(IBookEntity originalBookEntity, IBookEntity newBookEntity, CancellationToken cancellationToken)
+      => _bookRepository.UpdateAsync(
+        new BookEntity(originalBookEntity).Update(newBookEntity),
+        Array.Empty<string>(),
+        cancellationToken);
 
     /// <summary>Updates a book.</summary>
     /// <param name="originalBookEntity">An object that reprents a book entity to update.</param>
@@ -59,19 +49,10 @@ namespace AspNetPatchSample.Book.App
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public async Task UpdateAsync(IBookEntity originalBookEntity, IBookEntity newBookEntity, string[] properties, CancellationToken cancellationToken)
-    {
-      var dbBookEntity = await _bookRepository.GetAsync(originalBookEntity, cancellationToken);
-
-      if (dbBookEntity == null)
-      {
-        return;
-      }
-
-      var businessBookEntity = new BookEntity(dbBookEntity);
-      businessBookEntity.Update(originalBookEntity, properties);
-
-      await _bookRepository.UpdateAsync(businessBookEntity, properties, cancellationToken);
-    }
+    public Task UpdateAsync(IBookEntity originalBookEntity, IBookEntity newBookEntity, string[] properties, CancellationToken cancellationToken)
+      => _bookRepository.UpdateAsync(
+        new BookEntity(originalBookEntity).Update(newBookEntity, properties),
+        properties,
+        cancellationToken);
   }
 }
