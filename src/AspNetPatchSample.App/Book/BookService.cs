@@ -12,7 +12,7 @@ namespace AspNetPatchSample.Book.App
     private readonly IBookRepository _bookRepository;
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookService"/> class.</summary>
-    /// <param name="bookRepository">An object that provides a simple API to store instances of the <see cref="IBookEntity"/>.</param>
+    /// <param name="bookRepository">An object that provides a simple API to store instances of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</param>
     public BookService(IBookRepository bookRepository)
     {
       _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
