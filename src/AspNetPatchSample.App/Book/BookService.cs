@@ -6,12 +6,12 @@ namespace AspNetPatchSample.Book.App
 {
   using System;
 
-  /// <summary>Represents a simple API to operate instances of the <see cref="AspNetPatchSample.Domain.Book.IBookEntity"/>.</summary>
+  /// <summary>Represents a simple API to operate instances of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</summary>
   public sealed class BookService : IBookService
   {
     private readonly IBookRepository _bookRepository;
 
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Domain.Book.BookService"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookService"/> class.</summary>
     /// <param name="bookRepository">An object that provides a simple API to store instances of the <see cref="IBookEntity"/>.</param>
     public BookService(IBookRepository bookRepository)
     {
@@ -54,5 +54,12 @@ namespace AspNetPatchSample.Book.App
         new BookEntity(originalBookEntity).Update(newBookEntity, properties),
         properties,
         cancellationToken);
+
+    /// <summary>Deletes an entity.</summary>
+    /// <param name="identity">An object that represents an identity to delete.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation.</returns>
+    public Task DeleteAsync(IBookIdentity identity, CancellationToken cancellationToken)
+      => throw new NotImplementedException();
   }
 }
