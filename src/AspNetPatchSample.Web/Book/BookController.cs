@@ -23,7 +23,7 @@ namespace AspNetPatchSample.Book.Web
       _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
     }
 
-    /// <summary>Handles the get book query request.</summary>
+    /// <summary>Handles the GET book query request.</summary>
     /// <param name="requestDto">An object that represents a condition to query a book.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
@@ -42,7 +42,7 @@ namespace AspNetPatchSample.Book.Web
       return Ok(new GetBookResponseDto(bookEntity));
     }
 
-    /// <summary>Handles the post book command request.</summary>
+    /// <summary>Handles the POST book command request.</summary>
     /// <param name="requestDto">An object that represents data to add a book.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
@@ -59,7 +59,7 @@ namespace AspNetPatchSample.Book.Web
         new GetBookResponseDto(bookEntity));
     }
 
-    /// <summary>Handles the put book command request.</summary>
+    /// <summary>Handles the PUT book command request.</summary>
     /// <param name="requestDto">An object that represents data to update a book.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
@@ -81,7 +81,7 @@ namespace AspNetPatchSample.Book.Web
       return NoContent();
     }
 
-    /// <summary>Handles the patch book command request.</summary>
+    /// <summary>Handles the PATCH book command request.</summary>
     /// <param name="requestDto">An object that represents data to update a book partially.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
@@ -99,6 +99,27 @@ namespace AspNetPatchSample.Book.Web
       }
 
       await _bookService.UpdateAsync(bookEntity, requestDto, requestDto.Properties, cancellationToken);
+
+      return NoContent();
+    }
+
+    /// <summary>Handles the DELETE book command request.</summary>
+    /// <param name="requestDto">An object that represents data to delete a book.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+    [HttpPut("{bookdId}", Name = nameof(BookController.DeleteBook))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteBook(DeleteBookRequestDto requestDto, CancellationToken cancellationToken)
+    {
+      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+
+      if (bookEntity == null)
+      {
+        return NotFound();
+      }
+
+      await _bookService.DeleteAsync(bookEntity, cancellationToken);
 
       return NoContent();
     }
