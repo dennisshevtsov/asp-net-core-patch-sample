@@ -42,18 +42,6 @@ namespace AspNetPatchSample.Author.Web
       return Ok(new GetAuthorResponseDto(authorEntity));
     }
 
-    /// <summary>Handles the GET authors request.</summary>
-    /// <param name="requestDto">An object that represents the GET authors request data.</param>
-    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
-    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
-    [HttpGet(Name = nameof(AuthorController.GetAuthors))]
-    [ProducesResponseType(typeof(GetAuthorsResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IActionResult> GetAuthors(GetAuthorsRequestDto requestDto, CancellationToken cancellationToken)
-    {
-      return Task.FromResult<IActionResult>(Ok());
-    }
-
     /// <summary>Handles the POST author request.</summary>
     /// <param name="requestDto">An object that represents the POST author request data.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
