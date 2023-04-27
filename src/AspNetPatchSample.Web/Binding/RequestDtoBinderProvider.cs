@@ -14,7 +14,7 @@ namespace AspNetPatchSample.Web.Binding
     /// <returns>An instance of the <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder"/>.</returns>
     public IModelBinder? GetBinder(ModelBinderProviderContext context)
     {
-      if (context.Metadata.ModelType.IsAssignableTo(typeof(RequestDtoBase)))
+      if (context.Metadata.ModelType.IsAssignableTo(typeof(IIdentity)))
       {
         return new RequestDtoBinder();
       }
