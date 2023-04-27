@@ -7,7 +7,7 @@ namespace AspNetPatchSample.Author.App
   using AspNetPatchSample.App;
 
   /// <summary>Provides a simple API to execute a task with an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</summary>
-  public sealed class AuthorService : ServiceBase<IAuthorIdentity, IAuthorData, IAuthorEntity, AuthorEntity>, IAuthorService
+  public sealed class AuthorService : ServiceBase<IAuthorIdentity, IAuthorEntity, AuthorEntity>, IAuthorService
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorService"/> class.</summary>
     /// <param name="authorRepository">An object that provides a simple API to store instances of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</param>

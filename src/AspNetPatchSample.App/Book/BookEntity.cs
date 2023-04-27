@@ -10,13 +10,13 @@ namespace AspNetPatchSample.Book.App
   public sealed class BookEntity : IBookEntity, IUpdatable<IBookEntity>
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
-    /// <param name="bookData">An object that represents book data.</param>
-    public BookEntity(IBookData bookData)
+    /// <param name="bookEntity">An object that represents a book entity.</param>
+    public BookEntity(IBookEntity bookEntity)
     {
-      Name        = bookData.Name;
-      Author      = bookData.Author;
-      Description = bookData.Description;
-      Pages       = bookData.Pages;
+      Name        = bookEntity.Name;
+      Author      = bookEntity.Author;
+      Description = bookEntity.Description;
+      Pages       = bookEntity.Pages;
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>

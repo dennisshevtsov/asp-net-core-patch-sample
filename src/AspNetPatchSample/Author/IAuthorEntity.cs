@@ -5,7 +5,9 @@
 namespace AspNetPatchSample.Author
 {
   /// <summary>Represents an author entity.</summary>
-  public interface IAuthorEntity : IAuthorIdentity, IAuthorData
+  public interface IAuthorEntity : IAuthorIdentity
   {
+    /// <summary>Gets an object that represents a name of an author.</summary>
+    public string Name { get; }
   }
 }
