@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.Book
 {
   /// <summary>Represents a simple API to operate instances of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</summary>
-  public interface IBookService : IService<IBookIdentity, IBookData, IBookEntity>
+  public interface IBookService : IService<IBookIdentity, IBookEntity, IBookEntity>
   {
   }
 }
