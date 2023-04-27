@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using AspNetPatchSample.Web.Binding;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.ModelBinderProviders.Insert(0, new RequestDtoBinderProvider()));
 
 builder.Services.SetUpApplication();
 builder.Services.SetUpInfrastructure();
