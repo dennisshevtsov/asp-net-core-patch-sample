@@ -16,16 +16,10 @@ namespace AspNetPatchSample.Author.Data
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/> class.</summary>
-    /// <param name="authorData">An object that represents author data.</param>
-    public AuthorEntity(IAuthorData authorData)
-    {
-      Name = authorData.Name;
-    }
-
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/> class.</summary>
     /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity) : this((IAuthorData)authorEntity)
+    public AuthorEntity(IAuthorEntity authorEntity)
     {
+      Name     = authorEntity.Name;
       AuthorId = authorEntity.AuthorId;
     }
 
