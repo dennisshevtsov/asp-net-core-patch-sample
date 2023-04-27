@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.Author
 {
   /// <summary>Provides a simple API to execute a task with an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</summary>
-  public interface IAuthorService : IService<IAuthorIdentity, IAuthorEntity, IAuthorEntity>
+  public interface IAuthorService : IService<IAuthorIdentity, IAuthorEntity>
   {
   }
 }

@@ -6,12 +6,12 @@ namespace AspNetPatchSample.App
 {
   /// <summary>Provides a simple GRUD API.</summary>
   /// <typeparam name="TIdentity">An identity type.</typeparam>
-  /// <typeparam name="TData">An data type.</typeparam>
-  /// <typeparam name="TEntity">An entity type.</typeparam>
-  public abstract class ServiceBase<TIdentity, TData, TDomainEntity, TBusinessEntity>
-    : IService<TIdentity, TData, TDomainEntity>
-    where TIdentity       : IIdentity
-    where TDomainEntity   : class
+  /// <typeparam name="TDomainEntity">A domain entity type.</typeparam>
+  /// <typeparam name="TBusinessEntity">A buisiness entity type.</typeparam>
+  public abstract class ServiceBase<TIdentity, TDomainEntity, TBusinessEntity>
+    : IService<TIdentity, TDomainEntity>
+    where TIdentity : IIdentity
+    where TDomainEntity : class
     where TBusinessEntity : TDomainEntity, IUpdatable<TDomainEntity>
   {
     private readonly IRepository<TDomainEntity> _repository;
@@ -34,7 +34,7 @@ namespace AspNetPatchSample.App
     /// <param name="data">An object that represents data from that a new entity should be created.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</returns>
-    public virtual Task<TDomainEntity> AddAsync(TData data, CancellationToken cancellationToken)
+    public virtual Task<TDomainEntity> AddAsync(TDomainEntity data, CancellationToken cancellationToken)
       => _repository.AddAsync((TBusinessEntity)Activator.CreateInstance(typeof(TBusinessEntity), data)!, cancellationToken);
 
     /// <summary>Updates an entity.</summary>
