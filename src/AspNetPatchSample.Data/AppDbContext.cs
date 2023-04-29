@@ -12,6 +12,10 @@ namespace AspNetPatchSample.Data
   /// <summary>Represents a session with the database and can be used to query and save instances of your entities.</summary>
   public sealed class AppDbContext : DbContext
   {
+    public AppDbContext(DbContextOptions options) : base(options)
+    {
+    }
+
     /// <summary>Configures the model.</summary>
     /// <param name="modelBuilder">An object provides a simple API surface for configuring a <see cref="Microsoft.EntityFrameworkCore.Metadata.IMutableModel" />.</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
