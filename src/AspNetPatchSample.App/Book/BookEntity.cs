@@ -36,7 +36,7 @@ namespace AspNetPatchSample.Book.App
     public int Pages { get; private set; }
 
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
-    public string[] Properties { get; private set; }
+    public IEnumerable<string> Properties { get; private set; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>

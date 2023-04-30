@@ -10,18 +10,12 @@ namespace AspNetPatchSample.Author.App
   public sealed class AuthorEntity : IAuthorEntity, IUpdatable<IAuthorEntity>, IPatchable
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
-    public AuthorEntity()
-    {
-      Name       = string.Empty;
-      Properties = Array.Empty<string>();
-    }
-
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
     /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity) : this()
+    public AuthorEntity(IAuthorEntity authorEntity)
     {
-      Name     = authorEntity.Name;
-      AuthorId = authorEntity.AuthorId;
+      AuthorId   = authorEntity.AuthorId;
+      Name       = authorEntity.Name;
+      Properties = Array.Empty<string>();
     }
 
     /// <summary>Gets an object that represents an ID of author.</summary>
@@ -35,7 +29,7 @@ namespace AspNetPatchSample.Author.App
     public Guid ToGuid() => AuthorId;
 
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
-    public string[] Properties { get; private set; }
+    public IEnumerable<string> Properties { get; private set; }
 
     /// <summary>Updates this author.</summary>
     /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>

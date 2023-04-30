@@ -58,14 +58,14 @@ namespace AspNetPatchSample.Data
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public virtual async Task UpdateAsync(TInterface entity, string[] properties, CancellationToken cancellationToken)
+    public virtual async Task UpdateAsync(TInterface entity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
       var dbEntity = Create(entity);
       var dbEntityEntry = DbContext.Entry(dbEntity);
 
-      for (int i = 0; i < properties.Length; i++)
+      foreach (var propertyName in properties)
       {
-        dbEntityEntry.Property(properties[i]).IsModified = true;
+        dbEntityEntry.Property(propertyName).IsModified = true;
       }
 
       await DbContext.SaveChangesAsync(cancellationToken);
