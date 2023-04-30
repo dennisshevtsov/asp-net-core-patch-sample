@@ -63,7 +63,7 @@ namespace AspNetPatchSample.Book.Web
     /// <param name="requestDto">An object that represents data to update a book.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
-    [HttpPut(Name = nameof(BookController.PutBook))]
+    [HttpPut("{bookId}", Name = nameof(BookController.PutBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(PutBookRequestDto), "application/json")]
@@ -85,7 +85,7 @@ namespace AspNetPatchSample.Book.Web
     /// <param name="requestDto">An object that represents data to update a book partially.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
-    [HttpPatch(Name = nameof(BookController.PatchBook))]
+    [HttpPatch("{bookId}", Name = nameof(BookController.PatchBook))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
