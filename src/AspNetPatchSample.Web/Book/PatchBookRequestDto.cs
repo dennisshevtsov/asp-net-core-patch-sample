@@ -4,8 +4,6 @@
 
 namespace AspNetPatchSample.Book.Web
 {
-  using System.ComponentModel.DataAnnotations;
-
   using AspNetPatchSample.Web;
 
   /// <summary>Represents data to update a book parially.</summary>
@@ -14,7 +12,7 @@ namespace AspNetPatchSample.Book.Web
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PatchBookRequestDto"/> class.</summary>
     public PatchBookRequestDto()
     {
-      Title        = string.Empty;
+      Title       = string.Empty;
       Author      = string.Empty;
       Description = string.Empty;
       Properties  = Array.Empty<string>();
@@ -24,19 +22,15 @@ namespace AspNetPatchSample.Book.Web
     public Guid BookId { get; set; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
-    [Required]
     public string Title { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    [Required]
     public string Author { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    [Required]
     public string Description { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    [Required]
     public int Pages { get; set; }
 
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
