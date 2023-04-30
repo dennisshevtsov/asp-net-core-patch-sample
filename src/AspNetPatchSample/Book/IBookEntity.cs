@@ -7,8 +7,8 @@ namespace AspNetPatchSample.Book
   /// <summary>Represents a book entity.</summary>
   public interface IBookEntity : IBookIdentity
   {
-    /// <summary>Gets an object that represents a name of a book.</summary>
-    public string Name { get; }
+    /// <summary>Gets an object that represents a title of a book.</summary>
+    public string Title { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public string Author { get; }

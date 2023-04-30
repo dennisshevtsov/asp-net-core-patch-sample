@@ -24,7 +24,11 @@ namespace AspNetPatchSample.Web.Binding
       {
         model = await JsonSerializer.DeserializeAsync(
           bindingContext.HttpContext.Request.Body,
-          bindingContext.ModelType);
+          bindingContext.ModelType,
+          new JsonSerializerOptions
+          {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+          });
       }
       else
       {

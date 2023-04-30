@@ -7,27 +7,41 @@ namespace AspNetPatchSample.Author.App
   using AspNetPatchSample.App;
 
   /// <summary>Represents an author entity.</summary>
-  public sealed class AuthorEntity : IAuthorEntity, IUpdatable<IAuthorEntity>
+  public sealed class AuthorEntity : EntityBase, IAuthorEntity, IUpdatable<IAuthorEntity>
   {
+    private string _name;
+
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
-    public AuthorEntity()
+    private AuthorEntity() : base()
     {
-      Name = string.Empty;
+      _name       = string.Empty;
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
     /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity)
+    public AuthorEntity(IAuthorEntity authorEntity) : this()
     {
-      Name     = authorEntity.Name;
       AuthorId = authorEntity.AuthorId;
+      Name     = authorEntity.Name;
     }
 
     /// <summary>Gets an object that represents an ID of author.</summary>
     public Guid AuthorId { get; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
-    public string Name { get; private set; }
+    public string Name
+    {
+      get => _name;
+
+      private set
+      {
+        if (_name != value)
+        {
+          _name = value;
+          Updated(nameof(Name));
+        }
+      }
+    }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
@@ -38,6 +52,8 @@ namespace AspNetPatchSample.Author.App
     /// <returns>A reference of this entity.</returns>
     public IAuthorEntity Update(IAuthorEntity newAuthorEntity)
     {
+      Reset();
+
       Name = newAuthorEntity.Name;
 
       return this;
@@ -49,6 +65,8 @@ namespace AspNetPatchSample.Author.App
     /// <returns>A reference of this entity.</returns>
     public IAuthorEntity Update(IAuthorEntity newAuthorEntity, string[] properties)
     {
+      Reset();
+
       if (properties.Contains(nameof(Name)))
       {
         Name = newAuthorEntity.Name;

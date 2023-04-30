@@ -4,8 +4,6 @@
 
 namespace AspNetPatchSample.Book.Web
 {
-  using Microsoft.AspNetCore.Mvc;
-
   /// <summary>Represents a condition to query a book.</summary>
   public sealed class GetBookRequestDto : IBookIdentity
   {
@@ -20,8 +18,7 @@ namespace AspNetPatchSample.Book.Web
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
-    [FromRoute]
-    public Guid BookId { get; }
+    public Guid BookId { get; set; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>

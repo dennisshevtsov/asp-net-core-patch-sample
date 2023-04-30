@@ -24,7 +24,7 @@ namespace AspNetPatchSample.Book.Data
              .ValueGeneratedOnAdd()
              .HasValueGenerator<GuidValueGenerator>();
 
-      builder.Property(entity => entity.Name)
+      builder.Property(entity => entity.Title)
              .HasColumnName("name")
              .IsRequired()
              .HasMaxLength(256);

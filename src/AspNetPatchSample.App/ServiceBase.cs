@@ -12,7 +12,7 @@ namespace AspNetPatchSample.App
     : IService<TIdentity, TDomainEntity>
     where TIdentity : IIdentity
     where TDomainEntity : class
-    where TBusinessEntity : TDomainEntity, IUpdatable<TDomainEntity>
+    where TBusinessEntity : EntityBase, TDomainEntity, IUpdatable<TDomainEntity>
   {
     private readonly IRepository<TDomainEntity> _repository;
 
@@ -47,7 +47,7 @@ namespace AspNetPatchSample.App
       var buisinessEntity = (TBusinessEntity)Activator.CreateInstance(typeof(TBusinessEntity), originalEntity)!;
       buisinessEntity.Update(newEntity);
 
-      return _repository.UpdateAsync(buisinessEntity, Array.Empty<string>(), cancellationToken);
+      return _repository.UpdateAsync(buisinessEntity, buisinessEntity.Properties, cancellationToken);
     }
 
     /// <summary>Updates an entity partially.</summary>
