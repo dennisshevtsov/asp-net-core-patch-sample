@@ -108,7 +108,7 @@ namespace AspNetPatchSample.Author.Web
     /// <param name="requestDto">An object that represents the DELETE author request data.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
-    [HttpDelete(Name = nameof(AuthorController.DeleteAuthor))]
+    [HttpDelete("{authorId}", Name = nameof(AuthorController.DeleteAuthor))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Consumes(typeof(DeleteAuthorRequestDto), "application/json")]
