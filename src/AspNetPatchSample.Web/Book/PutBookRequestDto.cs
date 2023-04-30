@@ -6,8 +6,6 @@ namespace AspNetPatchSample.Book.Web
 {
   using System.ComponentModel.DataAnnotations;
 
-  using Microsoft.AspNetCore.Mvc;
-
   /// <summary>Represents data to update a book.</summary>
   public sealed class PutBookRequestDto : IBookEntity
   {

@@ -12,7 +12,7 @@ namespace AspNetPatchSample.Book.Data
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
     public BookEntity()
     {
-      Title        = string.Empty;
+      Title       = string.Empty;
       Author      = string.Empty;
       Description = string.Empty;
     }
@@ -21,7 +21,7 @@ namespace AspNetPatchSample.Book.Data
     /// <param name="orderEntity">An object that represents a book entity.</param>
     public BookEntity(IBookEntity orderEntity)
     {
-      Title        = orderEntity.Title;
+      Title       = orderEntity.Title;
       Author      = orderEntity.Author;
       Description = orderEntity.Description;
       Pages       = orderEntity.Pages;

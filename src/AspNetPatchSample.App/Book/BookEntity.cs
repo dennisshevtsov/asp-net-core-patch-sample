@@ -13,7 +13,7 @@ namespace AspNetPatchSample.Book.App
     /// <param name="bookEntity">An object that represents a book entity.</param>
     public BookEntity(IBookEntity bookEntity)
     {
-      Title        = bookEntity.Title;
+      Title       = bookEntity.Title;
       Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;

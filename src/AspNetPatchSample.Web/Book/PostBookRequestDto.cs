@@ -13,7 +13,7 @@ namespace AspNetPatchSample.Book.Web
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PostBookRequestDto"/> class.</summary>
     public PostBookRequestDto()
     {
-      Title        = string.Empty;
+      Title       = string.Empty;
       Author      = string.Empty;
       Description = string.Empty;
     }

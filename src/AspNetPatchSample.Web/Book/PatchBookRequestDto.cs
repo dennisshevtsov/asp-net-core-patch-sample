@@ -6,8 +6,6 @@ namespace AspNetPatchSample.Book.Web
 {
   using System.ComponentModel.DataAnnotations;
 
-  using Microsoft.AspNetCore.Mvc;
-
   using AspNetPatchSample.Web;
 
   /// <summary>Represents data to update a book parially.</summary>

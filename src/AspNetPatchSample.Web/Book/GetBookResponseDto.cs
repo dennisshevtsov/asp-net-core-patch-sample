@@ -12,7 +12,7 @@ namespace AspNetPatchSample.Book.Web
     public GetBookResponseDto(IBookEntity orderEntity)
     {
       BookId      = orderEntity.BookId;
-      Title        = orderEntity.Title;
+      Title       = orderEntity.Title;
       Author      = orderEntity.Author;
       Description = orderEntity.Description;
       Pages       = orderEntity.Pages;
