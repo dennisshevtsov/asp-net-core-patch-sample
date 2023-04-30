@@ -16,7 +16,7 @@ namespace AspNetPatchSample.Book.Web
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PatchBookRequestDto"/> class.</summary>
     public PatchBookRequestDto()
     {
-      Name        = string.Empty;
+      Title        = string.Empty;
       Author      = string.Empty;
       Description = string.Empty;
       Properties  = Array.Empty<string>();
@@ -26,10 +26,10 @@ namespace AspNetPatchSample.Book.Web
     [FromRoute]
     public Guid BookId { get; set; }
 
-    /// <summary>Gets an object that represents a name of a book.</summary>
+    /// <summary>Gets an object that represents a title of a book.</summary>
     [Required]
     [FromBody]
-    public string Name { get; set; }
+    public string Title { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     [Required]

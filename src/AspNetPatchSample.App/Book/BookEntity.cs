@@ -13,7 +13,7 @@ namespace AspNetPatchSample.Book.App
     /// <param name="bookEntity">An object that represents a book entity.</param>
     public BookEntity(IBookEntity bookEntity)
     {
-      Name        = bookEntity.Name;
+      Title        = bookEntity.Title;
       Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
@@ -23,8 +23,8 @@ namespace AspNetPatchSample.Book.App
     /// <summary>Gets an object that represents an ID of a book.</summary>
     public Guid BookId { get; }
 
-    /// <summary>Gets an object that represents a name of a book.</summary>
-    public string Name { get; private set; }
+    /// <summary>Gets an object that represents a title of a book.</summary>
+    public string Title { get; private set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public string Author { get; private set; }
@@ -47,7 +47,7 @@ namespace AspNetPatchSample.Book.App
     /// <returns>A reference to this book.</returns>
     public IBookEntity Update(IBookEntity bookEntity)
     {
-      Name        = bookEntity.Name;
+      Title        = bookEntity.Title;
       Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
@@ -61,9 +61,9 @@ namespace AspNetPatchSample.Book.App
     /// <returns>A reference to this book.</returns>
     public IBookEntity Update(IBookEntity bookEntity, string[] properties)
     {
-      if (properties.Contains(nameof(Name)))
+      if (properties.Contains(nameof(Title)))
       {
-        Name = bookEntity.Name;
+        Title = bookEntity.Title;
       }
 
       if (properties.Contains(nameof(Author)))

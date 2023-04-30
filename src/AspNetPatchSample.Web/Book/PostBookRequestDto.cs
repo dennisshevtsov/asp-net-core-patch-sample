@@ -13,7 +13,7 @@ namespace AspNetPatchSample.Book.Web
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PostBookRequestDto"/> class.</summary>
     public PostBookRequestDto()
     {
-      Name        = string.Empty;
+      Title        = string.Empty;
       Author      = string.Empty;
       Description = string.Empty;
     }
@@ -22,9 +22,9 @@ namespace AspNetPatchSample.Book.Web
     [JsonIgnore]
     public Guid BookId => Guid.Empty;
 
-    /// <summary>Gets an object that represents a name of a book.</summary>
+    /// <summary>Gets an object that represents a title of a book.</summary>
     [Required]
-    public string Name { get; set; }
+    public string Title { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     [Required]

@@ -12,7 +12,7 @@ namespace AspNetPatchSample.Book.Web
     public GetBookResponseDto(IBookEntity orderEntity)
     {
       BookId      = orderEntity.BookId;
-      Name        = orderEntity.Name;
+      Title        = orderEntity.Title;
       Author      = orderEntity.Author;
       Description = orderEntity.Description;
       Pages       = orderEntity.Pages;
@@ -21,8 +21,8 @@ namespace AspNetPatchSample.Book.Web
     /// <summary>Gets an object that represents an ID of a book.</summary>
     public Guid BookId { get; }
 
-    /// <summary>Gets an object that represents a name of a book.</summary>
-    public string Name { get; }
+    /// <summary>Gets an object that represents a title of a book.</summary>
+    public string Title { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public string Author { get; }
