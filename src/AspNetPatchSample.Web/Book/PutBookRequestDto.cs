@@ -18,7 +18,7 @@ namespace AspNetPatchSample.Book.Web
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
-    public Guid BookId { get; }
+    public Guid BookId { get; set; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     [Required]
