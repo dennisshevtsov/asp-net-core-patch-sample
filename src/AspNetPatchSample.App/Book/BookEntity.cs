@@ -7,7 +7,7 @@ namespace AspNetPatchSample.Book.App
   using AspNetPatchSample.App;
 
   /// <summary>Represents a book entity.</summary>
-  public sealed class BookEntity : IBookEntity, IUpdatable<IBookEntity>, IPatchable
+  public sealed class BookEntity : EntityBase, IBookEntity, IUpdatable<IBookEntity>
   {
     private string _title;
     private string _author;
@@ -15,16 +15,12 @@ namespace AspNetPatchSample.Book.App
 
     private int _pages;
 
-    private ISet<string> _properties;
-
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
-    private BookEntity()
+    private BookEntity() : base()
     {
       _title       = string.Empty;
       _author      = string.Empty;
       _description = string.Empty;
-
-      _properties  = new HashSet<string>();
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
@@ -36,8 +32,6 @@ namespace AspNetPatchSample.Book.App
       Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
-
-      _properties.Clear();
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
@@ -53,7 +47,7 @@ namespace AspNetPatchSample.Book.App
         if (_title != value)
         {
           _title = value;
-          _properties.Add(nameof(Title));
+          Updated(nameof(Title));
         }
       }
     }
@@ -68,7 +62,7 @@ namespace AspNetPatchSample.Book.App
         if (_author != value)
         {
           _author = value;
-          _properties.Add(nameof(Author));
+          Updated(nameof(Author));
         }
       }
     }
@@ -83,7 +77,7 @@ namespace AspNetPatchSample.Book.App
         if (_description != value)
         {
           _description = value;
-          _properties.Add(nameof(Description));
+          Updated(nameof(Description));
         }
       }
     }
@@ -98,13 +92,10 @@ namespace AspNetPatchSample.Book.App
         if (_pages != value)
         {
           _pages = value;
-          _properties.Add(nameof(Pages));
+          Updated(nameof(Pages));
         }
       }
     }
-
-    /// <summary>Gets an object that represents a collection of properties to update.</summary>
-    public IEnumerable<string> Properties { get => _properties; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
@@ -115,7 +106,7 @@ namespace AspNetPatchSample.Book.App
     /// <returns>A reference to this book.</returns>
     public IBookEntity Update(IBookEntity bookEntity)
     {
-      _properties.Clear();
+      Reset();
 
       Title       = bookEntity.Title;
       Author      = bookEntity.Author;
@@ -131,7 +122,7 @@ namespace AspNetPatchSample.Book.App
     /// <returns>A reference to this book.</returns>
     public IBookEntity Update(IBookEntity bookEntity, string[] properties)
     {
-      _properties.Clear();
+      Reset();
 
       if (properties.Contains(nameof(Title)))
       {

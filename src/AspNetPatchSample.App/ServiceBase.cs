@@ -12,7 +12,7 @@ namespace AspNetPatchSample.App
     : IService<TIdentity, TDomainEntity>
     where TIdentity : IIdentity
     where TDomainEntity : class
-    where TBusinessEntity : TDomainEntity, IUpdatable<TDomainEntity>, IPatchable
+    where TBusinessEntity : EntityBase, TDomainEntity, IUpdatable<TDomainEntity>
   {
     private readonly IRepository<TDomainEntity> _repository;
 

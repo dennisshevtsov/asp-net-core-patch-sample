@@ -7,16 +7,14 @@ namespace AspNetPatchSample.Author.App
   using AspNetPatchSample.App;
 
   /// <summary>Represents an author entity.</summary>
-  public sealed class AuthorEntity : IAuthorEntity, IUpdatable<IAuthorEntity>, IPatchable
+  public sealed class AuthorEntity : EntityBase, IAuthorEntity, IUpdatable<IAuthorEntity>
   {
     private string _name;
-    private ISet<string> _properties;
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
-    private AuthorEntity()
+    private AuthorEntity() : base()
     {
       _name       = string.Empty;
-      _properties = new HashSet<string>();
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
@@ -25,8 +23,6 @@ namespace AspNetPatchSample.Author.App
     {
       AuthorId = authorEntity.AuthorId;
       Name     = authorEntity.Name;
-
-      _properties.Clear();
     }
 
     /// <summary>Gets an object that represents an ID of author.</summary>
@@ -42,7 +38,7 @@ namespace AspNetPatchSample.Author.App
         if (_name != value)
         {
           _name = value;
-          _properties.Add(nameof(Name));
+          Updated(nameof(Name));
         }
       }
     }
@@ -51,15 +47,12 @@ namespace AspNetPatchSample.Author.App
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
     public Guid ToGuid() => AuthorId;
 
-    /// <summary>Gets an object that represents a collection of properties to update.</summary>
-    public IEnumerable<string> Properties { get => _properties; }
-
     /// <summary>Updates this author.</summary>
     /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>
     /// <returns>A reference of this entity.</returns>
     public IAuthorEntity Update(IAuthorEntity newAuthorEntity)
     {
-      _properties.Clear();
+      Reset();
 
       Name = newAuthorEntity.Name;
 
@@ -72,7 +65,7 @@ namespace AspNetPatchSample.Author.App
     /// <returns>A reference of this entity.</returns>
     public IAuthorEntity Update(IAuthorEntity newAuthorEntity, string[] properties)
     {
-      _properties.Clear();
+      Reset();
 
       if (properties.Contains(nameof(Name)))
       {
