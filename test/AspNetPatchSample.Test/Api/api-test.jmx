@@ -561,7 +561,7 @@
             </elementProp>
             <elementProp name="putBookPages" elementType="Argument">
               <stringProp name="Argument.name">putBookPages</stringProp>
-              <stringProp name="Argument.value">500</stringProp>
+              <stringProp name="Argument.value">800</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>

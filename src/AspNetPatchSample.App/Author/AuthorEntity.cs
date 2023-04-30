@@ -25,6 +25,8 @@ namespace AspNetPatchSample.Author.App
     {
       AuthorId = authorEntity.AuthorId;
       Name     = authorEntity.Name;
+
+      _properties.Clear();
     }
 
     /// <summary>Gets an object that represents an ID of author.</summary>

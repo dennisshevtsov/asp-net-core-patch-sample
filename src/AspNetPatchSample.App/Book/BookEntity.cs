@@ -9,34 +9,102 @@ namespace AspNetPatchSample.Book.App
   /// <summary>Represents a book entity.</summary>
   public sealed class BookEntity : IBookEntity, IUpdatable<IBookEntity>, IPatchable
   {
+    private string _title;
+    private string _author;
+    private string _description;
+
+    private int _pages;
+
+    private ISet<string> _properties;
+
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
+    private BookEntity()
+    {
+      _title       = string.Empty;
+      _author      = string.Empty;
+      _description = string.Empty;
+
+      _properties  = new HashSet<string>();
+    }
+
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
-    public BookEntity(IBookEntity bookEntity)
+    public BookEntity(IBookEntity bookEntity) : this()
     {
+      BookId      = bookEntity.BookId;
       Title       = bookEntity.Title;
       Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
-      Properties  = Array.Empty<string>();
+
+      _properties.Clear();
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
     public Guid BookId { get; }
 
-    /// <summary>Gets an object that represents a title of a book.</summary>
-    public string Title { get; private set; }
+    /// <summary>Gets/sets an object that represents a title of a book.</summary>
+    public string Title
+    {
+      get => _title;
 
-    /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Author { get; private set; }
+      set
+      {
+        if (_title != value)
+        {
+          _title = value;
+          _properties.Add(nameof(Title));
+        }
+      }
+    }
 
-    /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Description { get; private set; }
+    /// <summary>Gets/sets an object that represents a description of a book.</summary>
+    public string Author
+    {
+      get => _author;
 
-    /// <summary>Gets an object that represents a description of a book.</summary>
-    public int Pages { get; private set; }
+      set
+      {
+        if (_author != value)
+        {
+          _author = value;
+          _properties.Add(nameof(Author));
+        }
+      }
+    }
+
+    /// <summary>Gets/sets an object that represents a description of a book.</summary>
+    public string Description
+    {
+      get => _description;
+
+      set
+      {
+        if (_description != value)
+        {
+          _description = value;
+          _properties.Add(nameof(Description));
+        }
+      }
+    }
+
+    /// <summary>Gets/sets an object that represents a description of a book.</summary>
+    public int Pages
+    {
+      get => _pages;
+
+      set
+      {
+        if (_pages != value)
+        {
+          _pages = value;
+          _properties.Add(nameof(Pages));
+        }
+      }
+    }
 
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
-    public IEnumerable<string> Properties { get; private set; }
+    public IEnumerable<string> Properties { get => _properties; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
@@ -47,7 +115,9 @@ namespace AspNetPatchSample.Book.App
     /// <returns>A reference to this book.</returns>
     public IBookEntity Update(IBookEntity bookEntity)
     {
-      Title        = bookEntity.Title;
+      _properties.Clear();
+
+      Title       = bookEntity.Title;
       Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
@@ -61,6 +131,8 @@ namespace AspNetPatchSample.Book.App
     /// <returns>A reference to this book.</returns>
     public IBookEntity Update(IBookEntity bookEntity, string[] properties)
     {
+      _properties.Clear();
+
       if (properties.Contains(nameof(Title)))
       {
         Title = bookEntity.Title;
