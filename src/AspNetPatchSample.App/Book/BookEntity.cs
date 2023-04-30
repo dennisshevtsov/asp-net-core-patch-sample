@@ -7,7 +7,7 @@ namespace AspNetPatchSample.Book.App
   using AspNetPatchSample.App;
 
   /// <summary>Represents a book entity.</summary>
-  public sealed class BookEntity : IBookEntity, IUpdatable<IBookEntity>
+  public sealed class BookEntity : IBookEntity, IUpdatable<IBookEntity>, IPatchable
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
@@ -17,6 +17,7 @@ namespace AspNetPatchSample.Book.App
       Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
+      Properties  = Array.Empty<string>();
     }
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
@@ -33,6 +34,9 @@ namespace AspNetPatchSample.Book.App
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; private set; }
+
+    /// <summary>Gets an object that represents a collection of properties to update.</summary>
+    public string[] Properties { get; private set; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>

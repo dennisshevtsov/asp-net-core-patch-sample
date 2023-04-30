@@ -7,17 +7,18 @@ namespace AspNetPatchSample.Author.App
   using AspNetPatchSample.App;
 
   /// <summary>Represents an author entity.</summary>
-  public sealed class AuthorEntity : IAuthorEntity, IUpdatable<IAuthorEntity>
+  public sealed class AuthorEntity : IAuthorEntity, IUpdatable<IAuthorEntity>, IPatchable
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
     public AuthorEntity()
     {
-      Name = string.Empty;
+      Name       = string.Empty;
+      Properties = Array.Empty<string>();
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
     /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity)
+    public AuthorEntity(IAuthorEntity authorEntity) : this()
     {
       Name     = authorEntity.Name;
       AuthorId = authorEntity.AuthorId;
@@ -33,12 +34,16 @@ namespace AspNetPatchSample.Author.App
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
     public Guid ToGuid() => AuthorId;
 
+    /// <summary>Gets an object that represents a collection of properties to update.</summary>
+    public string[] Properties { get; private set; }
+
     /// <summary>Updates this author.</summary>
     /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>
     /// <returns>A reference of this entity.</returns>
     public IAuthorEntity Update(IAuthorEntity newAuthorEntity)
     {
-      Name = newAuthorEntity.Name;
+      Name       = newAuthorEntity.Name;
+      Properties = new[] {nameof(Name)};
 
       return this;
     }
@@ -51,7 +56,8 @@ namespace AspNetPatchSample.Author.App
     {
       if (properties.Contains(nameof(Name)))
       {
-        Name = newAuthorEntity.Name;
+        Name       = newAuthorEntity.Name;
+        Properties = new[] { nameof(Name) };
       }
 
       return this;
