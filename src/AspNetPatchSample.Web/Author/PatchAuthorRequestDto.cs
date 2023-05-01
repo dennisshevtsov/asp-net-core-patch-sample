@@ -5,6 +5,7 @@
 namespace AspNetPatchSample.Author.Web
 {
   using AspNetPatchSample.Web;
+  using System.Text.Json.Serialization;
 
   /// <summary>Represents the PATCH author request data.</summary>
   public sealed class PatchAuthorRequestDto : IAuthorEntity, IPatchable
@@ -23,7 +24,8 @@ namespace AspNetPatchSample.Author.Web
     public string Name { get; set; }
 
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
-    public string[] Properties { get; set; }
+    [JsonIgnore]
+    public IEnumerable<string> Properties { get; set; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
