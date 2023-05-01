@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-using System.Reflection;
-
 namespace AspNetPatchSample.App
 {
   /// <summary>Represents an entity base.</summary>
@@ -47,16 +45,7 @@ namespace AspNetPatchSample.App
       return Update(newEntity, UpdatingProperties(), properties.ToHashSet(StringComparer.OrdinalIgnoreCase));
     }
 
-    private string[] UpdatingProperties() =>
-      GetType().GetProperties()
-               .Where(property => property.SetMethod != null)
-               .Select(property => property.Name)
-               .ToArray();
-
-    private object Update(
-      object newEntity,
-      IEnumerable<string> updatingProperties,
-      ISet<string> updatedProperties)
+    private object Update(object newEntity, IEnumerable<string> updatingProperties, ISet<string> updatedProperties)
     {
       Reset();
 
@@ -77,5 +66,11 @@ namespace AspNetPatchSample.App
 
       return this;
     }
+
+    private string[] UpdatingProperties() =>
+      GetType().GetProperties()
+               .Where(property => property.SetMethod != null)
+               .Select(property => property.Name)
+               .ToArray();
   }
 }
