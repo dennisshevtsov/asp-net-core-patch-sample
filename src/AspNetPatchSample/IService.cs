@@ -34,7 +34,7 @@ namespace AspNetPatchSample
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public Task UpdateAsync(TEntity originalEntity, TEntity newEntity, string[] properties, CancellationToken cancellationToken);
+    public Task UpdateAsync(TEntity originalEntity, TEntity newEntity, IEnumerable<string> properties, CancellationToken cancellationToken);
 
     /// <summary>Deletes an entity.</summary>
     /// <param name="identity">An object that represents an identity to delete.</param>

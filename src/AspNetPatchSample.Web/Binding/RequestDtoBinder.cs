@@ -22,13 +22,7 @@ namespace AspNetPatchSample.Web.Binding
       if (bindingContext.HttpContext.Request.ContentLength != null &&
           bindingContext.HttpContext.Request.ContentLength != 0)
       {
-        model = await JsonSerializer.DeserializeAsync(
-          bindingContext.HttpContext.Request.Body,
-          bindingContext.ModelType,
-          new JsonSerializerOptions
-          {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-          });
+        model = await RequestDtoBinder.GetModelValue(bindingContext);
       }
       else
       {
@@ -51,6 +45,34 @@ namespace AspNetPatchSample.Web.Binding
       }
 
       bindingContext.Result = ModelBindingResult.Success(model);
+    }
+
+    private static async Task<object> GetModelValue(ModelBindingContext bindingContext)
+    {
+      var document = await JsonSerializer.DeserializeAsync<JsonDocument>(
+          bindingContext.HttpContext.Request.Body);
+
+      var model = document!.Deserialize(
+        bindingContext.ModelType,
+        new JsonSerializerOptions
+        {
+          PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        })!;
+
+      if (model is IPatchable patchable)
+      {
+        var properties =
+          document!.RootElement.EnumerateObject()!
+                               .Select(property => property.Name)
+                               .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        patchable.Properties =
+          bindingContext.ModelMetadata.Properties.Select(property => property.Name!)
+                                                 .Where(property => properties.Contains(property))
+                                                 .ToArray();
+      }
+
+      return model;
     }
   }
 }

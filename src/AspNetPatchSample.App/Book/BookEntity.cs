@@ -120,7 +120,7 @@ namespace AspNetPatchSample.Book.App
     /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <returns>A reference to this book.</returns>
-    public IBookEntity Update(IBookEntity bookEntity, string[] properties)
+    public IBookEntity Update(IBookEntity bookEntity, IEnumerable<string> properties)
     {
       Reset();
 

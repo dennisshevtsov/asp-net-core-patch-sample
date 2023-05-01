@@ -63,7 +63,7 @@ namespace AspNetPatchSample.Author.App
     /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <returns>A reference of this entity.</returns>
-    public IAuthorEntity Update(IAuthorEntity newAuthorEntity, string[] properties)
+    public IAuthorEntity Update(IAuthorEntity newAuthorEntity, IEnumerable<string> properties)
     {
       Reset();
 

@@ -8,6 +8,6 @@ namespace AspNetPatchSample.Web
   public interface IPatchable
   {
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
-    public string[] Properties { get; }
+    public IEnumerable<string> Properties { get; set; }
   }
 }

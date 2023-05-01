@@ -56,7 +56,7 @@ namespace AspNetPatchSample.App
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public virtual Task UpdateAsync(TDomainEntity originalEntity, TDomainEntity newEntity, string[] properties, CancellationToken cancellationToken)
+    public virtual Task UpdateAsync(TDomainEntity originalEntity, TDomainEntity newEntity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
       var buisinessEntity = (TBusinessEntity)Activator.CreateInstance(typeof(TBusinessEntity), originalEntity)!;
       buisinessEntity.Update(newEntity, properties);
