@@ -5,27 +5,14 @@
 namespace AspNetPatchSample.Book.App
 {
   using AspNetPatchSample.App;
+  using AspNetPatchSample.Author;
 
   /// <summary>Represents a book entity.</summary>
   public sealed class BookEntity : EntityBase, IBookEntity, IUpdatable<IBookEntity>
   {
-    private string _title;
-    private string _author;
-    private string _description;
-
-    private int _pages;
-
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
-    private BookEntity() : base()
-    {
-      _title       = string.Empty;
-      _author      = string.Empty;
-      _description = string.Empty;
-    }
-
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
-    public BookEntity(IBookEntity bookEntity) : this()
+    public BookEntity(IBookEntity bookEntity)
     {
       BookId      = bookEntity.BookId;
       Title       = bookEntity.Title;
@@ -38,64 +25,16 @@ namespace AspNetPatchSample.Book.App
     public Guid BookId { get; }
 
     /// <summary>Gets/sets an object that represents a title of a book.</summary>
-    public string Title
-    {
-      get => _title;
-
-      set
-      {
-        if (_title != value)
-        {
-          _title = value;
-          Updated(nameof(Title));
-        }
-      }
-    }
+    public string Title { get; private set; }
 
     /// <summary>Gets/sets an object that represents a description of a book.</summary>
-    public string Author
-    {
-      get => _author;
-
-      set
-      {
-        if (_author != value)
-        {
-          _author = value;
-          Updated(nameof(Author));
-        }
-      }
-    }
+    public string Author { get; private set; }
 
     /// <summary>Gets/sets an object that represents a description of a book.</summary>
-    public string Description
-    {
-      get => _description;
-
-      set
-      {
-        if (_description != value)
-        {
-          _description = value;
-          Updated(nameof(Description));
-        }
-      }
-    }
+    public string Description { get; private set; }
 
     /// <summary>Gets/sets an object that represents a description of a book.</summary>
-    public int Pages
-    {
-      get => _pages;
-
-      set
-      {
-        if (_pages != value)
-        {
-          _pages = value;
-          Updated(nameof(Pages));
-        }
-      }
-    }
+    public int Pages { get; private set; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
@@ -104,47 +43,13 @@ namespace AspNetPatchSample.Book.App
     /// <summary>Updates this book.</summary>
     /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
     /// <returns>A reference to this book.</returns>
-    public IBookEntity Update(IBookEntity bookEntity)
-    {
-      Reset();
-
-      Title       = bookEntity.Title;
-      Author      = bookEntity.Author;
-      Description = bookEntity.Description;
-      Pages       = bookEntity.Pages;
-
-      return this;
-    }
+    public IBookEntity Update(IBookEntity bookEntity) => (IBookEntity)base.Update(bookEntity);
 
     /// <summary>Updates this book.</summary>
     /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <returns>A reference to this book.</returns>
-    public IBookEntity Update(IBookEntity bookEntity, IEnumerable<string> properties)
-    {
-      Reset();
-
-      if (properties.Contains(nameof(Title)))
-      {
-        Title = bookEntity.Title;
-      }
-
-      if (properties.Contains(nameof(Author)))
-      {
-        Author = bookEntity.Author;
-      }
-
-      if (properties.Contains(nameof(Description)))
-      {
-        Description = bookEntity.Description;
-      }
-
-      if (properties.Contains(nameof(Pages)))
-      {
-        Pages = bookEntity.Pages;
-      }
-
-      return this;
-    }
+    public IBookEntity Update(IBookEntity bookEntity, IEnumerable<string> properties) =>
+      (IBookEntity)base.Update(bookEntity, properties);
   }
 }
