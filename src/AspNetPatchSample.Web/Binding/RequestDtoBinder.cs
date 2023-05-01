@@ -59,7 +59,7 @@ namespace AspNetPatchSample.Web.Binding
           PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         })!;
 
-      if (model is IPatchable patchable)
+      if (model is PatchRequestDtoBase patchable)
       {
         var properties =
           document!.RootElement.EnumerateObject()!

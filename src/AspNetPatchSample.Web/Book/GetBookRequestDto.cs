@@ -4,15 +4,17 @@
 
 namespace AspNetPatchSample.Book.Web
 {
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents a condition to query a book.</summary>
-  public sealed class GetBookRequestDto : IBookIdentity
+  public sealed class GetBookRequestDto : RequestDtoBase, IBookIdentity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.GetBookRequestDto"/> class.</summary>
-    public GetBookRequestDto() { }
+    public GetBookRequestDto() : base() { }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.GetBookRequestDto"/> class.</summary>
     /// <param name="bookIdentity">An object that represents an identity of a book.</param>
-    public GetBookRequestDto(IBookIdentity bookIdentity)
+    public GetBookRequestDto(IBookIdentity bookIdentity) : this()
     {
       BookId = bookIdentity.BookId;
     }

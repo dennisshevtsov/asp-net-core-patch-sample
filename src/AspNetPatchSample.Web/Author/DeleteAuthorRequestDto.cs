@@ -4,11 +4,13 @@
 
 namespace AspNetPatchSample.Author.Web
 {
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents the DELETE author request data.</summary>
-  public sealed class DeleteAuthorRequestDto : IAuthorIdentity
+  public sealed class DeleteAuthorRequestDto : RequestDtoBase, IAuthorIdentity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.DeleteAuthorRequestDto"/> class.</summary>
-    public DeleteAuthorRequestDto() {}
+    public DeleteAuthorRequestDto(): base() {}
 
     /// <summary>Gets/sets an object that represents an ID of author.</summary>
     public Guid AuthorId { get; set; }

@@ -6,11 +6,13 @@ namespace AspNetPatchSample.Author.Web
 {
   using System.Text.Json.Serialization;
 
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents the POST author request data.</summary>
-  public sealed class PostAuthorRequestDto : IAuthorEntity
+  public sealed class PostAuthorRequestDto : RequestDtoBase, IAuthorEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.PostAuthorRequestDto"/> class.</summary>
-    public PostAuthorRequestDto()
+    public PostAuthorRequestDto() : base()
     {
       Name = string.Empty;
     }

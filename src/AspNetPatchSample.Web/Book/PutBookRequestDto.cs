@@ -6,11 +6,13 @@ namespace AspNetPatchSample.Book.Web
 {
   using System.ComponentModel.DataAnnotations;
 
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents data to update a book.</summary>
-  public sealed class PutBookRequestDto : IBookEntity
+  public sealed class PutBookRequestDto : RequestDtoBase, IBookEntity
   {
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PutBookRequestDto"/> class.</summary>
-    public PutBookRequestDto()
+    public PutBookRequestDto() : base()
     {
       Title       = string.Empty;
       Author      = string.Empty;

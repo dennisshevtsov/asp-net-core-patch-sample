@@ -4,8 +4,10 @@
 
 namespace AspNetPatchSample.Book.Web
 {
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents data to delete a book.</summary>
-  public sealed class DeleteBookRequestDto : IBookIdentity
+  public sealed class DeleteBookRequestDto : RequestDtoBase, IBookIdentity
   {
     /// <summary>Gets an object that represents an ID of a book.</summary>
     public Guid BookId { get; set; }

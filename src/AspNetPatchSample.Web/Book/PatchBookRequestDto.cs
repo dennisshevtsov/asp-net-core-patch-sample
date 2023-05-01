@@ -5,13 +5,12 @@
 namespace AspNetPatchSample.Book.Web
 {
   using AspNetPatchSample.Web;
-  using System.Text.Json.Serialization;
 
   /// <summary>Represents data to update a book parially.</summary>
-  public sealed class PatchBookRequestDto : IBookEntity, IPatchable
+  public sealed class PatchBookRequestDto : PatchRequestDtoBase, IBookEntity
   {
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PatchBookRequestDto"/> class.</summary>
-    public PatchBookRequestDto()
+    public PatchBookRequestDto() : base()
     {
       Title       = string.Empty;
       Author      = string.Empty;
@@ -33,10 +32,6 @@ namespace AspNetPatchSample.Book.Web
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; set; }
-
-    /// <summary>Gets an object that represents a collection of properties to update.</summary>
-    [JsonIgnore]
-    public IEnumerable<string> Properties { get; set; }
 
     /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
     /// <returns>An object that represents a Globally Unique Identifier.</returns>
