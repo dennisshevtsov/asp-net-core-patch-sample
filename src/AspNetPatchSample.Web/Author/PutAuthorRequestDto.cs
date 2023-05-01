@@ -4,11 +4,13 @@
 
 namespace AspNetPatchSample.Author.Web
 {
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents the PUT author request data.</summary>
-  public sealed class PutAuthorRequestDto : IAuthorEntity
+  public sealed class PutAuthorRequestDto : RequestDtoBase, IAuthorEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.PutAuthorRequestDto"/> class.</summary>
-    public PutAuthorRequestDto()
+    public PutAuthorRequestDto() : base()
     {
       Name = string.Empty;
     }

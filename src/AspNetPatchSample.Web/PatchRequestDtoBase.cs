@@ -4,6 +4,8 @@
 
 namespace AspNetPatchSample.Web
 {
+  using System.Text.Json.Serialization;
+
   /// <summary>Represents a PATCH request DTO base.</summary>
   public abstract class PatchRequestDtoBase : RequestDtoBase
   {
@@ -14,6 +16,7 @@ namespace AspNetPatchSample.Web
     }
 
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
+    [JsonIgnore]
     public IEnumerable<string> Properties { get; internal set; }
   }
 }

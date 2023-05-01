@@ -7,11 +7,13 @@ namespace AspNetPatchSample.Book.Web
   using System.ComponentModel.DataAnnotations;
   using System.Text.Json.Serialization;
 
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents data to add a book.</summary>
-  public sealed class PostBookRequestDto : IBookEntity
+  public sealed class PostBookRequestDto : RequestDtoBase, IBookEntity
   {
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PostBookRequestDto"/> class.</summary>
-    public PostBookRequestDto()
+    public PostBookRequestDto() : base()
     {
       Title       = string.Empty;
       Author      = string.Empty;
