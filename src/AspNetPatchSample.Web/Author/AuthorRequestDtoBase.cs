@@ -9,7 +9,7 @@ namespace AspNetPatchSample.Author.Web
   using AspNetPatchSample.Web;
 
   /// <summary>Represents an author DTO base.</summary>
-  public class AuthorRequestDtoBase : RequestDtoBase, IAuthorIdentity
+  public abstract class AuthorRequestDtoBase : RequestDtoBase, IAuthorIdentity
   {
     /// <summary>Gets/sets an object that represents an ID of an author.</summary>
     [JsonIgnore]

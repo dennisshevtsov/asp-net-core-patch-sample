@@ -4,15 +4,8 @@
 
 namespace AspNetPatchSample.Book.Web
 {
-  using System.Text.Json.Serialization;
-
-  using AspNetPatchSample.Web;
-
   /// <summary>Represents data to delete a book.</summary>
-  public sealed class DeleteBookRequestDto : RequestDtoBase, IBookIdentity
+  public sealed class DeleteBookRequestDto : BookRequestDtoBase, IBookIdentity
   {
-    /// <summary>Gets/sets an object that represents an ID of a book.</summary>
-    [JsonPropertyName("bookId")]
-    public Guid Id { get; set; }
   }
 }
