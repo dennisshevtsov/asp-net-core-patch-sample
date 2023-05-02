@@ -9,9 +9,5 @@ namespace AspNetPatchSample.Data
   {
     /// <summary>Gets/sets an object that represents an ID of an entity.</summary>
     public Guid Id { get; set; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => Id;
   }
 }

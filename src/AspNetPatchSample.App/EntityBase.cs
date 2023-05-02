@@ -5,15 +5,21 @@
 namespace AspNetPatchSample.App
 {
   /// <summary>Represents an entity base.</summary>
-  public abstract class EntityBase : IUpdatable<object>
+  public abstract class EntityBase : IIdentity, IUpdatable<object>
   {
     private ISet<string> _properties;
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.App.Author.EntityBase"/> class.</summary>
-    protected EntityBase()
+    /// <param name="identity">An object that represents an identity.</param>
+    protected EntityBase(IIdentity identity)
     {
+      Id = identity.Id;
+
       _properties = new HashSet<string>();
     }
+
+    /// <summary>Gets an object that represents a GUID representation of this identity.</summary>
+    public Guid Id { get; }
 
     /// <summary>Gets an object that represents a collection of properties to update.</summary>
     public IEnumerable<string> Properties { get => _properties; }

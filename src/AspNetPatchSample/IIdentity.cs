@@ -7,8 +7,7 @@ namespace AspNetPatchSample
   /// <summary>Represents an identity.</summary>
   public interface IIdentity
   {
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid();
+    /// <summary>Gets an object that represents a GUID representation of this identity.</summary>
+    public Guid Id { get; }
   }
 }

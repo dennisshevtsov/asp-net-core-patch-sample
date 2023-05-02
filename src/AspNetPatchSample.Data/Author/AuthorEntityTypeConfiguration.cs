@@ -28,8 +28,6 @@ namespace AspNetPatchSample.Author.Data
              .HasColumnName("name")
              .IsRequired()
              .HasMaxLength(256);
-
-      builder.Ignore(entity => entity.AuthorId);
     }
   }
 }

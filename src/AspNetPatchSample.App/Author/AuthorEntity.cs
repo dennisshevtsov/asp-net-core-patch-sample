@@ -11,21 +11,13 @@ namespace AspNetPatchSample.Author.App
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
     /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity)
+    public AuthorEntity(IAuthorEntity authorEntity) : base(authorEntity)
     {
-      AuthorId = authorEntity.AuthorId;
-      Name     = authorEntity.Name;
+      Name = authorEntity.Name;
     }
-
-    /// <summary>Gets an object that represents an ID of author.</summary>
-    public Guid AuthorId { get; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
     public string Name { get; private set; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => AuthorId;
 
     /// <summary>Updates this author.</summary>
     /// <param name="newAuthorEntity">An object that represents an author entity from which this author should be updated.</param>

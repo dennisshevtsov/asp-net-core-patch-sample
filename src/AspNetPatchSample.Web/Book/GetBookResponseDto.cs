@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using System.Text.Json.Serialization;
+
 namespace AspNetPatchSample.Book.Web
 {
   /// <summary>Represents a book entity.</summary>
@@ -11,15 +13,16 @@ namespace AspNetPatchSample.Book.Web
     /// <param name="orderEntity">An object that represents a book entity.</param>
     public GetBookResponseDto(IBookEntity orderEntity)
     {
-      BookId      = orderEntity.BookId;
+      Id          = orderEntity.Id;
       Title       = orderEntity.Title;
       Author      = orderEntity.Author;
       Description = orderEntity.Description;
       Pages       = orderEntity.Pages;
     }
 
-    /// <summary>Gets an object that represents an ID of a book.</summary>
-    public Guid BookId { get; }
+    /// <summary>Gets/sets an object that represents an ID of a book.</summary>
+    [JsonPropertyName("bookId")]
+    public Guid Id { get; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; }
@@ -32,9 +35,5 @@ namespace AspNetPatchSample.Book.Web
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => BookId;
   }
 }

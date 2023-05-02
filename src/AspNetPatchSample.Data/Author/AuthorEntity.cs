@@ -19,12 +19,9 @@ namespace AspNetPatchSample.Author.Data
     /// <param name="authorEntity">An object that represents an author entity.</param>
     public AuthorEntity(IAuthorEntity authorEntity)
     {
-      Name     = authorEntity.Name;
-      AuthorId = authorEntity.AuthorId;
+      Name = authorEntity.Name;
+      Id   = authorEntity.Id;
     }
-
-    /// <summary>Gets an object that represents an ID of author.</summary>
-    public Guid AuthorId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
     public string Name { get; }
