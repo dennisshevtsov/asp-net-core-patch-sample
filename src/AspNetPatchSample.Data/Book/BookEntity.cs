@@ -18,18 +18,15 @@ namespace AspNetPatchSample.Book.Data
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
-    /// <param name="orderEntity">An object that represents a book entity.</param>
-    public BookEntity(IBookEntity orderEntity)
+    /// <param name="bookEntity">An object that represents a book entity.</param>
+    public BookEntity(IBookEntity bookEntity)
     {
-      Title       = orderEntity.Title;
-      Author      = orderEntity.Author;
-      Description = orderEntity.Description;
-      Pages       = orderEntity.Pages;
-      BookId      = orderEntity.BookId;
+      Id          = bookEntity.Id;
+      Title       = bookEntity.Title;
+      Author      = bookEntity.Author;
+      Description = bookEntity.Description;
+      Pages       = bookEntity.Pages;
     }
-
-    /// <summary>Gets an object that represents an ID of a book.</summary>
-    public Guid BookId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; }

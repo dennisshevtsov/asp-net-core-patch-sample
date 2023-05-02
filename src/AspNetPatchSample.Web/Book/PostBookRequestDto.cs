@@ -22,7 +22,7 @@ namespace AspNetPatchSample.Book.Web
 
     /// <summary>Gets an object that represents an ID of a book.</summary>
     [JsonIgnore]
-    public Guid BookId => Guid.Empty;
+    public Guid Id => Guid.Empty;
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     [Required]
@@ -39,9 +39,5 @@ namespace AspNetPatchSample.Book.Web
     /// <summary>Gets an object that represents a description of a book.</summary>
     [Required]
     public int Pages { get; set; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => BookId;
   }
 }

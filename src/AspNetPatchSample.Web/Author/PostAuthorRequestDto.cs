@@ -17,15 +17,11 @@ namespace AspNetPatchSample.Author.Web
       Name = string.Empty;
     }
 
-    /// <summary>Gets an object that represents an ID of author.</summary>
+    /// <summary>Gets an object that represents an ID of an author.</summary>
     [JsonIgnore]
-    public Guid AuthorId => Guid.Empty;
+    public Guid Id => Guid.Empty;
 
     /// <summary>Gets/sets an object that represents a name of an author.</summary>
     public string Name { get; set; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => AuthorId;
   }
 }

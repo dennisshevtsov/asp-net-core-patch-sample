@@ -4,6 +4,8 @@
 
 namespace AspNetPatchSample.Author.Web
 {
+  using System.Text.Json.Serialization;
+
   using AspNetPatchSample.Web;
 
   /// <summary>Represents the PUT author request data.</summary>
@@ -15,14 +17,11 @@ namespace AspNetPatchSample.Author.Web
       Name = string.Empty;
     }
 
-    /// <summary>Gets/sets an object that represents an ID of author.</summary>
-    public Guid AuthorId { get; set; }
+    /// <summary>Gets/sets an object that represents an ID of an author.</summary>
+    [JsonPropertyName("authorId")]
+    public Guid Id { get; set; }
 
     /// <summary>Gets/sets an object that represents a name of an author.</summary>
     public string Name { get; set; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => AuthorId;
   }
 }

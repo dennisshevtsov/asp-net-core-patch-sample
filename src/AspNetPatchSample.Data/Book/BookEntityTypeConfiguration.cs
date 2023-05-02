@@ -42,8 +42,6 @@ namespace AspNetPatchSample.Book.Data
       builder.Property(entity => entity.Pages)
              .HasColumnName("pages")
              .IsRequired();
-
-      builder.Ignore(entity => entity.BookId);
     }
   }
 }

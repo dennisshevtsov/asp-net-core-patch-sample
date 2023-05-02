@@ -4,6 +4,8 @@
 
 namespace AspNetPatchSample.Book.Web
 {
+  using System.Text.Json.Serialization;
+
   using AspNetPatchSample.Web;
 
   /// <summary>Represents data to update a book parially.</summary>
@@ -18,8 +20,9 @@ namespace AspNetPatchSample.Book.Web
       Properties  = Array.Empty<string>();
     }
 
-    /// <summary>Gets an object that represents an ID of a book.</summary>
-    public Guid BookId { get; set; }
+    /// <summary>Gets/sets an object that represents an ID of a book.</summary>
+    [JsonPropertyName("bookId")]
+    public Guid Id { get; set; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; set; }
@@ -32,9 +35,5 @@ namespace AspNetPatchSample.Book.Web
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; set; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => BookId;
   }
 }

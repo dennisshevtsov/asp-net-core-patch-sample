@@ -29,11 +29,9 @@ namespace AspNetPatchSample.Data
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="TEntity"/>. The result can be null.</returns>
     public virtual async Task<TInterface?> GetAsync(IIdentity identity, CancellationToken cancellationToken)
     {
-      var identityValue = identity.ToGuid();
-
       return await DbContext.Set<TImplementation>()
                             .AsNoTracking()
-                            .Where(entity => entity.Id == identityValue)
+                            .Where(entity => entity.Id == identity.Id)
                             .SingleOrDefaultAsync(cancellationToken);
     }
 
@@ -78,10 +76,8 @@ namespace AspNetPatchSample.Data
     /// <returns>An object that represents an asynchronous operation.</returns>
     public async Task DeleteAsync(IIdentity identity, CancellationToken cancellationToken)
     {
-      var identityValue = identity.ToGuid();
-
       var entity = await DbContext.Set<TImplementation>()
-                                  .Where(entity => entity.Id == identityValue)
+                                  .Where(entity => entity.Id == identity.Id)
                                   .SingleOrDefaultAsync(cancellationToken);
 
       if (entity != null)

@@ -4,19 +4,15 @@
 
 namespace AspNetPatchSample.Author.Web
 {
+  using System.Text.Json.Serialization;
+
   using AspNetPatchSample.Web;
 
   /// <summary>Represents the DELETE author request data.</summary>
   public sealed class DeleteAuthorRequestDto : RequestDtoBase, IAuthorIdentity
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.DeleteAuthorRequestDto"/> class.</summary>
-    public DeleteAuthorRequestDto(): base() {}
-
-    /// <summary>Gets/sets an object that represents an ID of author.</summary>
-    public Guid AuthorId { get; set; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => AuthorId;
+    /// <summary>Gets/sets an object that represents an ID of an author.</summary>
+    [JsonPropertyName("authorId")]
+    public Guid Id { get; set; }
   }
 }

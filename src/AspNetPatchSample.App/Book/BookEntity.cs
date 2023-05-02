@@ -5,24 +5,19 @@
 namespace AspNetPatchSample.Book.App
 {
   using AspNetPatchSample.App;
-  using AspNetPatchSample.Author;
 
   /// <summary>Represents a book entity.</summary>
   public sealed class BookEntity : EntityBase, IBookEntity, IUpdatable<IBookEntity>
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
-    public BookEntity(IBookEntity bookEntity)
+    public BookEntity(IBookEntity bookEntity) : base(bookEntity)
     {
-      BookId      = bookEntity.BookId;
       Title       = bookEntity.Title;
       Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
     }
-
-    /// <summary>Gets an object that represents an ID of a book.</summary>
-    public Guid BookId { get; }
 
     /// <summary>Gets/sets an object that represents a title of a book.</summary>
     public string Title { get; private set; }
@@ -35,10 +30,6 @@ namespace AspNetPatchSample.Book.App
 
     /// <summary>Gets/sets an object that represents a description of a book.</summary>
     public int Pages { get; private set; }
-
-    /// <summary>Converts this object to an instance of the <see cref="System.Guid"/>.</summary>
-    /// <returns>An object that represents a Globally Unique Identifier.</returns>
-    public Guid ToGuid() => BookId;
 
     /// <summary>Updates this book.</summary>
     /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
