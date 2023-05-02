@@ -9,7 +9,7 @@ namespace AspNetPatchSample.Book.Web
   using AspNetPatchSample.Web;
 
   /// <summary>Represents a book DTO base.</summary>
-  public abstract class BookRequestDtoBase : RequestDtoBase, IBookIdentity
+  public abstract class BookRequestDtoBase : IRequestDto, IBookIdentity
   {
     /// <summary>Gets/sets an object that represents an ID of a book.</summary>
     [JsonIgnore]

@@ -4,8 +4,8 @@
 
 namespace AspNetPatchSample.Web
 {
-  /// <summary>Represents a request DTO base.</summary>
-  public abstract class RequestDtoBase
+  /// <summary>Represents a request DTO.</summary>
+  public interface IRequestDto
   {
   }
 }

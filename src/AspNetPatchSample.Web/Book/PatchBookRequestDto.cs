@@ -9,7 +9,7 @@ namespace AspNetPatchSample.Book.Web
   using AspNetPatchSample.Web;
 
   /// <summary>Represents data to update a book parially.</summary>
-  public sealed class PatchBookRequestDto : PatchRequestDtoBase, IBookEntity
+  public sealed class PatchBookRequestDto : BookRequestDtoBase, IPatchRequestDto, IBookEntity
   {
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PatchBookRequestDto"/> class.</summary>
     public PatchBookRequestDto() : base()
@@ -19,10 +19,6 @@ namespace AspNetPatchSample.Book.Web
       Description = string.Empty;
       Properties  = Array.Empty<string>();
     }
-
-    /// <summary>Gets/sets an object that represents an ID of a book.</summary>
-    [JsonPropertyName("bookId")]
-    public Guid Id { get; set; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; set; }
@@ -35,5 +31,9 @@ namespace AspNetPatchSample.Book.Web
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; set; }
+
+    /// <summary>Gets an object that represents a collection of properties to update.</summary>
+    [JsonIgnore]
+    public IEnumerable<string> Properties { get; set; }
   }
 }
