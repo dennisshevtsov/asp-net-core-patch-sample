@@ -9,7 +9,7 @@ namespace AspNetPatchSample.Author.Web
   using AspNetPatchSample.Web;
 
   /// <summary>Represents the GET author request data.</summary>
-  public sealed class GetAuthorRequestDto : RequestDtoBase, IAuthorIdentity
+  public sealed class GetAuthorRequestDto : AuthorRequestDtoBase, IAuthorIdentity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.GetAuthorRequestDto"/> class.</summary>
     public GetAuthorRequestDto() : base() { }
@@ -20,9 +20,5 @@ namespace AspNetPatchSample.Author.Web
     {
       Id = authorIdentity.Id;
     }
-
-    /// <summary>Gets/sets an object that represents an ID of an author.</summary>
-    [JsonPropertyName("authorId")]
-    public Guid Id { get; set; }
   }
 }
