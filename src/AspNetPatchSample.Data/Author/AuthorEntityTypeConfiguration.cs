@@ -8,6 +8,8 @@ namespace AspNetPatchSample.Author.Data
   using Microsoft.EntityFrameworkCore.Metadata.Builders;
   using Microsoft.EntityFrameworkCore.ValueGeneration;
 
+  using AspNetPatchSample.Book.Data;
+
   /// <summary>Defines an entity type configuration for the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/>.</summary>
   public sealed class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<AuthorEntity>
   {
@@ -28,6 +30,20 @@ namespace AspNetPatchSample.Author.Data
              .HasColumnName("name")
              .IsRequired()
              .HasMaxLength(256);
+
+      builder.HasMany(entity => entity.Books)
+             .WithMany(entity => entity.Authors)
+             .UsingEntity(
+                "book_author",
+                builder => builder.HasOne(typeof(AuthorEntity))
+                                  .WithMany()
+                                  .HasForeignKey("authorId")
+                                  .HasPrincipalKey(nameof(AuthorEntity.Id)),
+                builder => builder.HasOne(typeof(BookEntity))
+                                  .WithMany()
+                                  .HasForeignKey("bookId")
+                                  .HasPrincipalKey(nameof(BookEntity.Id))
+              );
     }
   }
 }

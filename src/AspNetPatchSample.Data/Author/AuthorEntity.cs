@@ -4,6 +4,7 @@
 
 namespace AspNetPatchSample.Author.Data
 {
+  using AspNetPatchSample.Book.Data;
   using AspNetPatchSample.Data;
 
   /// <summary>Represents an author entity.</summary>
@@ -12,18 +13,22 @@ namespace AspNetPatchSample.Author.Data
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/> class.</summary>
     public AuthorEntity()
     {
-      Name = string.Empty;
+      Name  = string.Empty;
+      Books = new List<BookEntity>();
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/> class.</summary>
     /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity)
+    public AuthorEntity(IAuthorEntity authorEntity) : this()
     {
-      Name = authorEntity.Name;
       Id   = authorEntity.Id;
+      Name = authorEntity.Name;
     }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
     public string Name { get; }
+
+    /// <summary>Gets an object that represents a collection of this author's books.</summary>
+    public IEnumerable<BookEntity> Books { get; set; }
   }
 }
