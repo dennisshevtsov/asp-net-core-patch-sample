@@ -31,10 +31,7 @@ namespace AspNetPatchSample.Book.Data
              .IsRequired()
              .HasMaxLength(256);
 
-      builder.Property(entity => entity.Author)
-             .HasColumnName("author")
-             .IsRequired()
-             .HasMaxLength(256);
+      builder.Ignore(entity => entity.Author);
 
       builder.Property(entity => entity.Description)
              .HasColumnName("description")
