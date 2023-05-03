@@ -13,28 +13,42 @@ namespace AspNetPatchSample.Book.Data
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
     public BookEntity()
     {
-      Title       = string.Empty;
-      Author      = string.Empty;
+      Title = string.Empty;
+      Author = string.Empty;
       Description = string.Empty;
-      Authors     = new List<AuthorEntity>();
+      Authors = new List<AuthorEntity>();
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
     public BookEntity(IBookEntity bookEntity) : this()
     {
-      Id          = bookEntity.Id;
-      Title       = bookEntity.Title;
-      Author      = bookEntity.Author;
+      Id = bookEntity.Id;
+      Title = bookEntity.Title;
+      Author = bookEntity.Author;
       Description = bookEntity.Description;
-      Pages       = bookEntity.Pages;
+      Pages = bookEntity.Pages;
     }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Author { get; }
+    public string Author
+    {
+      get
+      {
+        if (Authors == null)
+        {
+          return string.Empty;
+        }
+
+        var authors = Authors.Select(entity => entity.Name)
+                             .ToArray();
+
+        return string.Join(", ", authors);
+      }
+    }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public string Description { get; }
