@@ -14,7 +14,6 @@ namespace AspNetPatchSample.Book.Data
     public BookEntity()
     {
       Title = string.Empty;
-      Author = string.Empty;
       Description = string.Empty;
       Authors = new List<AuthorEntity>();
     }
@@ -25,7 +24,6 @@ namespace AspNetPatchSample.Book.Data
     {
       Id = bookEntity.Id;
       Title = bookEntity.Title;
-      Author = bookEntity.Author;
       Description = bookEntity.Description;
       Pages = bookEntity.Pages;
     }
