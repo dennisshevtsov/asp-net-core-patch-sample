@@ -4,15 +4,16 @@
 
 namespace AspNetPatchSample.Book.Data
 {
+  using System.Threading;
+  using System.Threading.Tasks;
+
   using Microsoft.EntityFrameworkCore;
 
+  using AspNetPatchSample;
   using AspNetPatchSample.Book;
   using AspNetPatchSample.Data;
-  using System.Threading.Tasks;
-  using AspNetPatchSample;
-  using System.Threading;
-  using AspNetPatchSample.Author.Data;
   using AspNetPatchSample.Data.Book;
+  using System.Collections.Generic;
 
   /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</summary>
   public sealed class BookRepository : RepositoryBase<IBookEntity, BookEntity>, IBookRepository
@@ -31,15 +32,34 @@ namespace AspNetPatchSample.Book.Data
     public override async Task<IBookEntity> AddAsync(IBookEntity entity, CancellationToken cancellationToken)
     {
       var dbBookEntity = await base.AddAsync(entity, cancellationToken);
-
-      var bookAuthorEntities =
-        entity.Authors.Select(entity => new BookAuthorEntity(dbBookEntity.Id, entity.Id))
-                      .ToArray();
-
-      DbContext.AddRange(bookAuthorEntities);
-      await DbContext.SaveChangesAsync(cancellationToken);
+      await AddBookAuthors(entity, cancellationToken);
 
       return dbBookEntity;
+    }
+
+    public override async Task UpdateAsync(IBookEntity bookEntity, IEnumerable<string> properties, CancellationToken cancellationToken)
+    {
+      if (properties.Contains(nameof(IBookEntity.Authors)))
+      {
+        await DbContext.Set<BookAuthorEntity>()
+                       .Where(entity => entity.BookId == bookEntity.Id)
+                       .ExecuteDeleteAsync(cancellationToken);
+
+        await AddBookAuthors(bookEntity, cancellationToken);
+      }
+
+      await base.UpdateAsync(bookEntity, properties, cancellationToken);
+    }
+
+    private Task AddBookAuthors(IBookEntity bookEntity, CancellationToken cancellationToken)
+    {
+      var bookAuthorEntities =
+        bookEntity.Authors.Select(entity => new BookAuthorEntity(bookEntity.Id, entity.Id))
+                          .ToArray();
+
+      DbContext.AddRange(bookAuthorEntities);
+
+      return DbContext.SaveChangesAsync(cancellationToken);
     }
   }
 }
