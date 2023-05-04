@@ -9,6 +9,7 @@ namespace AspNetPatchSample.Book.Data
   using Microsoft.EntityFrameworkCore.ValueGeneration;
 
   using AspNetPatchSample.Author.Data;
+  using AspNetPatchSample.Data.Book;
 
   /// <summary>Defines an entity type configuration for the <see cref="AspNetPatchSample.Book.Data.BookEntity"/>.</summary>
   public sealed class BookEntityTypeConfiguration : IEntityTypeConfiguration<BookEntity>
@@ -43,16 +44,16 @@ namespace AspNetPatchSample.Book.Data
       builder.Ignore(entity => entity.Authors);
       builder.HasMany(entity => entity.BookAuthors)
              .WithMany(entity => entity.Books)
-             .UsingEntity(
+             .UsingEntity<BookAuthorEntity>(
                 "book_author",
-                builder => builder.HasOne(typeof(BookEntity))
+                builder => builder.HasOne<AuthorEntity>()
                                   .WithMany()
-                                  .HasForeignKey("bookId")
-                                  .HasPrincipalKey(nameof(BookEntity.Id)),
-                builder => builder.HasOne(typeof(AuthorEntity))
+                                  .HasForeignKey(entity => entity.AuthorId)
+                                  .HasPrincipalKey(entity => entity.Id),
+                builder => builder.HasOne<BookEntity>()
                                   .WithMany()
-                                  .HasForeignKey("authorId")
-                                  .HasPrincipalKey(nameof(AuthorEntity.Id))
+                                  .HasForeignKey(entity => entity.BookId)
+                                  .HasPrincipalKey(entity => entity.Id)
               );
     }
   }
