@@ -12,6 +12,7 @@ namespace AspNetPatchSample.Book.Data
   using AspNetPatchSample;
   using System.Threading;
   using AspNetPatchSample.Author.Data;
+  using AspNetPatchSample.Data.Book;
 
   /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</summary>
   public sealed class BookRepository : RepositoryBase<IBookEntity, BookEntity>, IBookRepository
@@ -26,5 +27,19 @@ namespace AspNetPatchSample.Book.Data
                         .Include(entity => entity.Authors)
                         .Where(entity => entity.Id == identity.Id)
                         .SingleOrDefaultAsync(cancellationToken);
+
+    public override async Task<IBookEntity> AddAsync(IBookEntity entity, CancellationToken cancellationToken)
+    {
+      var dbBookEntity = await base.AddAsync(entity, cancellationToken);
+
+      var bookAuthorEntities =
+        entity.Authors.Select(entity => new BookAuthorEntity(dbBookEntity.Id, entity.Id))
+                      .ToArray();
+
+      DbContext.AddRange(bookAuthorEntities);
+      await DbContext.SaveChangesAsync(cancellationToken);
+
+      return dbBookEntity;
+    }
   }
 }
