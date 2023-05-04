@@ -31,8 +31,6 @@ namespace AspNetPatchSample.Book.Data
              .IsRequired()
              .HasMaxLength(256);
 
-      builder.Ignore(entity => entity.Author);
-
       builder.Property(entity => entity.Description)
              .HasColumnName("description")
              .IsRequired()
@@ -42,7 +40,8 @@ namespace AspNetPatchSample.Book.Data
              .HasColumnName("pages")
              .IsRequired();
 
-      builder.HasMany(entity => entity.Authors)
+      builder.Ignore(entity => entity.Authors);
+      builder.HasMany(entity => entity.BookAuthors)
              .WithMany(entity => entity.Books)
              .UsingEntity(
                 "book_author",

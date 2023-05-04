@@ -32,7 +32,7 @@ namespace AspNetPatchSample.Author.Data
              .HasMaxLength(256);
 
       builder.HasMany(entity => entity.Books)
-             .WithMany(entity => entity.Authors)
+             .WithMany(entity => entity.BookAuthors)
              .UsingEntity(
                 "book_author",
                 builder => builder.HasOne(typeof(AuthorEntity))
