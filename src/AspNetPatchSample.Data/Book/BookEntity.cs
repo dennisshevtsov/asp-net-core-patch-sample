@@ -27,6 +27,8 @@ namespace AspNetPatchSample.Book.Data
       Title       = bookEntity.Title;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
+      BookAuthors = bookEntity.Authors.Select(entity => new AuthorEntity(entity))
+                                      .ToList();
     }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
