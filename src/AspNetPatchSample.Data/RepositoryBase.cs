@@ -73,9 +73,14 @@ namespace AspNetPatchSample.Data
       var dbEntity = Create(entity);
       var dbEntityEntry = DbContext.Entry(dbEntity);
 
-      foreach (var propertyName in properties)
+      var propertyHash = properties.ToHashSet();
+
+      foreach (var property in dbEntityEntry.Properties)
       {
-        dbEntityEntry.Property(propertyName).IsModified = true;
+        if (propertyHash.Contains(property.Metadata.Name))
+        {
+          property.IsModified = true;
+        }
       }
 
       await DbContext.SaveChangesAsync(cancellationToken);
