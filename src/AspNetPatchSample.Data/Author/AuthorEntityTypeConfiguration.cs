@@ -31,20 +31,6 @@ namespace AspNetPatchSample.Author.Data
              .HasColumnName("name")
              .IsRequired()
              .HasMaxLength(256);
-
-      builder.HasMany(entity => entity.Books)
-             .WithMany(entity => entity.BookAuthors)
-             .UsingEntity<BookAuthorEntity>(
-                "book_author",
-                builder => builder.HasOne<BookEntity>()
-                                  .WithMany()
-                                  .HasForeignKey(entity => entity.BookId)
-                                  .HasPrincipalKey(entity => entity.Id),
-                builder => builder.HasOne<AuthorEntity>()
-                                  .WithMany()
-                                  .HasForeignKey(entity => entity.AuthorId)
-                                  .HasPrincipalKey(entity => entity.Id)
-              );
     }
   }
 }
