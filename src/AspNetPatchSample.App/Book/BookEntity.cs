@@ -30,7 +30,7 @@ namespace AspNetPatchSample.Book.App
     public int Pages { get; private set; }
 
     /// <summary>Gets an object that represents a collection of authors of this book.</summary>
-    public IEnumerable<IAuthorEntity> Authors { get; }
+    public IEnumerable<IAuthorEntity> Authors { get; private set; }
 
     /// <summary>Updates this book.</summary>
     /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>
