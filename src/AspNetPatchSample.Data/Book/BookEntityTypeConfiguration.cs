@@ -53,7 +53,17 @@ namespace AspNetPatchSample.Book.Data
                 builder => builder.HasOne<BookEntity>()
                                   .WithMany()
                                   .HasForeignKey(entity => entity.BookId)
-                                  .HasPrincipalKey(entity => entity.Id)
+                                  .HasPrincipalKey(entity => entity.Id),
+                builder =>
+                {
+                  builder.Property(entity => entity.AuthorId)
+                         .HasColumnName("author_id")
+                         .IsRequired();
+
+                  builder.Property(entity => entity.BookId)
+                         .HasColumnName("book_id")
+                         .IsRequired();
+                }
               );
     }
   }
