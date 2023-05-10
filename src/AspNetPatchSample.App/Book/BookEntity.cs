@@ -5,6 +5,7 @@
 namespace AspNetPatchSample.Book.App
 {
   using AspNetPatchSample.App;
+  using AspNetPatchSample.Author;
 
   /// <summary>Represents a book entity.</summary>
   public sealed class BookEntity : EntityBase, IBookEntity, IUpdatable<IBookEntity>
@@ -14,22 +15,22 @@ namespace AspNetPatchSample.Book.App
     public BookEntity(IBookEntity bookEntity) : base(bookEntity)
     {
       Title       = bookEntity.Title;
-      Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
+      Authors     = bookEntity.Authors;
     }
 
     /// <summary>Gets/sets an object that represents a title of a book.</summary>
     public string Title { get; private set; }
 
     /// <summary>Gets/sets an object that represents a description of a book.</summary>
-    public string Author { get; private set; }
-
-    /// <summary>Gets/sets an object that represents a description of a book.</summary>
     public string Description { get; private set; }
 
     /// <summary>Gets/sets an object that represents a description of a book.</summary>
     public int Pages { get; private set; }
+
+    /// <summary>Gets an object that represents a collection of authors of this book.</summary>
+    public IEnumerable<IAuthorEntity> Authors { get; private set; }
 
     /// <summary>Updates this book.</summary>
     /// <param name="bookEntity">An object that represents a book entity from which this book should be updated..</param>

@@ -8,6 +8,9 @@ namespace AspNetPatchSample.Book.Data
   using Microsoft.EntityFrameworkCore.Metadata.Builders;
   using Microsoft.EntityFrameworkCore.ValueGeneration;
 
+  using AspNetPatchSample.Author.Data;
+  using AspNetPatchSample.Data.Book;
+
   /// <summary>Defines an entity type configuration for the <see cref="AspNetPatchSample.Book.Data.BookEntity"/>.</summary>
   public sealed class BookEntityTypeConfiguration : IEntityTypeConfiguration<BookEntity>
   {
@@ -29,11 +32,6 @@ namespace AspNetPatchSample.Book.Data
              .IsRequired()
              .HasMaxLength(256);
 
-      builder.Property(entity => entity.Author)
-             .HasColumnName("author")
-             .IsRequired()
-             .HasMaxLength(256);
-
       builder.Property(entity => entity.Description)
              .HasColumnName("description")
              .IsRequired()
@@ -42,6 +40,31 @@ namespace AspNetPatchSample.Book.Data
       builder.Property(entity => entity.Pages)
              .HasColumnName("pages")
              .IsRequired();
+
+      builder.Ignore(entity => entity.Authors);
+      builder.HasMany(entity => entity.BookAuthors)
+             .WithMany(entity => entity.Books)
+             .UsingEntity<BookAuthorEntity>(
+                "book_author",
+                builder => builder.HasOne<AuthorEntity>()
+                                  .WithMany()
+                                  .HasForeignKey(entity => entity.AuthorId)
+                                  .HasPrincipalKey(entity => entity.Id),
+                builder => builder.HasOne<BookEntity>()
+                                  .WithMany()
+                                  .HasForeignKey(entity => entity.BookId)
+                                  .HasPrincipalKey(entity => entity.Id),
+                builder =>
+                {
+                  builder.Property(entity => entity.AuthorId)
+                         .HasColumnName("author_id")
+                         .IsRequired();
+
+                  builder.Property(entity => entity.BookId)
+                         .HasColumnName("book_id")
+                         .IsRequired();
+                }
+              );
     }
   }
 }

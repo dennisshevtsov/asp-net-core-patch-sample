@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-using System.Text.Json.Serialization;
-
 namespace AspNetPatchSample.Book.Web
 {
+  using System.Text.Json.Serialization;
+
+  using AspNetPatchSample.Author;
+
   /// <summary>Represents a book entity.</summary>
   public sealed class GetBookResponseDto : IBookEntity
   {
@@ -15,9 +17,9 @@ namespace AspNetPatchSample.Book.Web
     {
       Id          = orderEntity.Id;
       Title       = orderEntity.Title;
-      Author      = orderEntity.Author;
       Description = orderEntity.Description;
       Pages       = orderEntity.Pages;
+      Authors     = AuthorDto.Copy(orderEntity.Authors);
     }
 
     /// <summary>Gets/sets an object that represents an ID of a book.</summary>
@@ -28,12 +30,35 @@ namespace AspNetPatchSample.Book.Web
     public string Title { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Author { get; }
-
-    /// <summary>Gets an object that represents a description of a book.</summary>
     public string Description { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; }
+
+    /// <summary>Gets an object that represents a collection of authors of this book.</summary>
+    public IEnumerable<IAuthorEntity> Authors { get; }
+
+    /// <summary>Represents an author entity.</summary>
+    public sealed class AuthorDto : IAuthorEntity
+    {
+      /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Web.GetBookResponseDto.AuthorDto"/> class.</summary>
+      /// <param name="authorEntity">An object that represents an author entity.</param>
+      public AuthorDto(IAuthorEntity authorEntity)
+      {
+        Id   = authorEntity.Id;
+        Name = authorEntity.Name;
+      }
+
+      /// <summary>Gets an object that represents an ID of an author.</summary>
+      [JsonPropertyName("authorId")]
+      public Guid Id { get; }
+
+      /// <summary>Gets an object that represents a name of an author.</summary>
+      public string Name { get; }
+
+      public static IEnumerable<IAuthorEntity> Copy(IEnumerable<IAuthorEntity> authorEntities)
+        => authorEntities.Select(entity => new AuthorDto(entity))
+                         .ToArray();
+    }
   }
 }

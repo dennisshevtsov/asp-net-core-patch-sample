@@ -4,6 +4,8 @@
 
 namespace AspNetPatchSample.Book.Data
 {
+  using AspNetPatchSample.Author;
+  using AspNetPatchSample.Author.Data;
   using AspNetPatchSample.Data;
 
   /// <summary>Represents a book entity.</summary>
@@ -13,31 +15,35 @@ namespace AspNetPatchSample.Book.Data
     public BookEntity()
     {
       Title       = string.Empty;
-      Author      = string.Empty;
       Description = string.Empty;
+      BookAuthors = new List<AuthorEntity>();
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
-    public BookEntity(IBookEntity bookEntity)
+    public BookEntity(IBookEntity bookEntity) : this()
     {
       Id          = bookEntity.Id;
       Title       = bookEntity.Title;
-      Author      = bookEntity.Author;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
+      BookAuthors = bookEntity.Authors.Select(entity => new AuthorEntity(entity))
+                                      .ToList();
     }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Author { get; }
-
-    /// <summary>Gets an object that represents a description of a book.</summary>
     public string Description { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; }
+
+    /// <summary>Gets an object that represents a collection of authors of this book.</summary>
+    public IEnumerable<AuthorEntity> BookAuthors { get; }
+
+    /// <summary>Gets an object that represents a collection of authors of this book.</summary>
+    public IEnumerable<IAuthorEntity> Authors => BookAuthors;
   }
 }

@@ -4,8 +4,12 @@
 
 namespace AspNetPatchSample.Book.Data
 {
+  using System.Threading;
+  using System.Threading.Tasks;
+
   using Microsoft.EntityFrameworkCore;
 
+  using AspNetPatchSample;
   using AspNetPatchSample.Book;
   using AspNetPatchSample.Data;
 
@@ -15,5 +19,12 @@ namespace AspNetPatchSample.Book.Data
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookRepository"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
     public BookRepository(DbContext dbContext) : base(dbContext) { }
+
+    public override async Task<IBookEntity?> GetAsync(IIdentity identity, CancellationToken cancellationToken)
+      => await DbContext.Set<BookEntity>()
+                        .AsNoTracking()
+                        .Include(entity => entity.BookAuthors)
+                        .Where(entity => entity.Id == identity.Id)
+                        .SingleOrDefaultAsync(cancellationToken);
   }
 }

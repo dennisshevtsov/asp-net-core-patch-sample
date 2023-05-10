@@ -8,6 +8,9 @@ namespace AspNetPatchSample.Author.Data
   using Microsoft.EntityFrameworkCore.Metadata.Builders;
   using Microsoft.EntityFrameworkCore.ValueGeneration;
 
+  using AspNetPatchSample.Book.Data;
+  using AspNetPatchSample.Data.Book;
+
   /// <summary>Defines an entity type configuration for the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/>.</summary>
   public sealed class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<AuthorEntity>
   {

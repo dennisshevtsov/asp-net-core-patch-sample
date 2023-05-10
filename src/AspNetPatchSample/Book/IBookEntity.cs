@@ -4,6 +4,8 @@
 
 namespace AspNetPatchSample.Book
 {
+  using AspNetPatchSample.Author;
+
   /// <summary>Represents a book entity.</summary>
   public interface IBookEntity : IBookIdentity
   {
@@ -11,12 +13,12 @@ namespace AspNetPatchSample.Book
     public string Title { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Author { get; }
-
-    /// <summary>Gets an object that represents a description of a book.</summary>
     public string Description { get; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     public int Pages { get; }
+
+    /// <summary>Gets an object that represents a collection of authors of this book.</summary>
+    public IEnumerable<IAuthorEntity> Authors { get; }
   }
 }

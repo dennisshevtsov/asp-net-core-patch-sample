@@ -45,6 +45,18 @@ namespace AspNetPatchSample.Data
       var dbEntityEntry = DbContext.Entry(dbEntity);
 
       dbEntityEntry.State = EntityState.Added;
+
+      foreach (var collectionEntry in dbEntityEntry.Collections)
+      {
+        if (collectionEntry.CurrentValue != null)
+        {
+          foreach (var collectionItemEntity in collectionEntry.CurrentValue)
+          {
+            DbContext.Entry(collectionItemEntity).State = EntityState.Unchanged;
+          }
+        }
+      }
+
       await DbContext.SaveChangesAsync(cancellationToken);
       dbEntityEntry.State = EntityState.Detached;
 
@@ -61,9 +73,14 @@ namespace AspNetPatchSample.Data
       var dbEntity = Create(entity);
       var dbEntityEntry = DbContext.Entry(dbEntity);
 
-      foreach (var propertyName in properties)
+      var propertyHash = properties.ToHashSet();
+
+      foreach (var property in dbEntityEntry.Properties)
       {
-        dbEntityEntry.Property(propertyName).IsModified = true;
+        if (propertyHash.Contains(property.Metadata.Name))
+        {
+          property.IsModified = true;
+        }
       }
 
       await DbContext.SaveChangesAsync(cancellationToken);
