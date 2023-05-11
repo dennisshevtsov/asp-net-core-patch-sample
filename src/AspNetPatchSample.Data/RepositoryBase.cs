@@ -70,14 +70,14 @@ namespace AspNetPatchSample.Data
     /// <returns>An object that represents an asynchronous operation.</returns>
     public virtual async Task UpdateAsync(TInterface entity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
-      var sourceEntity      = Create(entity);
-      var destinationEntity = new TImplementation();
-      destinationEntity.Id  = entity.Id;
+      var source      = Create(entity);
+      var destination = new TImplementation();
+      destination.Id  = entity.Id;
 
-      await MergeAsync(sourceEntity, destinationEntity, properties, cancellationToken);
+      await MergeAsync(source, destination, properties, cancellationToken);
       await DbContext.SaveChangesAsync(cancellationToken);
 
-      DbContext.Entry(destinationEntity).State = EntityState.Detached;
+      DbContext.Entry(destination).State = EntityState.Detached;
     }
 
     /// <summary>Deletes an entity by its ID.</summary>
@@ -102,10 +102,25 @@ namespace AspNetPatchSample.Data
 
     protected virtual Task MergeAsync(
       TImplementation source,
-      TImplementation desctination,
+      TImplementation destination,
       IEnumerable<string> properties,
       CancellationToken cancellationToken)
     {
+      var sourceEntry      = DbContext.Entry(source);
+      var destinationEntry = DbContext.Entry(destination);
+      var propertyHash     = properties.ToHashSet();
+
+      foreach (var sourceProperty in sourceEntry.Properties)
+      {
+        if (propertyHash.Contains(sourceProperty.Metadata.Name))
+        {
+          var destinationProperty = destinationEntry.Property(sourceProperty.Metadata.Name);
+
+          destinationProperty.CurrentValue = sourceProperty.CurrentValue;
+          destinationProperty.IsModified   = true;
+        }
+      }
+
       return Task.CompletedTask;
     }
   }
