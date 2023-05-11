@@ -7,6 +7,7 @@ namespace AspNetPatchSample.Data
   using Microsoft.EntityFrameworkCore;
   
   using AspNetPatchSample;
+  using System.Collections;
 
   /// <summary>Provides a simple API to store instances of the <see cref="TInterface"/>.</summary>
   /// <typeparam name="TInterface">Type of an entity.</typeparam>
@@ -100,7 +101,7 @@ namespace AspNetPatchSample.Data
     protected virtual TImplementation Create(TInterface entity)
       => (TImplementation)Activator.CreateInstance(typeof(TImplementation), entity)!;
 
-    protected virtual Task MergeAsync(
+    protected virtual async Task MergeAsync(
       TImplementation source,
       TImplementation destination,
       IEnumerable<string> properties,
@@ -121,7 +122,39 @@ namespace AspNetPatchSample.Data
         }
       }
 
-      return Task.CompletedTask;
+      foreach (var sourceCollection in sourceEntry.Collections)
+      {
+        if (sourceCollection.CurrentValue != null)
+        {
+          var destinationCollection = destinationEntry.Collection(sourceCollection.Metadata.Name);
+
+          await destinationCollection.LoadAsync(cancellationToken);
+
+          var destinationHash = destinationCollection.CurrentValue!.Cast<object>()
+                                                                   .ToHashSet();
+
+          var sourceHash = sourceCollection.CurrentValue!.Cast<object>()
+                                                         .ToHashSet();
+
+          var removing = destinationHash.Where(entity => !sourceHash.Contains(entity))
+                                        .ToList();
+
+          var adding   = sourceHash.Where(entity => !destinationHash.Contains(entity))
+                                   .ToList();
+
+          var destinationCollectionValue = (IList)destinationCollection.CurrentValue!;
+
+          foreach (var entity in removing)
+          {
+            destinationCollectionValue.Remove(entity);
+          }
+
+          foreach(var entity in adding)
+          {
+            destinationCollectionValue.Add(entity);
+          }
+        }
+      }
     }
   }
 }
