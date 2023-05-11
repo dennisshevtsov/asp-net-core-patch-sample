@@ -11,8 +11,8 @@ namespace AspNetPatchSample.Data
   /// <summary>Provides a simple API to store instances of the <see cref="TInterface"/>.</summary>
   /// <typeparam name="TInterface">Type of an entity.</typeparam>
   public abstract class RepositoryBase<TInterface, TImplementation> : IRepository<TInterface>
-    where TImplementation : EntityBase, TInterface
-    where TInterface      : class
+    where TImplementation : EntityBase, TInterface, new()
+    where TInterface      : class, IIdentity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Data.RepositoryBase{TInterface, TImplementation}"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
@@ -70,21 +70,14 @@ namespace AspNetPatchSample.Data
     /// <returns>An object that represents an asynchronous operation.</returns>
     public virtual async Task UpdateAsync(TInterface entity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
-      var dbEntity = Create(entity);
-      var dbEntityEntry = DbContext.Entry(dbEntity);
+      var sourceEntity      = Create(entity);
+      var destinationEntity = new TImplementation();
+      destinationEntity.Id  = entity.Id;
 
-      var propertyHash = properties.ToHashSet();
-
-      foreach (var property in dbEntityEntry.Properties)
-      {
-        if (propertyHash.Contains(property.Metadata.Name))
-        {
-          property.IsModified = true;
-        }
-      }
-
+      await MergeAsync(sourceEntity, destinationEntity, properties, cancellationToken);
       await DbContext.SaveChangesAsync(cancellationToken);
-      dbEntityEntry.State = EntityState.Detached;
+
+      DbContext.Entry(destinationEntity).State = EntityState.Detached;
     }
 
     /// <summary>Deletes an entity by its ID.</summary>
@@ -106,5 +99,14 @@ namespace AspNetPatchSample.Data
 
     protected virtual TImplementation Create(TInterface entity)
       => (TImplementation)Activator.CreateInstance(typeof(TImplementation), entity)!;
+
+    protected virtual Task MergeAsync(
+      TImplementation source,
+      TImplementation desctination,
+      IEnumerable<string> properties,
+      CancellationToken cancellationToken)
+    {
+      return Task.CompletedTask;
+    }
   }
 }
