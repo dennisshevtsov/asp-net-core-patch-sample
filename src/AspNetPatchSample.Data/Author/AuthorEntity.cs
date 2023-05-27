@@ -21,9 +21,12 @@ namespace AspNetPatchSample.Author.Data
     /// <param name="authorEntity">An object that represents an author entity.</param>
     public AuthorEntity(IAuthorEntity authorEntity) : this()
     {
-      Id   = authorEntity.Id;
-      Name = authorEntity.Name;
+      AuthorId = authorEntity.AuthorId;
+      Name     = authorEntity.Name;
     }
+
+    /// <summary>Gets an object that represents an ID of an author.</summary>
+    public Guid AuthorId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
     public string Name { get; }
