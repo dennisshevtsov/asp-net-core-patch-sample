@@ -23,13 +23,16 @@ namespace AspNetPatchSample.Book.Data
     /// <param name="bookEntity">An object that represents a book entity.</param>
     public BookEntity(IBookEntity bookEntity) : this()
     {
-      Id          = bookEntity.Id;
+      BookId      = bookEntity.BookId;
       Title       = bookEntity.Title;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
       BookAuthors = bookEntity.Authors.Select(entity => new AuthorEntity(entity))
                                       .ToList();
     }
+
+    /// <summary>Gets an object that represents an ID of a book.</summary>
+    public Guid BookId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; }

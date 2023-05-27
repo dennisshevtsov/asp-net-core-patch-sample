@@ -9,22 +9,21 @@ namespace AspNetPatchSample.Book.Data
 
   using Microsoft.EntityFrameworkCore;
 
-  using AspNetPatchSample;
   using AspNetPatchSample.Book;
   using AspNetPatchSample.Data;
 
   /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</summary>
-  public sealed class BookRepository : RepositoryBase<IBookEntity, BookEntity>, IBookRepository
+  public sealed class BookRepository : RepositoryBase<BookEntity, IBookEntity, IBookIdentity>, IBookRepository
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookRepository"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
     public BookRepository(DbContext dbContext) : base(dbContext) { }
 
-    public override async Task<IBookEntity?> GetAsync(IIdentity identity, CancellationToken cancellationToken)
+    public override async Task<IBookEntity?> GetAsync(IBookIdentity identity, CancellationToken cancellationToken)
       => await DbContext.Set<BookEntity>()
                         .AsNoTracking()
                         .Include(entity => entity.BookAuthors)
-                        .Where(entity => entity.Id == identity.Id)
+                        .Where(entity => entity.Id == identity.BookId)
                         .SingleOrDefaultAsync(cancellationToken);
   }
 }

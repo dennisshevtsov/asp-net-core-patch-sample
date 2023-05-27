@@ -10,7 +10,7 @@ namespace AspNetPatchSample.Author.Data
   using AspNetPatchSample.Data;
 
   /// <summary>Provides a simple API to store instances of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</summary>
-  public sealed class AuthorRepository : RepositoryBase<IAuthorEntity, AuthorEntity>, IAuthorRepository
+  public sealed class AuthorRepository : RepositoryBase<AuthorEntity, IAuthorEntity, IAuthorIdentity>, IAuthorRepository
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Data.AuthorRepository"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>

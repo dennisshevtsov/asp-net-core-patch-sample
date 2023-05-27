@@ -7,42 +7,51 @@ namespace AspNetPatchSample.Data
   using Microsoft.EntityFrameworkCore;
   
   using AspNetPatchSample;
-  using System.Collections;
 
-  /// <summary>Provides a simple API to store instances of the <see cref="TInterface"/>.</summary>
-  /// <typeparam name="TInterface">Type of an entity.</typeparam>
-  public abstract class RepositoryBase<TInterface, TImplementation> : IRepository<TInterface>
-    where TImplementation : EntityBase, TInterface, new()
-    where TInterface      : class, IIdentity
+  /// <summary>Provides a simple API to persistence of an entity.</summary>
+  public abstract class RepositoryBase<TEntityImpl, TEntity, TIdentity> : IRepository<TEntity, TIdentity>
+    where TEntityImpl : EntityBase, TEntity
+    where TEntity     : class, TIdentity
+    where TIdentity   : class
   {
-    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Data.RepositoryBase{TInterface, TImplementation}"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="RepositoryBase{TEntity, TIdentity}"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
-    public RepositoryBase(DbContext dbContext)
+    protected RepositoryBase(DbContext dbContext)
     {
       DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
+    /// <summary>Gets an object that represents a session with the database and can be used to query and save instances of your entities.</summary>
     protected DbContext DbContext { get; }
 
-    /// <summary>Gets an entity by its ID.</summary>
-    /// <param name="identity">An object that represents an identity.</param>
+    /// <summary>Gets an entity.</summary>
+    /// <param name="identity">An object that represents an identity of an entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
-    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="TEntity"/>. The result can be null.</returns>
-    public virtual async Task<TInterface?> GetAsync(IIdentity identity, CancellationToken cancellationToken)
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future.</returns>
+    public virtual async Task<TEntity?> GetAsync(TIdentity identity, CancellationToken cancellationToken)
     {
-      return await DbContext.Set<TImplementation>()
-                            .AsNoTracking()
-                            .Where(entity => entity.Id == identity.Id)
-                            .SingleOrDefaultAsync(cancellationToken);
+      var id = EntityBase.Create<TIdentity, TEntityImpl>(identity).Id;
+      var query = DbContext.Set<TEntityImpl>()
+                           .AsNoTracking()
+                           .Where(entity => entity.Id == id);
+
+      return await query.SingleOrDefaultAsync(cancellationToken);
     }
 
+    /// <summary>Includes relations.</summary>
+    /// <param name="query">An object that represents a query of entities.</param>
+    /// <param name="relations">An object that represents a collection of relations to load.</param>
+    /// <returns>An object that represents a query of entities.</returns>
+    protected virtual IQueryable<TEntityImpl> IncludeRelations(
+      IQueryable<TEntityImpl> query, IEnumerable<string> relations) => query;
+
     /// <summary>Adds an entity.</summary>
-    /// <param name="entity">An object that reprents an entity.</param>
+    /// <param name="entity">An object that represents an entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
-    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="Domain.Book.IBookEntity"/>.</returns>
-    public virtual async Task<TInterface> AddAsync(TInterface entity, CancellationToken cancellationToken)
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future.</returns>
+    public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
     {
-      var dbEntity = Create(entity);
+      var dbEntity = EntityBase.Create<TEntity, TEntityImpl>(entity);
       var dbEntityEntry = DbContext.Entry(dbEntity);
 
       dbEntityEntry.State = EntityState.Added;
@@ -65,96 +74,33 @@ namespace AspNetPatchSample.Data
     }
 
     /// <summary>Updates an entity.</summary>
-    /// <param name="entity">An object that represents an entity.</param>
+    /// <param name="originalEntity">An object that represents an entity to update.</param>
+    /// <param name="newEntity">An object that represents an entity from which the original entity should be updated.</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public virtual async Task UpdateAsync(TInterface entity, IEnumerable<string> properties, CancellationToken cancellationToken)
+    public async Task UpdateAsync(TEntity originalEntity, TEntity newEntity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
-      var source      = Create(entity);
-      var destination = new TImplementation();
-      destination.Id  = entity.Id;
+      var dbEntity = EntityBase.Create<TEntity, TEntityImpl>(originalEntity);
+      var dbEntityEntry = DbContext.Attach(originalEntity);
 
-      await MergeAsync(source, destination, properties, cancellationToken);
+      dbEntity.Update(newEntity, properties);
+
       await DbContext.SaveChangesAsync(cancellationToken);
-
-      DbContext.Entry(destination).State = EntityState.Detached;
+      dbEntityEntry.State = EntityState.Detached;
     }
 
-    /// <summary>Deletes an entity by its ID.</summary>
-    /// <param name="identity">An object that represents an identity.</param>
+    /// <summary>Deletes an entity.</summary>
+    /// <param name="identity">An object that represents an identity of an entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public async Task DeleteAsync(IIdentity identity, CancellationToken cancellationToken)
+    public virtual Task DeleteAsync(TIdentity identity, CancellationToken cancellationToken)
     {
-      var entity = await DbContext.Set<TImplementation>()
-                                  .Where(entity => entity.Id == identity.Id)
-                                  .SingleOrDefaultAsync(cancellationToken);
+      var id = EntityBase.Create<TIdentity, TEntityImpl>(identity).Id;
 
-      if (entity != null)
-      {
-        DbContext.Entry(entity).State = EntityState.Deleted;
-        await DbContext.SaveChangesAsync(cancellationToken);
-      }
-    }
-
-    protected virtual TImplementation Create(TInterface entity)
-      => (TImplementation)Activator.CreateInstance(typeof(TImplementation), entity)!;
-
-    protected virtual async Task MergeAsync(
-      TImplementation source,
-      TImplementation destination,
-      IEnumerable<string> properties,
-      CancellationToken cancellationToken)
-    {
-      var sourceEntry      = DbContext.Entry(source);
-      var destinationEntry = DbContext.Entry(destination);
-      var propertyHash     = properties.ToHashSet();
-
-      foreach (var sourceProperty in sourceEntry.Properties)
-      {
-        if (propertyHash.Contains(sourceProperty.Metadata.Name))
-        {
-          var destinationProperty = destinationEntry.Property(sourceProperty.Metadata.Name);
-
-          destinationProperty.CurrentValue = sourceProperty.CurrentValue;
-          destinationProperty.IsModified   = true;
-        }
-      }
-
-      foreach (var sourceCollection in sourceEntry.Collections)
-      {
-        if (sourceCollection.CurrentValue != null)
-        {
-          var destinationCollection = destinationEntry.Collection(sourceCollection.Metadata.Name);
-
-          await destinationCollection.LoadAsync(cancellationToken);
-
-          var destinationHash = destinationCollection.CurrentValue!.Cast<object>()
-                                                                   .ToHashSet();
-
-          var sourceHash = sourceCollection.CurrentValue!.Cast<object>()
-                                                         .ToHashSet();
-
-          var removing = destinationHash.Where(entity => !sourceHash.Contains(entity))
-                                        .ToList();
-
-          var adding   = sourceHash.Where(entity => !destinationHash.Contains(entity))
-                                   .ToList();
-
-          var destinationCollectionValue = (IList)destinationCollection.CurrentValue!;
-
-          foreach (var entity in removing)
-          {
-            destinationCollectionValue.Remove(entity);
-          }
-
-          foreach(var entity in adding)
-          {
-            destinationCollectionValue.Add(entity);
-          }
-        }
-      }
+      return DbContext.Set<TEntityImpl>()
+                      .Where(entity => entity.Id == id)
+                      .ExecuteDeleteAsync(cancellationToken);
     }
   }
 }
