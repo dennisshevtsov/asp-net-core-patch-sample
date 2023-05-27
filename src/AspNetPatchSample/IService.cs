@@ -5,9 +5,9 @@
 namespace AspNetPatchSample
 {
   /// <summary>Provides a simple GRUD API.</summary>
-  /// <typeparam name="TIdentity">An identity type.</typeparam>
   /// <typeparam name="TEntity">An entity type.</typeparam>
-  public interface IService<TIdentity, TEntity>
+  /// <typeparam name="TIdentity">An identity type.</typeparam>
+  public interface IService<TEntity, TIdentity>
   {
     /// <summary>Gets an entity.</summary>
     /// <param name="identity">An object that represents an identity to get.</param>
