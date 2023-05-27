@@ -4,10 +4,6 @@
 
 namespace AspNetPatchSample.Author.Web
 {
-  using System.Text.Json.Serialization;
-
-  using AspNetPatchSample.Web;
-
   /// <summary>Represents the PUT author request data.</summary>
   public sealed class PutAuthorRequestDto : AuthorRequestDtoBase, IAuthorEntity
   {
