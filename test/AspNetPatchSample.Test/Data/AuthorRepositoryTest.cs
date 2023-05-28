@@ -19,5 +19,15 @@ namespace AspNetPatchSample.Test.Data
     {
       _authorRepository = provider.GetRequiredService<IAuthorRepository>();
     }
+
+    [TestMethod]
+    public async Task GetAsync_ExistingAuthorIdPassed_AuthorReturned()
+    {
+      var controlAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
+      var actualAuthorEntity = await _authorRepository.GetAsync(controlAuthorEntity, CancellationToken.None);
+
+      Assert.IsNotNull(actualAuthorEntity);
+      TestAuthorEntity.AreEqual(controlAuthorEntity, actualAuthorEntity);
+    }
   }
 }
