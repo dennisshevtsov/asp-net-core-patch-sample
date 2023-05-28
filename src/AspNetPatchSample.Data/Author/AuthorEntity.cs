@@ -18,18 +18,24 @@ namespace AspNetPatchSample.Author.Data
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/> class.</summary>
-    /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity) : this()
+    /// <param name="authorIdentity">An object that represents an author identity.</param>
+    public AuthorEntity(IAuthorIdentity authorIdentity) : this()
     {
-      AuthorId = authorEntity.AuthorId;
-      Name     = authorEntity.Name;
+      AuthorId = authorIdentity.AuthorId;
+    }
+
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Data.AuthorEntity"/> class.</summary>
+    /// <param name="authorEntity">An object that represents an author entity.</param>
+    public AuthorEntity(IAuthorEntity authorEntity) : this((IAuthorIdentity)authorEntity)
+    {
+      Name = authorEntity.Name;
     }
 
     /// <summary>Gets an object that represents an ID of an author.</summary>
     public Guid AuthorId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
-    public string Name { get; }
+    public string Name { get; set; }
 
     /// <summary>Gets an object that represents a collection of this author's books.</summary>
     public IEnumerable<BookEntity> Books { get; set; }
