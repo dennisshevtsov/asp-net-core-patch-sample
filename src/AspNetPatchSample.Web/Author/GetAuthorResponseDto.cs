@@ -4,8 +4,6 @@
 
 namespace AspNetPatchSample.Author.Web
 {
-  using System.Text.Json.Serialization;
-
   /// <summary>Represents the GET author response data.</summary>
   public sealed class GetAuthorResponseDto : IAuthorEntity
   {
@@ -13,13 +11,12 @@ namespace AspNetPatchSample.Author.Web
     /// <param name="authorEntity">An object that represents an author entity.</param>
     public GetAuthorResponseDto(IAuthorEntity authorEntity)
     {
-      Id   = authorEntity.Id;
-      Name = authorEntity.Name;
+      AuthorId = authorEntity.AuthorId;
+      Name     = authorEntity.Name;
     }
 
     /// <summary>Gets/sets an object that represents an ID of an author.</summary>
-    [JsonPropertyName("authorId")]
-    public Guid Id { get; }
+    public Guid AuthorId { get; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
     public string Name { get; }

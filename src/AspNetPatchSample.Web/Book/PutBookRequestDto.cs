@@ -4,9 +4,10 @@
 
 namespace AspNetPatchSample.Book.Web
 {
-  using AspNetPatchSample.Author;
   using System.ComponentModel.DataAnnotations;
   using System.Text.Json.Serialization;
+
+  using AspNetPatchSample.Author;
 
   /// <summary>Represents data to update a book.</summary>
   public sealed class PutBookRequestDto : BookRequestDtoBase, IBookEntity
@@ -49,8 +50,7 @@ namespace AspNetPatchSample.Book.Web
       }
 
       /// <summary>Gets an object that represents an ID of an author.</summary>
-      [JsonPropertyName("authorId")]
-      public Guid Id { get; set; }
+      public Guid AuthorId { get; set; }
 
       /// <summary>Gets an object that represents a name of an author.</summary>
       public string Name { get; set; }
