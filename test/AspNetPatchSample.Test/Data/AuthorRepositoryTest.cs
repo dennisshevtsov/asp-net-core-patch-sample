@@ -54,11 +54,29 @@ namespace AspNetPatchSample.Test.Data
     public async Task AddAsync_AuthorPassed_AuthorSaved()
     {
       var controlAuthorEntity = TestAuthorEntity.New();
-      var actualAuthorEntity  = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
-      var dbAuthorEntity      = await TestAuthorEntity.GetAsync(DbContext, actualAuthorEntity);
+      var addedAuthorEntity   = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
+      var actualAuthorEntity  = await TestAuthorEntity.GetAsync(DbContext, addedAuthorEntity);
 
-      Assert.IsNotNull(dbAuthorEntity);
-      TestAuthorEntity.AreEqual(controlAuthorEntity, dbAuthorEntity);
+      Assert.IsNotNull(actualAuthorEntity);
+      TestAuthorEntity.AreEqual(controlAuthorEntity, actualAuthorEntity);
+    }
+
+    [TestMethod]
+    public async Task UpdateAsync_AuthorPassed_AuthorSaved()
+    {
+      var originalAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
+      var newAuthorEntity      = TestAuthorEntity.New();
+      var updatedProperties    = new[]
+      {
+        nameof(IAuthorEntity.Name),
+      };
+
+      await _authorRepository.UpdateAsync(originalAuthorEntity, newAuthorEntity, updatedProperties, CancellationToken.None);
+
+      var actualAuthorEntity = await TestAuthorEntity.GetAsync(DbContext, originalAuthorEntity);
+
+      Assert.IsNotNull(actualAuthorEntity);
+      TestAuthorEntity.AreEqual(newAuthorEntity, actualAuthorEntity);
     }
   }
 }

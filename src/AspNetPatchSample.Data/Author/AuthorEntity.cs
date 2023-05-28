@@ -35,7 +35,7 @@ namespace AspNetPatchSample.Author.Data
     public Guid AuthorId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a name of an author.</summary>
-    public string Name { get; }
+    public string Name { get; set; }
 
     /// <summary>Gets an object that represents a collection of this author's books.</summary>
     public IEnumerable<BookEntity> Books { get; set; }
