@@ -41,10 +41,15 @@ namespace AspNetPatchSample.Test.Data
       return dataAuthorEntity;
     }
 
+    public static async Task<IAuthorEntity?> GetAsync(DbContext dbContext, IAuthorIdentity authorIdentity)
+      => await dbContext.Set<AuthorEntity>()
+                        .AsNoTracking()
+                        .Where(entity => entity.AuthorId == authorIdentity.AuthorId)
+                        .SingleOrDefaultAsync();
+
     public static void AreEqual(IAuthorEntity control, IAuthorEntity actual)
     {
-      Assert.AreEqual(control.AuthorId, actual.AuthorId);
-      Assert.AreEqual(control.Name    , actual.Name    );
+      Assert.AreEqual(control.Name, actual.Name);
     }
   }
 }

@@ -47,7 +47,18 @@ namespace AspNetPatchSample.Test.Data
       var actualAuthorEntity  = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
 
       Assert.IsNotNull(actualAuthorEntity);
-      TestAuthorEntity.AreEqual(actualAuthorEntity, actualAuthorEntity);
+      TestAuthorEntity.AreEqual(controlAuthorEntity, actualAuthorEntity);
+    }
+
+    [TestMethod]
+    public async Task AddAsync_AuthorPassed_AuthorSaved()
+    {
+      var controlAuthorEntity = TestAuthorEntity.New();
+      var actualAuthorEntity  = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
+      var dbAuthorEntity      = await TestAuthorEntity.GetAsync(DbContext, actualAuthorEntity);
+
+      Assert.IsNotNull(dbAuthorEntity);
+      TestAuthorEntity.AreEqual(controlAuthorEntity, dbAuthorEntity);
     }
   }
 }
