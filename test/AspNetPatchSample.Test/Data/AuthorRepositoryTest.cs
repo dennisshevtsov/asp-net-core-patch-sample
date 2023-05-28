@@ -90,5 +90,18 @@ namespace AspNetPatchSample.Test.Data
 
       Assert.IsNull(actualAuthorEntity);
     }
+
+    [TestMethod]
+    public async Task DeleteAsync_UnknownAuthorPassed_ExistingAuthorKept()
+    {
+      var controlAuthorEntity   = await TestAuthorEntity.AddAsync(DbContext);
+      var unknownAuthorIdentity = TestAuthorIdentity.New();
+
+      await _authorRepository.DeleteAsync(unknownAuthorIdentity, CancellationToken.None);
+
+      var actualAuthorEntity = await TestAuthorEntity.GetAsync(DbContext, controlAuthorEntity);
+
+      Assert.IsNotNull(actualAuthorEntity);
+    }
   }
 }
