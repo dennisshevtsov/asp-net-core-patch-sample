@@ -7,6 +7,7 @@ namespace AspNetPatchSample.Test.Data
   using Microsoft.Extensions.DependencyInjection;
 
   using AspNetPatchSample.Author;
+  using AspNetPatchSample.Author.Data.Test;
 
   [TestClass]
   public sealed class AuthorRepositoryTest : DataTestBase
@@ -28,6 +29,15 @@ namespace AspNetPatchSample.Test.Data
 
       Assert.IsNotNull(actualAuthorEntity);
       TestAuthorEntity.AreEqual(controlAuthorEntity, actualAuthorEntity);
+    }
+
+    [TestMethod]
+    public async Task GetAsync_UknownAuthorIdPassed_NullReturned()
+    {
+      var controlAuthorIdentity = TestAuthorIdentity.New();
+      var actualAuthorEntity    = await _authorRepository.GetAsync(controlAuthorIdentity, CancellationToken.None);
+
+      Assert.IsNull(actualAuthorEntity);
     }
   }
 }
