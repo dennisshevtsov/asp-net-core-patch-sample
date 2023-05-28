@@ -25,7 +25,7 @@ namespace AspNetPatchSample.Test.Data
     public async Task GetAsync_ExistingAuthorIdPassed_AuthorReturned()
     {
       var controlAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
-      var actualAuthorEntity = await _authorRepository.GetAsync(controlAuthorEntity, CancellationToken.None);
+      var actualAuthorEntity  = await _authorRepository.GetAsync(controlAuthorEntity, CancellationToken.None);
 
       Assert.IsNotNull(actualAuthorEntity);
       TestAuthorEntity.AreEqual(controlAuthorEntity, actualAuthorEntity);
@@ -38,6 +38,16 @@ namespace AspNetPatchSample.Test.Data
       var actualAuthorEntity    = await _authorRepository.GetAsync(controlAuthorIdentity, CancellationToken.None);
 
       Assert.IsNull(actualAuthorEntity);
+    }
+
+    [TestMethod]
+    public async Task AddAsync_AuthorPassed_AuthorReturned()
+    {
+      var controlAuthorEntity = TestAuthorEntity.New();
+      var actualAuthorEntity  = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
+
+      Assert.IsNotNull(actualAuthorEntity);
+      TestAuthorEntity.AreEqual(actualAuthorEntity, actualAuthorEntity);
     }
   }
 }
