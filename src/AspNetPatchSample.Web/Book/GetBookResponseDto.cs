@@ -4,8 +4,6 @@
 
 namespace AspNetPatchSample.Book.Web
 {
-  using System.Text.Json.Serialization;
-
   using AspNetPatchSample.Author;
 
   /// <summary>Represents a book entity.</summary>
@@ -15,7 +13,7 @@ namespace AspNetPatchSample.Book.Web
     /// <param name="orderEntity">An object that represents a book entity.</param>
     public GetBookResponseDto(IBookEntity orderEntity)
     {
-      Id          = orderEntity.Id;
+      BookId      = orderEntity.BookId;
       Title       = orderEntity.Title;
       Description = orderEntity.Description;
       Pages       = orderEntity.Pages;
@@ -23,8 +21,7 @@ namespace AspNetPatchSample.Book.Web
     }
 
     /// <summary>Gets/sets an object that represents an ID of a book.</summary>
-    [JsonPropertyName("bookId")]
-    public Guid Id { get; }
+    public Guid BookId { get; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; }
@@ -45,13 +42,12 @@ namespace AspNetPatchSample.Book.Web
       /// <param name="authorEntity">An object that represents an author entity.</param>
       public AuthorDto(IAuthorEntity authorEntity)
       {
-        Id   = authorEntity.Id;
-        Name = authorEntity.Name;
+        AuthorId = authorEntity.AuthorId;
+        Name     = authorEntity.Name;
       }
 
       /// <summary>Gets an object that represents an ID of an author.</summary>
-      [JsonPropertyName("authorId")]
-      public Guid Id { get; }
+      public Guid AuthorId { get; }
 
       /// <summary>Gets an object that represents a name of an author.</summary>
       public string Name { get; }

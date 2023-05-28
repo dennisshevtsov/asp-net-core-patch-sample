@@ -52,8 +52,7 @@ namespace AspNetPatchSample.Book.Web
       }
 
       /// <summary>Gets an object that represents an ID of an author.</summary>
-      [JsonPropertyName("authorId")]
-      public Guid Id { get; set; }
+      public Guid AuthorId { get; set; }
 
       /// <summary>Gets an object that represents a name of an author.</summary>
       public string Name { get; set; }

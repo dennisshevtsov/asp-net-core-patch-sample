@@ -4,10 +4,6 @@
 
 namespace AspNetPatchSample.Author.Web
 {
-  using System.Text.Json.Serialization;
-
-  using AspNetPatchSample.Web;
-
   /// <summary>Represents the GET author request data.</summary>
   public sealed class GetAuthorRequestDto : AuthorRequestDtoBase, IAuthorIdentity
   {
@@ -18,7 +14,7 @@ namespace AspNetPatchSample.Author.Web
     /// <param name="authorIdentity">An object that represents an author identity.</param>
     public GetAuthorRequestDto(IAuthorIdentity authorIdentity) : this()
     {
-      Id = authorIdentity.Id;
+      AuthorId = authorIdentity.AuthorId;
     }
   }
 }

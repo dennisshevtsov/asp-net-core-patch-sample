@@ -14,7 +14,7 @@ namespace AspNetPatchSample.Book.Web
     /// <param name="bookIdentity">An object that represents an identity of a book.</param>
     public GetBookRequestDto(IBookIdentity bookIdentity) : this()
     {
-      Id = bookIdentity.Id;
+      BookId = bookIdentity.BookId;
     }
   }
 }
