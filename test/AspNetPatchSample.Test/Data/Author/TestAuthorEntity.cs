@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Test.Data
+namespace AspNetPatchSample.Author.Data.Test
 {
-  using AspNetPatchSample.Author;
-  using AspNetPatchSample.Author.Data;
-
   using Microsoft.EntityFrameworkCore;
 
   public sealed class TestAuthorEntity : IAuthorEntity
