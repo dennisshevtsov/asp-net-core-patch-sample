@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSample.Test.Data
+namespace AspNetPatchSample.Author.Data.Test
 {
-  using AspNetPatchSample.Author;
-  using AspNetPatchSample.Author.Data;
-
   using Microsoft.EntityFrameworkCore;
 
   public sealed class TestAuthorEntity : IAuthorEntity
@@ -16,18 +13,21 @@ namespace AspNetPatchSample.Test.Data
       Name = string.Empty;
     }
 
-    public TestAuthorEntity(Guid authorId, string name) : this()
+    public TestAuthorEntity(IAuthorEntity authorEntity) : this()
     {
-      AuthorId = authorId;
-      Name     = name;
+      AuthorId = authorEntity.AuthorId;
+      Name     = authorEntity.Name;
     }
 
-    public Guid AuthorId { get; }
+    public Guid AuthorId { get; private init; }
 
-    public string Name { get; }
+    public string Name { get; private init; }
 
-    public static IAuthorEntity New() =>
-      new TestAuthorEntity(Guid.NewGuid(), Guid.NewGuid().ToString());
+    public static IAuthorEntity New() => new TestAuthorEntity
+    {
+      AuthorId = Guid.NewGuid(),
+      Name     = Guid.NewGuid().ToString(),
+    };
 
     public static async Task<IAuthorEntity> AddAsync(DbContext dbContext)
     {
@@ -50,6 +50,19 @@ namespace AspNetPatchSample.Test.Data
     public static void AreEqual(IAuthorEntity control, IAuthorEntity actual)
     {
       Assert.AreEqual(control.Name, actual.Name);
+    }
+
+    public static void AreEqual(IEnumerable<IAuthorEntity> control, IEnumerable<IAuthorEntity> actual)
+    {
+      var controlList = control.OrderBy(entity => entity.AuthorId).ToList();
+      var actualList  = actual.OrderBy(entity => entity.AuthorId).ToList();
+
+      Assert.AreEqual(controlList.Count, actualList.Count);
+
+      for (int i = 0; i < controlList.Count; i++)
+      {
+        TestAuthorEntity.AreEqual(controlList[i], actualList[i]);
+      }
     }
   }
 }
