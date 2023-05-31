@@ -19,6 +19,9 @@ namespace AspNetPatchSample.Author.Data.Test
       Name     = name;
     }
 
+    public TestAuthorEntity(IAuthorEntity authorEntity)
+      : this(authorEntity.AuthorId, authorEntity.Name) { }
+
     public Guid AuthorId { get; }
 
     public string Name { get; }
