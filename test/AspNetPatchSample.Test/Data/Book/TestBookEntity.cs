@@ -47,9 +47,11 @@ namespace AspNetPatchSample.Book.Data.Test
       Authors     = authors.Select(entity => new TestAuthorEntity(entity)).ToList(),
     };
 
+    public static IBookEntity New() => TestBookEntity.New(500, new List<IAuthorEntity>());
+
     public static async Task<IBookEntity> AddAsync(DbContext dbContext)
     {
-      var testBookEntity = TestBookEntity.New(500, new List<IAuthorEntity>());
+      var testBookEntity = TestBookEntity.New();
       var dataBookEntity = new BookEntity(testBookEntity);
 
       var dataBookEntityEntry = dbContext.Add(dataBookEntity);
