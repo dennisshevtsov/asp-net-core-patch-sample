@@ -94,5 +94,18 @@ namespace AspNetPatchSample.Book.Data.Test
 
       Assert.IsNull(actualBookEntity);
     }
+
+    [TestMethod]
+    public async Task DeleteAsync_UnknownBookPassed_ExistingBookKept()
+    {
+      var controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+      var unknownBookIdentity = TestBookEntity.New();
+
+      await _bookRepository.DeleteAsync(unknownBookIdentity, CancellationToken.None);
+
+      var actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
+
+      Assert.IsNotNull(actualBookEntity);
+    }
   }
 }
