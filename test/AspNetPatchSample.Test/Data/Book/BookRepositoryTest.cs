@@ -82,5 +82,17 @@ namespace AspNetPatchSample.Book.Data.Test
       Assert.IsNotNull(actualBookEntity);
       TestBookEntity.AreEqual(newBookEntity, actualBookEntity);
     }
+
+    [TestMethod]
+    public async Task DeleteAsync_ExistingBookPassed_BookDeleted()
+    {
+      var controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+
+      await _bookRepository.DeleteAsync(controlBookEntity, CancellationToken.None);
+
+      var actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
+
+      Assert.IsNull(actualBookEntity);
+    }
   }
 }
