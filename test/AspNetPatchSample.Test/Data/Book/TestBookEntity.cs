@@ -16,27 +16,24 @@ namespace AspNetPatchSample.Book.Data.Test
       Authors     = new List<IAuthorEntity>();
     }
 
-    public TestBookEntity(Guid bookId, string title, string description, int pages, IEnumerable<IAuthorEntity> authors) : this()
+    public TestBookEntity(IBookEntity bookEntity) : this()
     {
-      BookId      = bookId;
-      Title       = title;
-      Description = description;
-      Pages       = pages;
-      Authors     = authors.Select(entity => new TestAuthorEntity(entity))
-                           .ToList();
+      BookId      = bookEntity.BookId;
+      Title       = bookEntity.Title;
+      Description = bookEntity.Description;
+      Pages       = bookEntity.Pages;
+      Authors     = bookEntity.Authors.Select(entity => new TestAuthorEntity(entity))
+                                      .ToList();
     }
 
-    public TestBookEntity(IBookEntity bookEntity)
-      : this(bookEntity.BookId, bookEntity.Title, bookEntity.Description, bookEntity.Pages, bookEntity.Authors) { }
+    public Guid BookId { get; private init; }
 
-    public Guid BookId { get; set; }
+    public string Title { get; private init; }
 
-    public string Title { get; }
+    public string Description { get; private init; }
 
-    public string Description { get; }
+    public int Pages { get; private init; }
 
-    public int Pages { get; }
-
-    public IEnumerable<IAuthorEntity> Authors { get; }
+    public IEnumerable<IAuthorEntity> Authors { get; private init; }
   }
 }

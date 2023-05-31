@@ -13,21 +13,21 @@ namespace AspNetPatchSample.Author.Data.Test
       Name = string.Empty;
     }
 
-    public TestAuthorEntity(Guid authorId, string name) : this()
+    public TestAuthorEntity(IAuthorEntity authorEntity) : this()
     {
-      AuthorId = authorId;
-      Name     = name;
+      AuthorId = authorEntity.AuthorId;
+      Name     = authorEntity.Name;
     }
 
-    public TestAuthorEntity(IAuthorEntity authorEntity)
-      : this(authorEntity.AuthorId, authorEntity.Name) { }
+    public Guid AuthorId { get; private init; }
 
-    public Guid AuthorId { get; }
+    public string Name { get; private init; }
 
-    public string Name { get; }
-
-    public static IAuthorEntity New() =>
-      new TestAuthorEntity(Guid.NewGuid(), Guid.NewGuid().ToString());
+    public static IAuthorEntity New() => new TestAuthorEntity
+    {
+      AuthorId = Guid.NewGuid(),
+      Name     = Guid.NewGuid().ToString(),
+    };
 
     public static async Task<IAuthorEntity> AddAsync(DbContext dbContext)
     {
