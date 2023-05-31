@@ -7,6 +7,7 @@ namespace AspNetPatchSample.Book.Data.Test
   using Microsoft.Extensions.DependencyInjection;
 
   using AspNetPatchSampl.Data.Test;
+  using AspNetPatchSample.Author.Data.Test;
 
   [TestClass]
   public sealed class BookRepositoryTest : DataTestBase
@@ -18,6 +19,16 @@ namespace AspNetPatchSample.Book.Data.Test
     protected override void Initialize(IServiceProvider provider)
     {
       _bookRepository = provider.GetRequiredService<IBookRepository>();
+    }
+
+    [TestMethod]
+    public async Task GetAsync_ExistingBookIdPassed_AuthorReturned()
+    {
+      var controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+      var actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, CancellationToken.None);
+
+      Assert.IsNotNull(actualBookEntity);
+      TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
     }
   }
 }
