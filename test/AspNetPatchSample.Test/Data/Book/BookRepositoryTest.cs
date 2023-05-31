@@ -9,6 +9,7 @@ namespace AspNetPatchSample.Book.Data.Test
   using AspNetPatchSampl.Data.Test;
   using AspNetPatchSample.Author.Data.Test;
   using AspNetPatchSample.Author;
+  using AspNetPatchSample.Author.Data;
 
   [TestClass]
   public sealed class BookRepositoryTest : DataTestBase
@@ -46,6 +47,17 @@ namespace AspNetPatchSample.Book.Data.Test
     {
       var controlBookEntity = TestBookEntity.New();
       var actualBookEntity = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
+
+      Assert.IsNotNull(actualBookEntity);
+      TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
+    }
+
+    [TestMethod]
+    public async Task AddAsync_BookPassed_BookSaved()
+    {
+      var controlBookEntity = TestBookEntity.New();
+      var addedBookEntity = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
+      var actualBookEntity = await TestBookEntity.GetAsync(DbContext, addedBookEntity);
 
       Assert.IsNotNull(actualBookEntity);
       TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
