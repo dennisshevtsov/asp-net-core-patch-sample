@@ -35,16 +35,16 @@ namespace AspNetPatchSample.Book.Data
     public Guid BookId { get => Id; set => Id = value; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
-    public string Title { get; }
+    public string Title { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public string Description { get; }
+    public string Description { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    public int Pages { get; }
+    public int Pages { get; set; }
 
     /// <summary>Gets an object that represents a collection of authors of this book.</summary>
-    public IEnumerable<AuthorEntity> BookAuthors { get; }
+    public IEnumerable<AuthorEntity> BookAuthors { get; set; }
 
     /// <summary>Gets an object that represents a collection of authors of this book.</summary>
     public IEnumerable<IAuthorEntity> Authors => BookAuthors;
