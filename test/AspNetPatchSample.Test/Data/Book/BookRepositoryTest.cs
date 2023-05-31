@@ -22,7 +22,7 @@ namespace AspNetPatchSample.Book.Data.Test
     }
 
     [TestMethod]
-    public async Task GetAsync_ExistingBookIdPassed_AuthorReturned()
+    public async Task GetAsync_ExistingBookIdPassed_BookReturned()
     {
       var controlBookEntity = await TestBookEntity.AddAsync(DbContext);
       var actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, CancellationToken.None);
