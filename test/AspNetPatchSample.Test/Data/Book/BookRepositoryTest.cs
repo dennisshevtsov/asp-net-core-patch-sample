@@ -30,5 +30,14 @@ namespace AspNetPatchSample.Book.Data.Test
       Assert.IsNotNull(actualBookEntity);
       TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
     }
+
+    [TestMethod]
+    public async Task GetAsync_UknownBookIdPassed_NullReturned()
+    {
+      var controlBookIdentity = TestBookIdentity.New();
+      var actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, CancellationToken.None);
+
+      Assert.IsNull(actualBookEntity);
+    }
   }
 }
