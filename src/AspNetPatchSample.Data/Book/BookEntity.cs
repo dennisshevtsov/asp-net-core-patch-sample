@@ -20,10 +20,16 @@ namespace AspNetPatchSample.Book.Data
     }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
-    /// <param name="bookEntity">An object that represents a book entity.</param>
-    public BookEntity(IBookEntity bookEntity) : this()
+    /// <param name="bookIdentity">An object that represents an identity of a book.</param>
+    public BookEntity(IBookIdentity bookIdentity) : this()
     {
-      BookId      = bookEntity.BookId;
+      BookId = bookIdentity.BookId;
+    }
+
+    /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.Data.BookEntity"/> class.</summary>
+    /// <param name="bookEntity">An object that represents a book entity.</param>
+    public BookEntity(IBookEntity bookEntity) : this((IBookIdentity)bookEntity)
+    {
       Title       = bookEntity.Title;
       Description = bookEntity.Description;
       Pages       = bookEntity.Pages;
