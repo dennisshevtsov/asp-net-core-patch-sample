@@ -4,6 +4,8 @@
 
 namespace AspNetPatchSample.Book.Data.Test
 {
+  using Microsoft.EntityFrameworkCore;
+
   using AspNetPatchSample.Author;
   using AspNetPatchSample.Author.Data.Test;
 
@@ -35,5 +37,40 @@ namespace AspNetPatchSample.Book.Data.Test
     public int Pages { get; private init; }
 
     public IEnumerable<IAuthorEntity> Authors { get; private init; }
+
+    public static IBookEntity New(int pages, IEnumerable<IAuthorEntity> authors) => new TestBookEntity
+    {
+      BookId      = Guid.NewGuid(),
+      Title       = Guid.NewGuid().ToString(),
+      Description = Guid.NewGuid().ToString(),
+      Pages       = pages,
+      Authors     = authors.Select(entity => new TestAuthorEntity(entity)).ToList(),
+    };
+
+    public static async Task<IBookEntity> AddAsync(DbContext dbContext)
+    {
+      var testBookEntity = TestBookEntity.New(500, new List<IAuthorEntity>());
+      var dataBookEntity = new BookEntity(testBookEntity);
+
+      var dataBookEntityEntry = dbContext.Add(dataBookEntity);
+      await dbContext.SaveChangesAsync();
+      dataBookEntityEntry.State = EntityState.Detached;
+
+      return dataBookEntity;
+    }
+
+    public static async Task<IBookEntity?> GetAsync(DbContext dbContext, IBookIdentity bookIdentity)
+      => await dbContext.Set<BookEntity>()
+                        .AsNoTracking()
+                        .Where(entity => entity.BookId == bookIdentity.BookId)
+                        .SingleOrDefaultAsync();
+
+    public static void AreEqual(IBookEntity control, IBookEntity actual)
+    {
+      Assert.AreEqual(control.Title, actual.Title);
+      Assert.AreEqual(control.Description, actual.Description);
+      Assert.AreEqual(control.Pages, actual.Pages);
+      TestAuthorEntity.AreEqual(control.Authors, actual.Authors);
+    }
   }
 }

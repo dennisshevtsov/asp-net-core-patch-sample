@@ -51,5 +51,18 @@ namespace AspNetPatchSample.Author.Data.Test
     {
       Assert.AreEqual(control.Name, actual.Name);
     }
+
+    public static void AreEqual(IEnumerable<IAuthorEntity> control, IEnumerable<IAuthorEntity> actual)
+    {
+      var controlList = control.OrderBy(entity => entity.AuthorId).ToList();
+      var actualList  = actual.OrderBy(entity => entity.AuthorId).ToList();
+
+      Assert.AreEqual(controlList.Count, actualList.Count);
+
+      for (int i = 0; i < controlList.Count; i++)
+      {
+        TestAuthorEntity.AreEqual(controlList[i], actualList[i]);
+      }
+    }
   }
 }
