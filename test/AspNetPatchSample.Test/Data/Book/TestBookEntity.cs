@@ -54,6 +54,8 @@ namespace AspNetPatchSample.Book.Data.Test
       var testBookEntity = TestBookEntity.New(pages, authors);
       var dataBookEntity = new BookEntity(testBookEntity);
 
+      dbContext.AttachRange(dataBookEntity.BookAuthors);
+
       var dataBookEntityEntry = dbContext.Add(dataBookEntity);
       await dbContext.SaveChangesAsync();
       dataBookEntityEntry.State = EntityState.Detached;

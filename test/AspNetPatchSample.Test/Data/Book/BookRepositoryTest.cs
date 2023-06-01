@@ -6,6 +6,7 @@ namespace AspNetPatchSample.Book.Data.Test
 {
   using Microsoft.Extensions.DependencyInjection;
 
+  using AspNetPatchSample.Author.Data.Test;
   using AspNetPatchSample.Data.Test;
 
   [TestClass]
@@ -63,13 +64,25 @@ namespace AspNetPatchSample.Book.Data.Test
     [TestMethod]
     public async Task UpdateAsync_BookPassed_BookSaved()
     {
-      var originalBookEntity = await TestBookEntity.AddAsync(DbContext);
-      var newBookEntity = TestBookEntity.New();
+      var controlAuthorEntityCollection = await TestAuthorEntity.AddAsync(DbContext, 5);
+
+      var originalAuthorEntityCollection = controlAuthorEntityCollection.Take(2).ToArray();
+      var originalBookEntity = await TestBookEntity.AddAsync(DbContext, 500, originalAuthorEntityCollection);
+
+      var newAuthorEntityCollection = new[]
+      {
+        controlAuthorEntityCollection[0],
+        controlAuthorEntityCollection[2],
+        controlAuthorEntityCollection[3],
+        controlAuthorEntityCollection[4],
+      };
+      var newBookEntity = TestBookEntity.New(800, newAuthorEntityCollection);
       var updatedProperties = new[]
       {
         nameof(IBookEntity.Title),
         nameof(IBookEntity.Description),
         nameof(IBookEntity.Pages),
+        nameof(IBookEntity.Authors),
       };
 
       await _bookRepository.UpdateAsync(originalBookEntity, newBookEntity, updatedProperties, CancellationToken.None);

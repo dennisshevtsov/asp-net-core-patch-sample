@@ -41,7 +41,7 @@ namespace AspNetPatchSample.Author.Data.Test
       return dataAuthorEntity;
     }
 
-    public static async Task<IEnumerable<IAuthorEntity>> AddAsync(DbContext dbContext, int authors)
+    public static async Task<List<IAuthorEntity>> AddAsync(DbContext dbContext, int authors)
     {
       var authorEntityCollection = new List<IAuthorEntity>();
 
