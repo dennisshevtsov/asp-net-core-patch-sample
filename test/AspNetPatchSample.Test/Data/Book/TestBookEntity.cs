@@ -49,9 +49,9 @@ namespace AspNetPatchSample.Book.Data.Test
 
     public static IBookEntity New() => TestBookEntity.New(500, new List<IAuthorEntity>());
 
-    public static async Task<IBookEntity> AddAsync(DbContext dbContext)
+    public static async Task<IBookEntity> AddAsync(DbContext dbContext, int pages, IEnumerable<IAuthorEntity> authors)
     {
-      var testBookEntity = TestBookEntity.New();
+      var testBookEntity = TestBookEntity.New(pages, authors);
       var dataBookEntity = new BookEntity(testBookEntity);
 
       var dataBookEntityEntry = dbContext.Add(dataBookEntity);
@@ -60,6 +60,9 @@ namespace AspNetPatchSample.Book.Data.Test
 
       return dataBookEntity;
     }
+
+    public static Task<IBookEntity> AddAsync(DbContext dbContext) =>
+      TestBookEntity.AddAsync(dbContext, 500, new List<IAuthorEntity>());
 
     public static async Task<IBookEntity?> GetAsync(DbContext dbContext, IBookIdentity bookIdentity)
       => await dbContext.Set<BookEntity>()
