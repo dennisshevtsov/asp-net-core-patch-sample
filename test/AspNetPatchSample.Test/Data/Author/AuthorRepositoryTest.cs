@@ -6,7 +6,7 @@ namespace AspNetPatchSample.Author.Data.Test
 {
   using Microsoft.Extensions.DependencyInjection;
 
-  using AspNetPatchSampl.Data.Test;
+  using AspNetPatchSample.Data.Test;
 
   [TestClass]
   public sealed class AuthorRepositoryTest : DataTestBase

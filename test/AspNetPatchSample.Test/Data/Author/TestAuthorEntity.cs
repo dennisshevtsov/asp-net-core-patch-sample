@@ -41,6 +41,18 @@ namespace AspNetPatchSample.Author.Data.Test
       return dataAuthorEntity;
     }
 
+    public static async Task<List<IAuthorEntity>> AddAsync(DbContext dbContext, int authors)
+    {
+      var authorEntityCollection = new List<IAuthorEntity>();
+
+      for (int i = 0; i < authors; i++)
+      {
+        authorEntityCollection.Add(await TestAuthorEntity.AddAsync(dbContext));
+      }
+
+      return authorEntityCollection;
+    }
+
     public static async Task<IAuthorEntity?> GetAsync(DbContext dbContext, IAuthorIdentity authorIdentity)
       => await dbContext.Set<AuthorEntity>()
                         .AsNoTracking()

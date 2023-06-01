@@ -49,10 +49,12 @@ namespace AspNetPatchSample.Book.Data.Test
 
     public static IBookEntity New() => TestBookEntity.New(500, new List<IAuthorEntity>());
 
-    public static async Task<IBookEntity> AddAsync(DbContext dbContext)
+    public static async Task<IBookEntity> AddAsync(DbContext dbContext, int pages, IEnumerable<IAuthorEntity> authors)
     {
-      var testBookEntity = TestBookEntity.New();
+      var testBookEntity = TestBookEntity.New(pages, authors);
       var dataBookEntity = new BookEntity(testBookEntity);
+
+      dbContext.AttachRange(dataBookEntity.BookAuthors);
 
       var dataBookEntityEntry = dbContext.Add(dataBookEntity);
       await dbContext.SaveChangesAsync();
@@ -61,9 +63,13 @@ namespace AspNetPatchSample.Book.Data.Test
       return dataBookEntity;
     }
 
+    public static Task<IBookEntity> AddAsync(DbContext dbContext) =>
+      TestBookEntity.AddAsync(dbContext, 500, new List<IAuthorEntity>());
+
     public static async Task<IBookEntity?> GetAsync(DbContext dbContext, IBookIdentity bookIdentity)
       => await dbContext.Set<BookEntity>()
                         .AsNoTracking()
+                        .Include(entity => entity.BookAuthors)
                         .Where(entity => entity.BookId == bookIdentity.BookId)
                         .SingleOrDefaultAsync();
 
