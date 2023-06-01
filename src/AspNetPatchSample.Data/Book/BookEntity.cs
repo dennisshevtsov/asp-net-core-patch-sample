@@ -50,9 +50,46 @@ namespace AspNetPatchSample.Book.Data
     public int Pages { get; set; }
 
     /// <summary>Gets an object that represents a collection of authors of this book.</summary>
-    public IEnumerable<AuthorEntity> BookAuthors { get; set; }
+    public ICollection<AuthorEntity> BookAuthors { get; set; }
 
     /// <summary>Gets an object that represents a collection of authors of this book.</summary>
-    public IEnumerable<IAuthorEntity> Authors => BookAuthors;
+    public IEnumerable<IAuthorEntity> Authors
+    {
+      get => BookAuthors;
+      set => BookAuthors = value.Select(entity => new AuthorEntity(entity)).ToList();
+    }
+
+    protected override void Update(object newEntity, string property)
+    {
+      if (property != nameof(Authors))
+      {
+        base.Update(newEntity, property);
+
+        return;
+      }
+
+      var newBookEntity = (IBookEntity)newEntity;
+
+      var newAuthors = newBookEntity.Authors.Select(entity => entity.AuthorId)
+                                            .ToHashSet();
+      var exitingAuthors = Authors.Select(entity => entity.AuthorId)
+                                  .ToHashSet();
+
+      var deletingAuthors = BookAuthors.Where(entity => !newAuthors.Contains(entity.AuthorId))
+                                       .ToList();
+
+      foreach (var authorEntity in deletingAuthors)
+      {
+        BookAuthors.Remove(authorEntity);
+      }
+
+      var addingAuthors = newBookEntity.Authors.Where(entity => !exitingAuthors.Contains(entity.AuthorId))
+                                               .ToList();
+
+      foreach (var authorEntity in addingAuthors)
+      {
+        BookAuthors.Add(new AuthorEntity(authorEntity));
+      }
+    }
   }
 }
