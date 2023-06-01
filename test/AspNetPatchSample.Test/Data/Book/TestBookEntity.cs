@@ -69,6 +69,7 @@ namespace AspNetPatchSample.Book.Data.Test
     public static async Task<IBookEntity?> GetAsync(DbContext dbContext, IBookIdentity bookIdentity)
       => await dbContext.Set<BookEntity>()
                         .AsNoTracking()
+                        .Include(entity => entity.BookAuthors)
                         .Where(entity => entity.BookId == bookIdentity.BookId)
                         .SingleOrDefaultAsync();
 
