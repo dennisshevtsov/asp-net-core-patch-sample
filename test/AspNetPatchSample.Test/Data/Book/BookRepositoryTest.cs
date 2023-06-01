@@ -7,9 +7,6 @@ namespace AspNetPatchSample.Book.Data.Test
   using Microsoft.Extensions.DependencyInjection;
 
   using AspNetPatchSample.Data.Test;
-  using AspNetPatchSample.Author.Data.Test;
-  using AspNetPatchSample.Author;
-  using AspNetPatchSample.Author.Data;
 
   [TestClass]
   public sealed class BookRepositoryTest : DataTestBase
