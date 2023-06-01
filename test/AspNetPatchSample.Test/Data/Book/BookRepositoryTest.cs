@@ -6,7 +6,7 @@ namespace AspNetPatchSample.Book.Data.Test
 {
   using Microsoft.Extensions.DependencyInjection;
 
-  using AspNetPatchSampl.Data.Test;
+  using AspNetPatchSample.Data.Test;
   using AspNetPatchSample.Author.Data.Test;
   using AspNetPatchSample.Author;
   using AspNetPatchSample.Author.Data;

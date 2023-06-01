@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace AspNetPatchSampl.Data.Test
+namespace AspNetPatchSample.Data.Test
 {
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
