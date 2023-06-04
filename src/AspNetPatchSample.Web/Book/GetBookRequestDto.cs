@@ -4,11 +4,13 @@
 
 namespace AspNetPatchSample.Book.Web
 {
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents a condition to query a book.</summary>
-  public sealed class GetBookRequestDto : BookRequestDtoBase, IBookIdentity
+  public sealed class GetBookRequestDto : IRequestDto, IBookIdentity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.GetBookRequestDto"/> class.</summary>
-    public GetBookRequestDto() : base() { }
+    public GetBookRequestDto() { }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.GetBookRequestDto"/> class.</summary>
     /// <param name="bookIdentity">An object that represents an identity of a book.</param>
@@ -16,5 +18,8 @@ namespace AspNetPatchSample.Book.Web
     {
       BookId = bookIdentity.BookId;
     }
+
+    /// <summary>Gets an objecct that represents an ID of a book.</summary>
+    public Guid BookId { get; set; }
   }
 }
