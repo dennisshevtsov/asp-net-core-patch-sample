@@ -5,8 +5,7 @@
 namespace AspNetPatchSample.Data
 {
   using Microsoft.EntityFrameworkCore;
-  
-  using AspNetPatchSample;
+  using Microsoft.EntityFrameworkCore.ChangeTracking;
 
   /// <summary>Provides a simple API to persistence of an entity.</summary>
   public abstract class RepositoryBase<TEntityImpl, TEntity, TIdentity> : IRepository<TEntity, TIdentity>
@@ -55,17 +54,7 @@ namespace AspNetPatchSample.Data
       var dbEntityEntry = DbContext.Entry(dbEntity);
 
       dbEntityEntry.State = EntityState.Added;
-
-      foreach (var collectionEntry in dbEntityEntry.Collections)
-      {
-        if (collectionEntry.CurrentValue != null)
-        {
-          foreach (var collectionItemEntity in collectionEntry.CurrentValue)
-          {
-            DbContext.Entry(collectionItemEntity).State = EntityState.Unchanged;
-          }
-        }
-      }
+      SetCollectionsAsUnchanged(dbEntityEntry);
 
       await DbContext.SaveChangesAsync(cancellationToken);
       dbEntityEntry.State = EntityState.Detached;
@@ -82,9 +71,10 @@ namespace AspNetPatchSample.Data
     public async Task UpdateAsync(TEntity originalEntity, TEntity newEntity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
       var dbEntity = EntityBase.Create<TEntity, TEntityImpl>(originalEntity);
-      var dbEntityEntry = DbContext.Attach(originalEntity);
+      var dbEntityEntry = DbContext.Attach(dbEntity);
 
       dbEntity.Update(newEntity, properties);
+      SetCollectionsAsUnchanged(dbEntityEntry);
 
       await DbContext.SaveChangesAsync(cancellationToken);
       dbEntityEntry.State = EntityState.Detached;
@@ -101,6 +91,20 @@ namespace AspNetPatchSample.Data
       return DbContext.Set<TEntityImpl>()
                       .Where(entity => entity.Id == id)
                       .ExecuteDeleteAsync(cancellationToken);
+    }
+
+    private void SetCollectionsAsUnchanged(EntityEntry<TEntityImpl> entry)
+    {
+      foreach (var collectionEntry in entry.Collections)
+      {
+        if (collectionEntry.CurrentValue != null)
+        {
+          foreach (var collectionItemEntity in collectionEntry.CurrentValue)
+          {
+            DbContext.Entry(collectionItemEntity).State = EntityState.Unchanged;
+          }
+        }
+      }
     }
   }
 }

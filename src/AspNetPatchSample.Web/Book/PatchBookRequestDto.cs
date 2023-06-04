@@ -10,16 +10,19 @@ namespace AspNetPatchSample.Book.Web
   using AspNetPatchSample.Web;
 
   /// <summary>Represents data to update a book parially.</summary>
-  public sealed class PatchBookRequestDto : BookRequestDtoBase, IPatchRequestDto, IBookEntity
+  public sealed class PatchBookRequestDto : IRequestDto, IPatchRequestDto, IBookEntity
   {
     /// <summary>Initalizes a new instance of the <see cref="AspNetPatchSample.Web.Dtos.PatchBookRequestDto"/> class.</summary>
-    public PatchBookRequestDto() : base()
+    public PatchBookRequestDto()
     {
       Title       = string.Empty;
       Description = string.Empty;
       Properties  = Array.Empty<string>();
       BookAuthors = Array.Empty<AuthorDto>();
     }
+
+    /// <summary>Gets an objecct that represents an ID of a book.</summary>
+    public Guid BookId { get; set; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     public string Title { get; set; }

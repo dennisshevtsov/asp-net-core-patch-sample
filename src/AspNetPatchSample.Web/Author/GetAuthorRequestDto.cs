@@ -4,11 +4,13 @@
 
 namespace AspNetPatchSample.Author.Web
 {
+  using AspNetPatchSample.Web;
+
   /// <summary>Represents the GET author request data.</summary>
-  public sealed class GetAuthorRequestDto : AuthorRequestDtoBase, IAuthorIdentity
+  public sealed class GetAuthorRequestDto : IRequestDto, IAuthorIdentity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.GetAuthorRequestDto"/> class.</summary>
-    public GetAuthorRequestDto() : base() { }
+    public GetAuthorRequestDto() { }
 
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.Web.GetAuthorRequestDto"/> class.</summary>
     /// <param name="authorIdentity">An object that represents an author identity.</param>
@@ -16,5 +18,8 @@ namespace AspNetPatchSample.Author.Web
     {
       AuthorId = authorIdentity.AuthorId;
     }
+
+    /// <summary>Gets an objecct that represents an ID of an author.</summary>
+    public Guid AuthorId { get; set; }
   }
 }

@@ -4,9 +4,10 @@
 
 namespace AspNetPatchSample.Book.App
 {
-  using AspNetPatchSample.App;
   using System.Threading;
   using System.Threading.Tasks;
+
+  using AspNetPatchSample.App;
 
   /// <summary>Represents a simple API to operate instances of the <see cref="AspNetPatchSample.Book.IBookEntity"/>.</summary>
   public sealed class BookService : ServiceBase<IBookEntity, IBookIdentity>, IBookService

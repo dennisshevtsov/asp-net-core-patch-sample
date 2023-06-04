@@ -4,10 +4,10 @@
 
 namespace AspNetPatchSample.Author.App
 {
-  using AspNetPatchSample.App;
-  using System.Collections.Generic;
   using System.Threading;
   using System.Threading.Tasks;
+
+  using AspNetPatchSample.App;
 
   /// <summary>Provides a simple API to execute a task with an instance of the <see cref="AspNetPatchSample.Author.IAuthorEntity"/>.</summary>
   public sealed class AuthorService : ServiceBase<IAuthorEntity, IAuthorIdentity>, IAuthorService
