@@ -86,6 +86,17 @@ namespace AspNetPatchSample.Data
 
       dbEntity.Update(newEntity, properties);
 
+      foreach (var collectionEntry in dbEntityEntry.Collections)
+      {
+        if (collectionEntry.CurrentValue != null)
+        {
+          foreach (var collectionItemEntity in collectionEntry.CurrentValue)
+          {
+            DbContext.Entry(collectionItemEntity).State = EntityState.Unchanged;
+          }
+        }
+      }
+
       await DbContext.SaveChangesAsync(cancellationToken);
       dbEntityEntry.State = EntityState.Detached;
     }
