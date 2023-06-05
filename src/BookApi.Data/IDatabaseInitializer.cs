@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace BookApi.Data.Initialization
+namespace BookApi.Data
 {
   /// <summary>Provides a simple API to set up the database.</summary>
   public interface IDatabaseInitializer

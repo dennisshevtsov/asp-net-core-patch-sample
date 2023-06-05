@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace BookApi.Data.Initialization
+namespace BookApi.Data
 {
   using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +11,7 @@ namespace BookApi.Data.Initialization
   {
     private readonly DbContext _dbContext;
 
-    /// <summary>Initializes a new instance of the <see cref="BookApi.Data.Initialization.DatabaseInitializer"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="BookApi.Data.DatabaseInitializer"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
     public DatabaseInitializer(DbContext dbContext)
     {

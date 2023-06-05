@@ -36,6 +36,8 @@ namespace Microsoft.Extensions.DependencyInjection
         builder.UseNpgsql(options.ConnectionString);
       });
 
+      services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
+
       return services;
     }
   }
