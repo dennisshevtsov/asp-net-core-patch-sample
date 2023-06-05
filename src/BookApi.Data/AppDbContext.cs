@@ -12,9 +12,9 @@ namespace BookApi.Data
   /// <summary>Represents a session with the database and can be used to query and save instances of your entities.</summary>
   public sealed class AppDbContext : DbContext
   {
-    public AppDbContext(DbContextOptions options) : base(options)
-    {
-    }
+    /// <summary>Initializes a new instance of the <see cref="BookApi.Data.AppDbContext"/> class.</summary>
+    /// <param name="options">An object that represents options for the <see cref="Microsoft.EntityFrameworkCore.DbContext"/>.</param>
+    public AppDbContext(DbContextOptions options) : base(options) { }
 
     /// <summary>Configures the model.</summary>
     /// <param name="modelBuilder">An object provides a simple API surface for configuring a <see cref="Microsoft.EntityFrameworkCore.Metadata.IMutableModel" />.</param>

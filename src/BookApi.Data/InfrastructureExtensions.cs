@@ -5,10 +5,10 @@
 namespace Microsoft.Extensions.DependencyInjection
 {
   using Microsoft.EntityFrameworkCore;
-
-  using BookApi.Data;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.Options;
+
+  using BookApi.Data;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
   public static class InfrastructureExtensions
@@ -35,6 +35,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
         builder.UseNpgsql(options.ConnectionString);
       });
+
+      services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
 
       return services;
     }

@@ -4,21 +4,17 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-  using BookApi.Author;
-  using BookApi.Author.Data;
-  using BookApi.Book;
-  using BookApi.Book.Data;
+  using BookApi.Web.Binding;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
-  public static class RepositoryExtensions
+  public static class ServicesExtensions
   {
-    /// <summary>Registers repositories in a DI container.</summary>
+    /// <summary>Sets up controllers.</summary>
     /// <param name="services">An object that specifies the contract for a collection of service descriptors.</param>
     /// <returns>An object that specifies the contract for a collection of service descriptors.</returns>
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    public static IServiceCollection SetUpControllers(this IServiceCollection services)
     {
-      services.AddScoped<IAuthorRepository, AuthorRepository>();
-      services.AddScoped<IBookRepository, BookRepository>();
+      services.AddControllers(options => options.ModelBinderProviders.Insert(0, new RequestDtoBinderProvider()));
 
       return services;
     }
