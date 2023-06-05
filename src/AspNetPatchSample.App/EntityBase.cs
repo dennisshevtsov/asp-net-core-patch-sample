@@ -4,15 +4,18 @@
 
 namespace AspNetPatchSample.App
 {
+  /// <summary>Represents an entity base.</summary>
   public abstract class EntityBase
   {
     private readonly IList<string> _properties;
 
+    /// <summary>Initializes a new instance of the <see cref="EntityBase"/> class.</summary>
     protected EntityBase()
     {
       _properties = new List<string>();
     }
 
+    /// <summary>Gets/sets an object that represents a collection of updated properties.</summary>
     public IEnumerable<string> Properties => _properties;
   }
 }
