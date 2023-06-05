@@ -4,10 +4,11 @@
 
 namespace AspNetPatchSample.Book.App
 {
+  using AspNetPatchSample.App;
   using AspNetPatchSample.Author;
 
   /// <summary>Represents a book entity.</summary>
-  public sealed class BookEntity : IBookEntity
+  public sealed class BookEntity : EntityBase, IBookEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Book.App.BookEntity"/> class.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>

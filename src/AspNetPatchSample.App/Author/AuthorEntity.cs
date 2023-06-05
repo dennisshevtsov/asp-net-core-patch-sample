@@ -4,8 +4,10 @@
 
 namespace AspNetPatchSample.Author.App
 {
+  using AspNetPatchSample.App;
+
   /// <summary>Represents an author entity.</summary>
-  public sealed class AuthorEntity : IAuthorEntity
+  public sealed class AuthorEntity : EntityBase, IAuthorEntity
   {
     /// <summary>Initializes a new instance of the <see cref="AspNetPatchSample.Author.App.AuthorEntity"/> class.</summary>
     /// <param name="authorEntity">An object that represents an author entity.</param>
