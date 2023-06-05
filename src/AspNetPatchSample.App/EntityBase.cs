@@ -5,7 +5,7 @@
 namespace AspNetPatchSample.App
 {
   /// <summary>Represents an entity base.</summary>
-  public abstract class EntityBase
+  public abstract class EntityBase : IUpdatable<object>
   {
     private readonly IList<string> _properties;
 
@@ -17,6 +17,44 @@ namespace AspNetPatchSample.App
 
     /// <summary>Gets/sets an object that represents a collection of updated properties.</summary>
     public IEnumerable<string> Properties => _properties;
+
+    /// <summary>Updates this entity.</summary>
+    /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
+    public void Update(object newEntity)
+    {
+      var updatingProperties = GetUpdatingProperties();
+      var updatedProperties = updatingProperties;
+
+      Update(newEntity, updatedProperties, updatingProperties);
+    }
+
+    /// <summary>Updates this entity.</summary>
+    /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
+    /// <param name="properties">An object that represents a collection of properties to update.</param>
+    public void Update(object newEntity, IEnumerable<string> properties) =>
+      Update(newEntity, properties, GetUpdatingProperties());
+
+    protected virtual void Update(object newEntity, IEnumerable<string> updatedProperties, ISet<string> updatingProperties)
+    {
+      foreach (var property in updatedProperties)
+      {
+        if (updatingProperties.Contains(property))
+        {
+          var originalProperty = GetType().GetProperty(property)!;
+          var newProperty = newEntity.GetType().GetProperty(property)!;
+
+          var originalValue = originalProperty.GetValue(this);
+          var newValue = newProperty.GetValue(newEntity);
+
+          if (!object.Equals(originalValue, newValue))
+          {
+            originalProperty.SetValue(this, newValue);
+          }
+
+          _properties.Add(property);
+        }
+      }
+    }
 
     /// <summary>Creates a copy of an entity.</summary>
     /// <param name="entity">An object that represents an entity to copy.</param>
@@ -34,5 +72,11 @@ namespace AspNetPatchSample.App
       return (T2)typeof(T2).GetConstructor(new[] { typeof(T1) })!
                            .Invoke(new object[] { entity! });
     }
+
+    private ISet<string> GetUpdatingProperties() =>
+      GetType().GetProperties()
+               .Where(property => property.CanWrite)
+               .Select(property => property.Name)
+               .ToHashSet(StringComparer.OrdinalIgnoreCase);
   }
 }
