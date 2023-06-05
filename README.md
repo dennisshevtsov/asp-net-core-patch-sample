@@ -7,6 +7,6 @@ The PATCH method updates only properties of an entity that are provided in the b
 `PATCH /api/book/{bookId}`
 ```JSON
 {
-  'title': 'a new title'
+  "title": "a new title"
 }
 ```
