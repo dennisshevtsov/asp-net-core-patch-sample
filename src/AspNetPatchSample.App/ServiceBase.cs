@@ -5,9 +5,11 @@
 namespace AspNetPatchSample.App
 {
   /// <summary>Provides a simple GRUD API.</summary>
+  /// <typeparam name="TBusinessEntity">A business entity.</typeparam>
   /// <typeparam name="TEntity">An entity type.</typeparam>
   /// <typeparam name="TIdentity">An identity type.</typeparam>
-  public abstract class ServiceBase<TEntity, TIdentity> : IService<TEntity, TIdentity>
+  public abstract class ServiceBase<TBusinessEntity, TEntity, TIdentity> : IService<TEntity, TIdentity>
+    where TBusinessEntity : EntityBase, TEntity
   {
     private readonly IRepository<TEntity, TIdentity> _repository;
 
@@ -37,7 +39,13 @@ namespace AspNetPatchSample.App
     /// <param name="newEntity">An object that represents an entity from that the original one should be updated.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
-    public abstract Task UpdateAsync(TEntity originalEntity, TEntity newEntity, CancellationToken cancellationToken);
+    public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, CancellationToken cancellationToken)
+    {
+      var businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
+      businessEntity.Update(newEntity!);
+
+      return _repository.UpdateAsync(originalEntity, newEntity, businessEntity.Properties, cancellationToken);
+    }
 
     /// <summary>Updates an entity partially.</summary>
     /// <param name="originalEntity">An object that represents an entity to update.</param>
@@ -46,7 +54,12 @@ namespace AspNetPatchSample.App
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation.</returns>
     public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, IEnumerable<string> properties, CancellationToken cancellationToken)
-      => _repository.UpdateAsync(originalEntity, newEntity, properties, cancellationToken);
+    {
+      var businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
+      businessEntity.Update(newEntity!, properties);
+
+      return _repository.UpdateAsync(originalEntity, newEntity, businessEntity.Properties, cancellationToken);
+    }
 
     /// <summary>Deletes an entity.</summary>
     /// <param name="identity">An object that represents an identity to delete.</param>
