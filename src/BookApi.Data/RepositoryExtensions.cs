@@ -5,9 +5,8 @@
 namespace Microsoft.Extensions.DependencyInjection
 {
   using BookApi.Author;
-  using BookApi.Book;
-
   using BookApi.Author.Data;
+  using BookApi.Book;
   using BookApi.Book.Data;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
