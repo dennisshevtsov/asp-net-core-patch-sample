@@ -12,28 +12,12 @@ namespace AspNetPatchSample.Data
 
     /// <summary>Updates this entity.</summary>
     /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
-    public void Update(object newEntity)
-    {
-      var updatingProperties = GetUpdatingProperties();
-      var updatedProperties = updatingProperties;
-
-      Update(newEntity, updatedProperties, updatingProperties);
-    }
-
-    /// <summary>Updates this entity.</summary>
-    /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
-    public void Update(object newEntity, IEnumerable<string> properties) =>
-      Update(newEntity, properties, GetUpdatingProperties());
-
-    protected virtual void Update(object newEntity, IEnumerable<string> updatedProperties, ISet<string> updatingProperties)
+    public void Update(object newEntity, IEnumerable<string> properties)
     {
-      foreach (var property in updatedProperties)
+      foreach (var property in properties)
       {
-        if (updatingProperties.Contains(property))
-        {
           Update(newEntity, property);
-        }
       }
     }
 
@@ -50,12 +34,6 @@ namespace AspNetPatchSample.Data
         originalProperty.SetValue(this, newValue);
       }
     }
-
-    private ISet<string> GetUpdatingProperties() =>
-      GetType().GetProperties()
-               .Where(property => property.CanWrite)
-               .Select(property => property.Name)
-               .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>Creates a copy of an entity.</summary>
     /// <param name="entity">An object that represents an entity to copy.</param>
