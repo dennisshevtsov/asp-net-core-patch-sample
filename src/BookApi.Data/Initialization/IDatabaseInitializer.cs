@@ -5,8 +5,11 @@
 namespace BookApi.Data.Initialization
 {
   /// <summary>Provides a simple API to set up the database.</summary>
-  public interface IInitializer
+  public interface IDatabaseInitializer
   {
+    /// <summary>Sets up the database.</summary>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation.</returns>
     public Task SetUpAsync(CancellationToken cancellationToken);
   }
 }
