@@ -3,7 +3,6 @@
 // See LICENSE in the project root for license information.
 
 using BookApi.Web.Binding;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +14,7 @@ builder.Services.SetUpInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-  scope.ServiceProvider.GetRequiredService<DbContext>().Database.EnsureCreated();
-}
-
+app.SetUpDatabase();
 app.UseSwagger();
 app.UseRouting();
 app.MapControllers();
