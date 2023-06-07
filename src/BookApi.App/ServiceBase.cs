@@ -10,6 +10,7 @@ namespace BookApi.App
   /// <typeparam name="TIdentity">An identity type.</typeparam>
   public abstract class ServiceBase<TBusinessEntity, TEntity, TIdentity> : IService<TEntity, TIdentity>
     where TBusinessEntity : EntityBase, TEntity
+    where TEntity         : TIdentity
   {
     private readonly IRepository<TEntity, TIdentity> _repository;
 
@@ -25,7 +26,11 @@ namespace BookApi.App
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="BookApi.Author.IAuthorEntity"/>. The result can be null.</returns>
     public virtual Task<TEntity?> GetAsync(TIdentity identity, CancellationToken cancellationToken)
-      => _repository.GetAsync(identity, Enumerable.Empty<string>(), cancellationToken);
+    {
+      var entity = EntityBase.Create<TIdentity, TBusinessEntity>(identity);
+
+      return _repository.GetAsync(identity, entity.Relations, cancellationToken);
+    }
 
     /// <summary>Adds an entity.</summary>
     /// <param name="entity">An object that represents data from that a new entity should be created.</param>
