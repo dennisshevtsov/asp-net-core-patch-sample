@@ -11,8 +11,23 @@ namespace BookApi.Book.App
   public sealed class BookEntity : EntityBase, IBookEntity
   {
     /// <summary>Initializes a new instance of the <see cref="BookApi.Book.App.BookEntity"/> class.</summary>
+    public BookEntity()
+    {
+      Title       = string.Empty;
+      Description = string.Empty;
+      Authors     = Enumerable.Empty<IAuthorEntity>();
+    }
+
+    /// <summary>Initializes a new instance of the <see cref="BookApi.Book.App.BookEntity"/> class.</summary>
+    /// <param name="bookIdentity">An object that represents an identity of a book.</param>
+    public BookEntity(IBookIdentity bookIdentity) : this()
+    {
+      BookId = bookIdentity.BookId;
+    }
+
+    /// <summary>Initializes a new instance of the <see cref="BookApi.Book.App.BookEntity"/> class.</summary>
     /// <param name="bookEntity">An object that represents a book entity.</param>
-    public BookEntity(IBookEntity bookEntity)
+    public BookEntity(IBookEntity bookEntity) : this((IBookIdentity) bookEntity)
     {
       BookId      = bookEntity.BookId;
       Title       = bookEntity.Title;

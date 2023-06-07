@@ -10,11 +10,23 @@ namespace BookApi.Author.App
   public sealed class AuthorEntity : EntityBase, IAuthorEntity
   {
     /// <summary>Initializes a new instance of the <see cref="BookApi.Author.App.AuthorEntity"/> class.</summary>
-    /// <param name="authorEntity">An object that represents an author entity.</param>
-    public AuthorEntity(IAuthorEntity authorEntity)
+    public AuthorEntity()
     {
-      AuthorId = authorEntity.AuthorId;
-      Name     = authorEntity.Name;
+      Name = string.Empty;
+    }
+
+    /// <summary>Initializes a new instance of the <see cref="BookApi.Author.App.AuthorEntity"/> class.</summary>
+    /// <param name="authorIdentity">An object that represents an author identity.</param>
+    public AuthorEntity(IAuthorIdentity authorIdentity) : this()
+    {
+      AuthorId = authorIdentity.AuthorId;
+    }
+
+    /// <summary>Initializes a new instance of the <see cref="BookApi.Author.App.AuthorEntity"/> class.</summary>
+    /// <param name="authorEntity">An object that represents an author entity.</param>
+    public AuthorEntity(IAuthorEntity authorEntity) : this((IAuthorIdentity) authorEntity)
+    {
+      Name = authorEntity.Name;
     }
 
     /// <summary>Gets an object that represents an ID of an author.</summary>
