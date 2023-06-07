@@ -91,7 +91,7 @@ namespace BookApi.Book.Web
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
     public async Task<IActionResult> PatchBook(PatchBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+      var bookEntity = await _bookService.GetAsync(requestDto, requestDto.Properties, cancellationToken);
 
       if (bookEntity == null)
       {

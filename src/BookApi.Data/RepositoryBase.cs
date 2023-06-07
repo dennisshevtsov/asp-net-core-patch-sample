@@ -25,14 +25,20 @@ namespace BookApi.Data
 
     /// <summary>Gets an entity.</summary>
     /// <param name="identity">An object that represents an identity of an entity.</param>
+    /// <param name="relations">An object that represents a collection of relations to load.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future.</returns>
-    public virtual async Task<TEntity?> GetAsync(TIdentity identity, CancellationToken cancellationToken)
+    public async Task<TEntity?> GetAsync(TIdentity identity, IEnumerable<string> relations, CancellationToken cancellationToken)
     {
-      var id = EntityBase.Create<TIdentity, TEntityImpl>(identity).Id;
+      var dataEntity = EntityBase.Create<TIdentity, TEntityImpl>(identity);
       var query = DbContext.Set<TEntityImpl>()
                            .AsNoTracking()
-                           .Where(entity => entity.Id == id);
+                           .Where(entity => entity.Id == dataEntity.Id);
+
+      foreach (var relation in dataEntity.Relations(relations))
+      {
+        query = query.Include(relation);
+      }
 
       return await query.SingleOrDefaultAsync(cancellationToken);
     }

@@ -59,6 +59,19 @@ namespace BookApi.Book.Data
       set => BookAuthors = value.Select(entity => new AuthorEntity(entity)).ToList();
     }
 
+    /// <summary>Gets a collection of relation that this entity has.</summary>
+    /// <param name="relations">An object that represents a collection of relations.</param>
+    /// <returns>An object that represents a collection of relation that this entity has.</returns>
+    public override IEnumerable<string> Relations(IEnumerable<string> relations)
+    {
+      if (relations.Contains(nameof(Authors)))
+      {
+        return new[] { nameof(BookAuthors) };
+      }
+
+      return base.Relations(relations);
+    }
+
     protected override void Update(object newEntity, string property)
     {
       if (property != nameof(Authors))

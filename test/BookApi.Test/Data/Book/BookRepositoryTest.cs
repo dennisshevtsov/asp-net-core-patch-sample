@@ -25,7 +25,9 @@ namespace BookApi.Book.Data.Test
     public async Task GetAsync_ExistingBookIdPassed_BookReturned()
     {
       var controlBookEntity = await TestBookEntity.AddAsync(DbContext);
-      var actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, CancellationToken.None);
+
+      var relations = new[] { nameof(IBookEntity.Authors) };
+      var actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, relations, CancellationToken.None);
 
       Assert.IsNotNull(actualBookEntity);
       TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
@@ -35,7 +37,9 @@ namespace BookApi.Book.Data.Test
     public async Task GetAsync_UknownBookIdPassed_NullReturned()
     {
       var controlBookIdentity = TestBookIdentity.New();
-      var actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, CancellationToken.None);
+
+      var relations = new[] { nameof(IBookEntity.Authors) };
+      var actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, relations, CancellationToken.None);
 
       Assert.IsNull(actualBookEntity);
     }

@@ -18,12 +18,5 @@ namespace BookApi.Book.Data
     /// <summary>Initializes a new instance of the <see cref="BookApi.Book.Data.BookRepository"/> class.</summary>
     /// <param name="dbContext">An object that represents a session with the database and can be used to query and save instances of your entities.</param>
     public BookRepository(DbContext dbContext) : base(dbContext) { }
-
-    public override async Task<IBookEntity?> GetAsync(IBookIdentity identity, CancellationToken cancellationToken)
-      => await DbContext.Set<BookEntity>()
-                        .AsNoTracking()
-                        .Include(entity => entity.BookAuthors)
-                        .Where(entity => entity.Id == identity.BookId)
-                        .SingleOrDefaultAsync(cancellationToken);
   }
 }

@@ -10,11 +10,13 @@ namespace BookApi.App
   {
     /// <summary>Updates this entity.</summary>
     /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
-    public void Update(TEntity newEntity);
+    /// <returns>An object that represents a collection of updated properties.</returns>
+    public IEnumerable<string> Update(TEntity newEntity);
 
     /// <summary>Updates this entity.</summary>
     /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
-    /// <param name="properties">An object that represents a collection of properties to update.</param>
-    public void Update(TEntity newEntity, IEnumerable<string> properties);
+    /// <param name="propertiesToUpdate">An object that represents a collection of properties to update.</param>
+    /// <returns>An object that represents a collection of updated properties.</returns>
+    public IEnumerable<string> Update(TEntity newEntity, IEnumerable<string> properties);
   }
 }
