@@ -21,7 +21,8 @@ namespace BookApi.App
     /// <summary>Gets an object that represents a collection of related entities.</summary>
     public IEnumerable<string> Relations() =>
       GetType().GetProperties()
-               .Where(property => property.PropertyType.IsClass)
+               .Where(property => !property.PropertyType.IsValueType)
+               .Where(property => property.PropertyType != typeof(string))
                .Select(property => property.Name)
                .ToHashSet(StringComparer.OrdinalIgnoreCase);
 

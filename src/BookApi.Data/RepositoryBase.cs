@@ -30,12 +30,12 @@ namespace BookApi.Data
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future.</returns>
     public async Task<TEntity?> GetAsync(TIdentity identity, IEnumerable<string> relations, CancellationToken cancellationToken)
     {
-      var entity = EntityBase.Create<TIdentity, TEntityImpl>(identity);
+      var dataEntity = EntityBase.Create<TIdentity, TEntityImpl>(identity);
       var query = DbContext.Set<TEntityImpl>()
                            .AsNoTracking()
-                           .Where(entity => entity.Id == entity.Id);
+                           .Where(entity => entity.Id == dataEntity.Id);
 
-      foreach (var relation in entity.Relations(relations))
+      foreach (var relation in dataEntity.Relations(relations))
       {
         query = query.Include(relation);
       }
