@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-using System.Collections;
-
 namespace BookApi.App
 {
   /// <summary>Represents an entity base.</summary>
@@ -21,10 +19,20 @@ namespace BookApi.App
     public IEnumerable<string> Properties => _properties;
 
     /// <summary>Gets an object that represents a collection of related entities.</summary>
-    public IEnumerable<string> Relations => GetType().GetProperties()
-                                                     .Where(property => property.PropertyType.IsClass)
-                                                     .Select(property => property.Name)
-                                                     .ToList();
+    public IEnumerable<string> Relations() =>
+      GetType().GetProperties()
+               .Where(property => property.PropertyType.IsClass)
+               .Select(property => property.Name)
+               .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>Gets an object that represents a collection of related entities.</summary>
+    public IEnumerable<string> Relations(IEnumerable<string> relations)
+    {
+      var avalable = Relations();
+
+      return avalable.Where(relation => avalable.Contains(relation))
+                     .ToHashSet(StringComparer.OrdinalIgnoreCase);
+    }
 
     /// <summary>Updates this entity.</summary>
     /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>

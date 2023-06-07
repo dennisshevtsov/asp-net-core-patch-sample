@@ -29,7 +29,19 @@ namespace BookApi.App
     {
       var entity = EntityBase.Create<TIdentity, TBusinessEntity>(identity);
 
-      return _repository.GetAsync(identity, entity.Relations, cancellationToken);
+      return _repository.GetAsync(identity, entity.Relations(), cancellationToken);
+    }
+
+    /// <summary>Gets an entity.</summary>
+    /// <param name="identity">An object that represents an identity to get.</param>
+    /// <param name="relations">An object that represents a collection of relations to load.</param>
+    /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
+    /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="BookApi.Author.IAuthorEntity"/>. The result can be null.</returns>
+    public Task<TEntity?> GetAsync(TIdentity identity, IEnumerable<string> relations, CancellationToken cancellationToken)
+    {
+      var entity = EntityBase.Create<TIdentity, TBusinessEntity>(identity);
+
+      return _repository.GetAsync(identity, entity.Relations(relations), cancellationToken);
     }
 
     /// <summary>Adds an entity.</summary>
