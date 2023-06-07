@@ -10,6 +10,12 @@ namespace BookApi.Data
     /// <summary>Gets an object that represents an ID of an entity.</summary>
     public Guid Id { get; protected set; }
 
+    /// <summary>Gets a collection of relation that this entity has.</summary>
+    /// <param name="relations">An object that represents a collection of relations.</param>
+    /// <returns>An object that represents a collection of relation that this entity has.</returns>
+    public virtual IEnumerable<string> Relations(IEnumerable<string> relations) =>
+      Enumerable.Empty<string>();
+
     /// <summary>Updates this entity.</summary>
     /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
     /// <param name="properties">An object that represents a collection of properties to update.</param>
