@@ -58,10 +58,10 @@ namespace BookApi.App
     /// <returns>An object that represents an asynchronous operation.</returns>
     public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, CancellationToken cancellationToken)
     {
-      var businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-      businessEntity.Update(newEntity!);
+      var businessEntity    = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
+      var updatedProperties = businessEntity.Update(newEntity!);
 
-      return _repository.UpdateAsync(originalEntity, newEntity, businessEntity.Properties, cancellationToken);
+      return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
     }
 
     /// <summary>Updates an entity partially.</summary>
@@ -72,10 +72,10 @@ namespace BookApi.App
     /// <returns>An object that represents an asynchronous operation.</returns>
     public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
-      var businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-      businessEntity.Update(newEntity!, properties);
+      var businessEntity    = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
+      var updatedProperties = businessEntity.Update(newEntity!, properties);
 
-      return _repository.UpdateAsync(originalEntity, newEntity, businessEntity.Properties, cancellationToken);
+      return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
     }
 
     /// <summary>Deletes an entity.</summary>

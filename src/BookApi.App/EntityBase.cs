@@ -7,17 +7,6 @@ namespace BookApi.App
   /// <summary>Represents an entity base.</summary>
   public abstract class EntityBase : IUpdatable<object>
   {
-    private readonly IList<string> _properties;
-
-    /// <summary>Initializes a new instance of the <see cref="EntityBase"/> class.</summary>
-    protected EntityBase()
-    {
-      _properties = new List<string>();
-    }
-
-    /// <summary>Gets/sets an object that represents a collection of updated properties.</summary>
-    public IEnumerable<string> Properties => _properties;
-
     /// <summary>Gets an object that represents a collection of related entities.</summary>
     public IEnumerable<string> Relations() =>
       GetType().GetProperties()
@@ -37,23 +26,27 @@ namespace BookApi.App
 
     /// <summary>Updates this entity.</summary>
     /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
-    public void Update(object newEntity)
+    /// <returns>An object that represents a collection of updated properties.</returns>
+    public IEnumerable<string> Update(object newEntity)
     {
       var updatingProperties = GetUpdatingProperties();
       var updatedProperties = updatingProperties;
 
-      Update(newEntity, updatedProperties, updatingProperties);
+      return Update(newEntity, updatedProperties, updatingProperties);
     }
 
     /// <summary>Updates this entity.</summary>
     /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
-    /// <param name="properties">An object that represents a collection of properties to update.</param>
-    public void Update(object newEntity, IEnumerable<string> properties) =>
-      Update(newEntity, properties, GetUpdatingProperties());
+    /// <param name="propertiesToUpdate">An object that represents a collection of properties to update.</param>
+    /// <returns>An object that represents a collection of updated properties.</returns>
+    public IEnumerable<string> Update(object newEntity, IEnumerable<string> propertiesToUpdate) =>
+      Update(newEntity, propertiesToUpdate, GetUpdatingProperties());
 
-    protected virtual void Update(object newEntity, IEnumerable<string> updatedProperties, ISet<string> updatingProperties)
+    protected virtual IEnumerable<string> Update(object newEntity, IEnumerable<string> propertiesToUpdate, ISet<string> updatingProperties)
     {
-      foreach (var property in updatedProperties)
+      var updatedProperties = new List<string>();
+
+      foreach (var property in propertiesToUpdate)
       {
         if (updatingProperties.Contains(property))
         {
@@ -68,9 +61,11 @@ namespace BookApi.App
             originalProperty.SetValue(this, newValue);
           }
 
-          _properties.Add(property);
+          updatedProperties.Add(property);
         }
       }
+
+      return updatedProperties;
     }
 
     /// <summary>Creates a copy of an entity.</summary>
