@@ -43,13 +43,6 @@ namespace BookApi.Data
       return await query.SingleOrDefaultAsync(cancellationToken);
     }
 
-    /// <summary>Includes relations.</summary>
-    /// <param name="query">An object that represents a query of entities.</param>
-    /// <param name="relations">An object that represents a collection of relations to load.</param>
-    /// <returns>An object that represents a query of entities.</returns>
-    protected virtual IQueryable<TEntityImpl> IncludeRelations(
-      IQueryable<TEntityImpl> query, IEnumerable<string> relations) => query;
-
     /// <summary>Adds an entity.</summary>
     /// <param name="entity">An object that represents an entity.</param>
     /// <param name="cancellationToken">An object that propagates notification that operations should be canceled.</param>
