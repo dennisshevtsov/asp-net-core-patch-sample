@@ -33,7 +33,6 @@ namespace BookApi.Book.Web
     public string Description { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
-    [Required]
     public int Pages { get; set; }
 
     /// <summary>Gets an object that represents a collection of authors of this book.</summary>
