@@ -30,7 +30,7 @@ namespace BookApi.Author.Data
       builder.Property(entity => entity.Name)
              .HasColumnName("name")
              .IsRequired()
-             .HasMaxLength(256);
+             .HasMaxLength(255);
     }
   }
 }

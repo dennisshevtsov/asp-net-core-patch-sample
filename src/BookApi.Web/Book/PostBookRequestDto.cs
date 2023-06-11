@@ -27,10 +27,12 @@ namespace BookApi.Book.Web
 
     /// <summary>Gets an object that represents a title of a book.</summary>
     [Required]
+    [MaxLength(255)]
     public string Title { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
     [Required]
+    [MaxLength(255)]
     public string Description { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>

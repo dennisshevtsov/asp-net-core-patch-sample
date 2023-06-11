@@ -24,6 +24,7 @@ namespace BookApi.Author.Web
 
     /// <summary>Gets/sets an object that represents a name of an author.</summary>
     [Required]
+    [MaxLength(255)]
     public string Name { get; set; }
   }
 }
