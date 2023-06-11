@@ -15,7 +15,7 @@ namespace BookApi.Book.App
     {
       Title       = string.Empty;
       Description = string.Empty;
-      Authors     = Enumerable.Empty<IAuthorEntity>();
+      Authors     = Array.Empty<IAuthorEntity>();
     }
 
     /// <summary>Initializes a new instance of the <see cref="BookApi.Book.App.BookEntity"/> class.</summary>

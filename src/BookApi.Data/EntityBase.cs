@@ -14,7 +14,7 @@ namespace BookApi.Data
     /// <param name="relations">An object that represents a collection of relations.</param>
     /// <returns>An object that represents a collection of relation that this entity has.</returns>
     public virtual IEnumerable<string> Relations(IEnumerable<string> relations) =>
-      Enumerable.Empty<string>();
+      Array.Empty<string>();
 
     /// <summary>Updates this entity.</summary>
     /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>

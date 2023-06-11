@@ -5,6 +5,7 @@
 namespace BookApi.Author.Web
 {
   using BookApi.Web;
+  using System.ComponentModel.DataAnnotations;
 
   /// <summary>Represents the PUT author request data.</summary>
   public sealed class PutAuthorRequestDto : IRequestDto, IAuthorEntity
@@ -19,6 +20,8 @@ namespace BookApi.Author.Web
     public Guid AuthorId { get; set; }
 
     /// <summary>Gets/sets an object that represents a name of an author.</summary>
+    [Required]
+    [MaxLength(255)]
     public string Name { get; set; }
   }
 }

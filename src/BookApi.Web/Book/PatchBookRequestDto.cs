@@ -4,6 +4,7 @@
 
 namespace BookApi.Book.Web
 {
+  using System.ComponentModel.DataAnnotations;
   using System.Text.Json.Serialization;
 
   using BookApi.Author;
@@ -25,9 +26,13 @@ namespace BookApi.Book.Web
     public Guid BookId { get; set; }
 
     /// <summary>Gets an object that represents a title of a book.</summary>
+    [Required]
+    [MaxLength(255)]
     public string Title { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>
+    [Required]
+    [MaxLength(255)]
     public string Description { get; set; }
 
     /// <summary>Gets an object that represents a description of a book.</summary>

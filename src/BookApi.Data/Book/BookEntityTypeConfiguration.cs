@@ -30,12 +30,12 @@ namespace BookApi.Book.Data
       builder.Property(entity => entity.Title)
              .HasColumnName("name")
              .IsRequired()
-             .HasMaxLength(256);
+             .HasMaxLength(255);
 
       builder.Property(entity => entity.Description)
              .HasColumnName("description")
              .IsRequired()
-             .HasMaxLength(256);
+             .HasMaxLength(255);
 
       builder.Property(entity => entity.Pages)
              .HasColumnName("pages")

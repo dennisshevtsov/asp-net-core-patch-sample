@@ -5,6 +5,7 @@
 namespace Microsoft.Extensions.DependencyInjection
 {
   using BookApi.Web.Binding;
+  using BookApi.Web.Filters;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
   public static class ServicesExtensions
@@ -14,7 +15,11 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <returns>An object that specifies the contract for a collection of service descriptors.</returns>
     public static IServiceCollection SetUpControllers(this IServiceCollection services)
     {
-      services.AddControllers(options => options.ModelBinderProviders.Insert(0, new RequestDtoBinderProvider()));
+      services.AddControllers(options =>
+      {
+        options.Filters.Insert(0, new SuppressValidationFilter());
+        options.ModelBinderProviders.Insert(0, new RequestDtoBinderProvider());
+      });
 
       return services;
     }
