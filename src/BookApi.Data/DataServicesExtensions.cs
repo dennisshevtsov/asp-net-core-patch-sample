@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
   using BookApi.Data;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
-  public static class InfrastructureExtensions
+  public static class DataServicesExtensions
   {
     /// <summary>Sets up the infrastructure.</summary>
     /// <param name="services">An object that specifies the contract for a collection of service descriptors.</param>

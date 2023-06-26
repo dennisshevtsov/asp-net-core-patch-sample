@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
   using BookApi.Book;
 
   /// <summary>Extends the API of the <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</summary>
-  public static class AppExtensions
+  public static class AppServicesExtensions
   {
     /// <summary>Sets up the app.</summary>
     /// <param name="services">An object that specifies the contract for a collection of service descriptors.</param>
