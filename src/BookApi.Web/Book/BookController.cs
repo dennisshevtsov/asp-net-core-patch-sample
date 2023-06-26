@@ -16,7 +16,7 @@ namespace BookApi.Book.Web
   {
     private readonly IBookService _bookService;
 
-    /// <summary>Initializes a new instance of the <see cref="BookApi.Web.Controllers.BookController"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="BookApi.Book.Web.BookController"/> class.</summary>
     /// <param name="bookService">An object that represents a simple API to operate instances of the <see cref="Domain.Book.IBookEntity"/>.</param>
     public BookController(IBookService bookService)
     {
