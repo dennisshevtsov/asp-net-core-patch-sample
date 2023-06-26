@@ -4,7 +4,7 @@
 
 namespace Microsoft.AspNetCore.Builder
 {
-  using BookApi.Data;
+  using Microsoft.EntityFrameworkCore;
 
   /// <summary>Extends the API of the <see cref="Microsoft.AspNetCore.Builder.WebApplication"/>.</summary>
   public static class ApplicationBuilderExtensions
@@ -13,10 +13,8 @@ namespace Microsoft.AspNetCore.Builder
     {
       using (var scope = app.Services.CreateScope())
       {
-        scope.ServiceProvider.GetRequiredService<IDatabaseInitializer>()
-                             .SetUpAsync(CancellationToken.None)
-                             .GetAwaiter()
-                             .GetResult();
+        scope.ServiceProvider.GetRequiredService<DbContext>()
+                             .Database.EnsureCreated();
       }
 
       return app;
