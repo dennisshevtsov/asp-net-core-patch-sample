@@ -13,7 +13,7 @@ namespace BookApi.Book.Web
   /// <summary>Represents data to add a book.</summary>
   public sealed class PostBookRequestDto : IRequestDto, IBookEntity
   {
-    /// <summary>Initalizes a new instance of the <see cref="BookApi.Web.Dtos.PostBookRequestDto"/> class.</summary>
+    /// <summary>Initalizes a new instance of the <see cref="BookApi.Book.Web.PostBookRequestDto"/> class.</summary>
     public PostBookRequestDto()
     {
       Title       = string.Empty;

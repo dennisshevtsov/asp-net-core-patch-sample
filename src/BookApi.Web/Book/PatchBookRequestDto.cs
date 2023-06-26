@@ -13,7 +13,7 @@ namespace BookApi.Book.Web
   /// <summary>Represents data to update a book parially.</summary>
   public sealed class PatchBookRequestDto : IRequestDto, IPatchRequestDto, IBookEntity
   {
-    /// <summary>Initalizes a new instance of the <see cref="BookApi.Web.Dtos.PatchBookRequestDto"/> class.</summary>
+    /// <summary>Initalizes a new instance of the <see cref="BookApi.Book.Web.PatchBookRequestDto"/> class.</summary>
     public PatchBookRequestDto()
     {
       Title       = string.Empty;

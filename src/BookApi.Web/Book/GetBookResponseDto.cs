@@ -9,7 +9,7 @@ namespace BookApi.Book.Web
   /// <summary>Represents a book entity.</summary>
   public sealed class GetBookResponseDto : IBookEntity
   {
-    /// <summary>Initializes a new instance of the <see cref="BookApi.Web.Dtos.GetBookResponseDto"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="BookApi.Book.Web.GetBookResponseDto"/> class.</summary>
     /// <param name="orderEntity">An object that represents a book entity.</param>
     public GetBookResponseDto(IBookEntity orderEntity)
     {
