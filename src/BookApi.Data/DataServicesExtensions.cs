@@ -30,7 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         if (string.IsNullOrWhiteSpace(options.ConnectionString))
         {
-          throw new ArgumentNullException(nameof(DatabaseOptions.ConnectionString));
+          ArgumentException.ThrowIfNullOrEmpty(nameof(options.ConnectionString));
         }
 
         builder.UseNpgsql(options.ConnectionString);
