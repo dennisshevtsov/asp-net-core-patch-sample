@@ -11,7 +11,7 @@ namespace Microsoft.AspNetCore.Builder
   {
     public static WebApplication SetUpDatabase(this WebApplication app)
     {
-      using (var scope = app.Services.CreateScope())
+      using (IServiceScope scope = app.Services.CreateScope())
       {
         scope.ServiceProvider.GetRequiredService<DbContext>()
                              .Database.EnsureCreated();

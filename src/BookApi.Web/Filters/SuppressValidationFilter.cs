@@ -17,17 +17,17 @@ namespace BookApi.Web.Filters
     {
       if (context.HttpContext.Request.Method == HttpMethods.Patch)
       {
-        var requestDto = context.ActionArguments.Select(argument => argument.Value)
-                                                .FirstOrDefault(argument => argument is IPatchRequestDto);
+        object? requestDto = context.ActionArguments.Select(argument => argument.Value)
+                                                    .FirstOrDefault(argument => argument is IPatchRequestDto);
 
         if (requestDto != null)
         {
-          var properties = ((IPatchRequestDto)requestDto).Properties.ToHashSet();
-          var errors     = context.ModelState.Select(error => error.Key)
-                                             .Where(error => !properties.Contains(error))
-                                             .ToList();
+          ISet<string> properties = ((IPatchRequestDto)requestDto).Properties.ToHashSet();
+          IList<string> errors    = context.ModelState.Select(error => error.Key)
+                                                      .Where(error => !properties.Contains(error))
+                                                      .ToList();
 
-          foreach (var error in errors )
+          foreach (string error in errors)
           {
             context.ModelState.Remove(error);
           }

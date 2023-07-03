@@ -81,25 +81,27 @@ namespace BookApi.Book.Data
         return;
       }
 
-      var newBookEntity = (IBookEntity)newEntity;
+      IBookEntity newBookEntity = (IBookEntity)newEntity;
 
-      var newAuthors = newBookEntity.Authors.Select(entity => entity.AuthorId)
-                                            .ToHashSet();
-      var exitingAuthors = Authors.Select(entity => entity.AuthorId)
-                                  .ToHashSet();
+      ISet<Guid> newAuthors = newBookEntity.Authors.Select(entity => entity.AuthorId)
+                                                   .ToHashSet();
+      ISet<Guid> exitingAuthors = Authors.Select(entity => entity.AuthorId)
+                                         .ToHashSet();
 
-      var deletingAuthors = BookAuthors.Where(entity => !newAuthors.Contains(entity.AuthorId))
-                                       .ToList();
+      IList<AuthorEntity> deletingAuthors =
+        BookAuthors.Where(entity => !newAuthors.Contains(entity.AuthorId))
+                   .ToList();
 
-      foreach (var authorEntity in deletingAuthors)
+      foreach (AuthorEntity authorEntity in deletingAuthors)
       {
         BookAuthors.Remove(authorEntity);
       }
 
-      var addingAuthors = newBookEntity.Authors.Where(entity => !exitingAuthors.Contains(entity.AuthorId))
-                                               .ToList();
+      IList<IAuthorEntity> addingAuthors =
+        newBookEntity.Authors.Where(entity => !exitingAuthors.Contains(entity.AuthorId))
+                     .ToList();
 
-      foreach (var authorEntity in addingAuthors)
+      foreach (IAuthorEntity authorEntity in addingAuthors)
       {
         BookAuthors.Add(new AuthorEntity(authorEntity));
       }

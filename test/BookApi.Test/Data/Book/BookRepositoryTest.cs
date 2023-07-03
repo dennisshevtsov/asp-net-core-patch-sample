@@ -8,6 +8,7 @@ namespace BookApi.Book.Data.Test
 
   using BookApi.Author.Data.Test;
   using BookApi.Data.Test;
+  using BookApi.Author;
 
   [TestClass]
   public sealed class BookRepositoryTest : DataTestBase
@@ -24,10 +25,10 @@ namespace BookApi.Book.Data.Test
     [TestMethod]
     public async Task GetAsync_ExistingBookIdPassed_BookReturned()
     {
-      var controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+      IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+      IEnumerable<string> relations = new[] { nameof(IBookEntity.Authors) };
 
-      var relations = new[] { nameof(IBookEntity.Authors) };
-      var actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, relations, CancellationToken.None);
+      IBookEntity? actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, relations, CancellationToken.None);
 
       Assert.IsNotNull(actualBookEntity);
       TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
@@ -36,10 +37,10 @@ namespace BookApi.Book.Data.Test
     [TestMethod]
     public async Task GetAsync_UknownBookIdPassed_NullReturned()
     {
-      var controlBookIdentity = TestBookIdentity.New();
+      IBookIdentity controlBookIdentity = TestBookIdentity.New();
+      IEnumerable<string> relations     = new[] { nameof(IBookEntity.Authors) };
 
-      var relations = new[] { nameof(IBookEntity.Authors) };
-      var actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, relations, CancellationToken.None);
+      IBookEntity? actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, relations, CancellationToken.None);
 
       Assert.IsNull(actualBookEntity);
     }
@@ -47,8 +48,8 @@ namespace BookApi.Book.Data.Test
     [TestMethod]
     public async Task AddAsync_BookPassed_BookReturned()
     {
-      var controlBookEntity = TestBookEntity.New();
-      var actualBookEntity = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
+      IBookEntity controlBookEntity = TestBookEntity.New();
+      IBookEntity actualBookEntity = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
 
       Assert.IsNotNull(actualBookEntity);
       TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
@@ -57,9 +58,9 @@ namespace BookApi.Book.Data.Test
     [TestMethod]
     public async Task AddAsync_BookPassed_BookSaved()
     {
-      var controlBookEntity = TestBookEntity.New();
-      var addedBookEntity = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
-      var actualBookEntity = await TestBookEntity.GetAsync(DbContext, addedBookEntity);
+      IBookEntity controlBookEntity = TestBookEntity.New();
+      IBookEntity addedBookEntity   = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
+      IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, addedBookEntity);
 
       Assert.IsNotNull(actualBookEntity);
       TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
@@ -68,20 +69,20 @@ namespace BookApi.Book.Data.Test
     [TestMethod]
     public async Task UpdateAsync_BookPassed_BookSaved()
     {
-      var controlAuthorEntityCollection = await TestAuthorEntity.AddAsync(DbContext, 5);
+      IList<IAuthorEntity> controlAuthorEntityCollection = await TestAuthorEntity.AddAsync(DbContext, 5);
 
-      var originalAuthorEntityCollection = controlAuthorEntityCollection.Take(2).ToArray();
-      var originalBookEntity = await TestBookEntity.AddAsync(DbContext, 500, originalAuthorEntityCollection);
+      IAuthorEntity[] originalAuthorEntityCollection = controlAuthorEntityCollection.Take(2).ToArray();
+      IBookEntity originalBookEntity = await TestBookEntity.AddAsync(DbContext, 500, originalAuthorEntityCollection);
 
-      var newAuthorEntityCollection = new[]
+      IAuthorEntity[] newAuthorEntityCollection = new[]
       {
         controlAuthorEntityCollection[0],
         controlAuthorEntityCollection[2],
         controlAuthorEntityCollection[3],
         controlAuthorEntityCollection[4],
       };
-      var newBookEntity = TestBookEntity.New(800, newAuthorEntityCollection);
-      var updatedProperties = new[]
+      IBookEntity newBookEntity = TestBookEntity.New(800, newAuthorEntityCollection);
+      IEnumerable<string> updatedProperties = new[]
       {
         nameof(IBookEntity.Title),
         nameof(IBookEntity.Description),
@@ -91,7 +92,7 @@ namespace BookApi.Book.Data.Test
 
       await _bookRepository.UpdateAsync(originalBookEntity, newBookEntity, updatedProperties, CancellationToken.None);
 
-      var actualBookEntity = await TestBookEntity.GetAsync(DbContext, originalBookEntity);
+      IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, originalBookEntity);
 
       Assert.IsNotNull(actualBookEntity);
       TestBookEntity.AreEqual(newBookEntity, actualBookEntity);
@@ -100,11 +101,11 @@ namespace BookApi.Book.Data.Test
     [TestMethod]
     public async Task DeleteAsync_ExistingBookPassed_BookDeleted()
     {
-      var controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+      IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
 
       await _bookRepository.DeleteAsync(controlBookEntity, CancellationToken.None);
 
-      var actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
+      IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
 
       Assert.IsNull(actualBookEntity);
     }
@@ -112,12 +113,12 @@ namespace BookApi.Book.Data.Test
     [TestMethod]
     public async Task DeleteAsync_UnknownBookPassed_ExistingBookKept()
     {
-      var controlBookEntity = await TestBookEntity.AddAsync(DbContext);
-      var unknownBookIdentity = TestBookEntity.New();
+      IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+      IBookEntity unknownBookIdentity = TestBookEntity.New();
 
       await _bookRepository.DeleteAsync(unknownBookIdentity, CancellationToken.None);
 
-      var actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
+      IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
 
       Assert.IsNotNull(actualBookEntity);
     }

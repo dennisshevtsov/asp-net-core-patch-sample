@@ -27,7 +27,7 @@ namespace BookApi.App
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="BookApi.Author.IAuthorEntity"/>. The result can be null.</returns>
     public virtual Task<TEntity?> GetAsync(TIdentity identity, CancellationToken cancellationToken)
     {
-      var entity = EntityBase.Create<TIdentity, TBusinessEntity>(identity);
+      TBusinessEntity entity = EntityBase.Create<TIdentity, TBusinessEntity>(identity);
 
       return _repository.GetAsync(identity, entity.Relations(), cancellationToken);
     }
@@ -39,7 +39,7 @@ namespace BookApi.App
     /// <returns>An object that represents an asynchronous operation that produces a result at some time in the future. The result is an instance of the <see cref="BookApi.Author.IAuthorEntity"/>. The result can be null.</returns>
     public Task<TEntity?> GetAsync(TIdentity identity, IEnumerable<string> relations, CancellationToken cancellationToken)
     {
-      var entity = EntityBase.Create<TIdentity, TBusinessEntity>(identity);
+      TBusinessEntity entity = EntityBase.Create<TIdentity, TBusinessEntity>(identity);
 
       return _repository.GetAsync(identity, entity.Relations(relations), cancellationToken);
     }
@@ -58,8 +58,8 @@ namespace BookApi.App
     /// <returns>An object that represents an asynchronous operation.</returns>
     public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, CancellationToken cancellationToken)
     {
-      var businessEntity    = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-      var updatedProperties = businessEntity.Compare(newEntity!);
+      TBusinessEntity businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
+      IEnumerable<string> updatedProperties = businessEntity.Compare(newEntity!);
 
       return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
     }
@@ -72,8 +72,8 @@ namespace BookApi.App
     /// <returns>An object that represents an asynchronous operation.</returns>
     public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
-      var businessEntity    = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-      var updatedProperties = businessEntity.Compare(newEntity!, properties);
+      TBusinessEntity businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
+      IEnumerable<string> updatedProperties = businessEntity.Compare(newEntity!, properties);
 
       return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
     }

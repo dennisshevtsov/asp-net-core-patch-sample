@@ -5,6 +5,7 @@
 namespace BookApi.Author.Data.Test
 {
   using Microsoft.EntityFrameworkCore;
+  using Microsoft.EntityFrameworkCore.ChangeTracking;
 
   public sealed class TestAuthorEntity : IAuthorEntity
   {
@@ -31,10 +32,10 @@ namespace BookApi.Author.Data.Test
 
     public static async Task<IAuthorEntity> AddAsync(DbContext dbContext)
     {
-      var testAuthorEntity = TestAuthorEntity.New();
-      var dataAuthorEntity = new AuthorEntity(testAuthorEntity);
+      IAuthorEntity testAuthorEntity = TestAuthorEntity.New();
+      AuthorEntity dataAuthorEntity  = new(testAuthorEntity);
 
-      var dataAuthorEntityEntry = dbContext.Add(dataAuthorEntity);
+      EntityEntry<AuthorEntity> dataAuthorEntityEntry = dbContext.Add(dataAuthorEntity);
       await dbContext.SaveChangesAsync();
       dataAuthorEntityEntry.State = EntityState.Detached;
 
@@ -43,7 +44,7 @@ namespace BookApi.Author.Data.Test
 
     public static async Task<List<IAuthorEntity>> AddAsync(DbContext dbContext, int authors)
     {
-      var authorEntityCollection = new List<IAuthorEntity>();
+      List<IAuthorEntity> authorEntityCollection = new();
 
       for (int i = 0; i < authors; i++)
       {
@@ -66,8 +67,8 @@ namespace BookApi.Author.Data.Test
 
     public static void AreEqual(IEnumerable<IAuthorEntity> control, IEnumerable<IAuthorEntity> actual)
     {
-      var controlList = control.OrderBy(entity => entity.AuthorId).ToList();
-      var actualList  = actual.OrderBy(entity => entity.AuthorId).ToList();
+      IList<IAuthorEntity> controlList = control.OrderBy(entity => entity.AuthorId).ToList();
+      IList<IAuthorEntity> actualList  = actual.OrderBy(entity => entity.AuthorId).ToList();
 
       Assert.AreEqual(controlList.Count, actualList.Count);
 

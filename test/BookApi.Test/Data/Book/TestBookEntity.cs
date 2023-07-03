@@ -8,6 +8,7 @@ namespace BookApi.Book.Data.Test
 
   using BookApi.Author;
   using BookApi.Author.Data.Test;
+  using Microsoft.EntityFrameworkCore.ChangeTracking;
 
   public sealed class TestBookEntity : IBookEntity
   {
@@ -51,12 +52,12 @@ namespace BookApi.Book.Data.Test
 
     public static async Task<IBookEntity> AddAsync(DbContext dbContext, int pages, IEnumerable<IAuthorEntity> authors)
     {
-      var testBookEntity = TestBookEntity.New(pages, authors);
-      var dataBookEntity = new BookEntity(testBookEntity);
+      IBookEntity testBookEntity = TestBookEntity.New(pages, authors);
+      BookEntity dataBookEntity  = new(testBookEntity);
 
       dbContext.AttachRange(dataBookEntity.BookAuthors);
 
-      var dataBookEntityEntry = dbContext.Add(dataBookEntity);
+      EntityEntry<BookEntity> dataBookEntityEntry = dbContext.Add(dataBookEntity);
       await dbContext.SaveChangesAsync();
       dataBookEntityEntry.State = EntityState.Detached;
 

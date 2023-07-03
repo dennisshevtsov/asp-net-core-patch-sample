@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using System.Reflection;
+
 namespace BookApi.Data
 {
   /// <summary>Represents an entity base.</summary>
@@ -21,7 +23,7 @@ namespace BookApi.Data
     /// <param name="properties">An object that represents a collection of properties to update.</param>
     public void Update(object newEntity, IEnumerable<string> properties)
     {
-      foreach (var property in properties)
+      foreach (string property in properties)
       {
           Update(newEntity, property);
       }
@@ -29,10 +31,10 @@ namespace BookApi.Data
 
     protected virtual void Update(object newEntity, string property)
     {
-      var originalProperty = GetType().GetProperty(property)!;
-      var newProperty      = newEntity.GetType().GetProperty(property)!;
+      PropertyInfo originalProperty = GetType().GetProperty(property)!;
+      PropertyInfo newProperty      = newEntity.GetType().GetProperty(property)!;
 
-      var newValue = newProperty.GetValue(newEntity);
+      object? newValue = newProperty.GetValue(newEntity);
 
       originalProperty.SetValue(this, newValue);
     }
