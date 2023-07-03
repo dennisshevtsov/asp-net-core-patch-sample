@@ -2,125 +2,124 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace BookApi.Book.Data.Test
+using Microsoft.Extensions.DependencyInjection;
+
+using BookApi.Author;
+using BookApi.Author.Data.Test;
+using BookApi.Data.Test;
+
+namespace BookApi.Book.Data.Test;
+
+[TestClass]
+public sealed class BookRepositoryTest : DataTestBase
 {
-  using Microsoft.Extensions.DependencyInjection;
-
-  using BookApi.Author.Data.Test;
-  using BookApi.Data.Test;
-  using BookApi.Author;
-
-  [TestClass]
-  public sealed class BookRepositoryTest : DataTestBase
-  {
 #pragma warning disable CS8618
-    private IBookRepository _bookRepository;
+  private IBookRepository _bookRepository;
 #pragma warning restore CS8618
 
-    protected override void Initialize(IServiceProvider provider)
+  protected override void Initialize(IServiceProvider provider)
+  {
+    _bookRepository = provider.GetRequiredService<IBookRepository>();
+  }
+
+  [TestMethod]
+  public async Task GetAsync_ExistingBookIdPassed_BookReturned()
+  {
+    IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+    IEnumerable<string> relations = new[] { nameof(IBookEntity.Authors) };
+
+    IBookEntity? actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, relations, CancellationToken.None);
+
+    Assert.IsNotNull(actualBookEntity);
+    TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
+  }
+
+  [TestMethod]
+  public async Task GetAsync_UknownBookIdPassed_NullReturned()
+  {
+    IBookIdentity controlBookIdentity = TestBookIdentity.New();
+    IEnumerable<string> relations     = new[] { nameof(IBookEntity.Authors) };
+
+    IBookEntity? actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, relations, CancellationToken.None);
+
+    Assert.IsNull(actualBookEntity);
+  }
+
+  [TestMethod]
+  public async Task AddAsync_BookPassed_BookReturned()
+  {
+    IBookEntity controlBookEntity = TestBookEntity.New();
+    IBookEntity actualBookEntity = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
+
+    Assert.IsNotNull(actualBookEntity);
+    TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
+  }
+
+  [TestMethod]
+  public async Task AddAsync_BookPassed_BookSaved()
+  {
+    IBookEntity controlBookEntity = TestBookEntity.New();
+    IBookEntity addedBookEntity   = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
+    IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, addedBookEntity);
+
+    Assert.IsNotNull(actualBookEntity);
+    TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
+  }
+
+  [TestMethod]
+  public async Task UpdateAsync_BookPassed_BookSaved()
+  {
+    IList<IAuthorEntity> controlAuthorEntityCollection = await TestAuthorEntity.AddAsync(DbContext, 5);
+
+    IAuthorEntity[] originalAuthorEntityCollection = controlAuthorEntityCollection.Take(2).ToArray();
+    IBookEntity originalBookEntity = await TestBookEntity.AddAsync(DbContext, 500, originalAuthorEntityCollection);
+
+    IAuthorEntity[] newAuthorEntityCollection = new[]
     {
-      _bookRepository = provider.GetRequiredService<IBookRepository>();
-    }
-
-    [TestMethod]
-    public async Task GetAsync_ExistingBookIdPassed_BookReturned()
+      controlAuthorEntityCollection[0],
+      controlAuthorEntityCollection[2],
+      controlAuthorEntityCollection[3],
+      controlAuthorEntityCollection[4],
+    };
+    IBookEntity newBookEntity = TestBookEntity.New(800, newAuthorEntityCollection);
+    IEnumerable<string> updatedProperties = new[]
     {
-      IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
-      IEnumerable<string> relations = new[] { nameof(IBookEntity.Authors) };
+      nameof(IBookEntity.Title),
+      nameof(IBookEntity.Description),
+      nameof(IBookEntity.Pages),
+      nameof(IBookEntity.Authors),
+    };
 
-      IBookEntity? actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, relations, CancellationToken.None);
+    await _bookRepository.UpdateAsync(originalBookEntity, newBookEntity, updatedProperties, CancellationToken.None);
 
-      Assert.IsNotNull(actualBookEntity);
-      TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
-    }
+    IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, originalBookEntity);
 
-    [TestMethod]
-    public async Task GetAsync_UknownBookIdPassed_NullReturned()
-    {
-      IBookIdentity controlBookIdentity = TestBookIdentity.New();
-      IEnumerable<string> relations     = new[] { nameof(IBookEntity.Authors) };
+    Assert.IsNotNull(actualBookEntity);
+    TestBookEntity.AreEqual(newBookEntity, actualBookEntity);
+  }
 
-      IBookEntity? actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, relations, CancellationToken.None);
+  [TestMethod]
+  public async Task DeleteAsync_ExistingBookPassed_BookDeleted()
+  {
+    IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
 
-      Assert.IsNull(actualBookEntity);
-    }
+    await _bookRepository.DeleteAsync(controlBookEntity, CancellationToken.None);
 
-    [TestMethod]
-    public async Task AddAsync_BookPassed_BookReturned()
-    {
-      IBookEntity controlBookEntity = TestBookEntity.New();
-      IBookEntity actualBookEntity = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
+    IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
 
-      Assert.IsNotNull(actualBookEntity);
-      TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
-    }
+    Assert.IsNull(actualBookEntity);
+  }
 
-    [TestMethod]
-    public async Task AddAsync_BookPassed_BookSaved()
-    {
-      IBookEntity controlBookEntity = TestBookEntity.New();
-      IBookEntity addedBookEntity   = await _bookRepository.AddAsync(controlBookEntity, CancellationToken.None);
-      IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, addedBookEntity);
+  [TestMethod]
+  public async Task DeleteAsync_UnknownBookPassed_ExistingBookKept()
+  {
+    IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
+    IBookEntity unknownBookIdentity = TestBookEntity.New();
 
-      Assert.IsNotNull(actualBookEntity);
-      TestBookEntity.AreEqual(controlBookEntity, actualBookEntity);
-    }
+    await _bookRepository.DeleteAsync(unknownBookIdentity, CancellationToken.None);
 
-    [TestMethod]
-    public async Task UpdateAsync_BookPassed_BookSaved()
-    {
-      IList<IAuthorEntity> controlAuthorEntityCollection = await TestAuthorEntity.AddAsync(DbContext, 5);
+    IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
 
-      IAuthorEntity[] originalAuthorEntityCollection = controlAuthorEntityCollection.Take(2).ToArray();
-      IBookEntity originalBookEntity = await TestBookEntity.AddAsync(DbContext, 500, originalAuthorEntityCollection);
-
-      IAuthorEntity[] newAuthorEntityCollection = new[]
-      {
-        controlAuthorEntityCollection[0],
-        controlAuthorEntityCollection[2],
-        controlAuthorEntityCollection[3],
-        controlAuthorEntityCollection[4],
-      };
-      IBookEntity newBookEntity = TestBookEntity.New(800, newAuthorEntityCollection);
-      IEnumerable<string> updatedProperties = new[]
-      {
-        nameof(IBookEntity.Title),
-        nameof(IBookEntity.Description),
-        nameof(IBookEntity.Pages),
-        nameof(IBookEntity.Authors),
-      };
-
-      await _bookRepository.UpdateAsync(originalBookEntity, newBookEntity, updatedProperties, CancellationToken.None);
-
-      IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, originalBookEntity);
-
-      Assert.IsNotNull(actualBookEntity);
-      TestBookEntity.AreEqual(newBookEntity, actualBookEntity);
-    }
-
-    [TestMethod]
-    public async Task DeleteAsync_ExistingBookPassed_BookDeleted()
-    {
-      IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
-
-      await _bookRepository.DeleteAsync(controlBookEntity, CancellationToken.None);
-
-      IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
-
-      Assert.IsNull(actualBookEntity);
-    }
-
-    [TestMethod]
-    public async Task DeleteAsync_UnknownBookPassed_ExistingBookKept()
-    {
-      IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
-      IBookEntity unknownBookIdentity = TestBookEntity.New();
-
-      await _bookRepository.DeleteAsync(unknownBookIdentity, CancellationToken.None);
-
-      IBookEntity? actualBookEntity = await TestBookEntity.GetAsync(DbContext, controlBookEntity);
-
-      Assert.IsNotNull(actualBookEntity);
-    }
+    Assert.IsNotNull(actualBookEntity);
   }
 }

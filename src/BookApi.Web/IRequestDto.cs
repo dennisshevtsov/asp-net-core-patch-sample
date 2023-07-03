@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace BookApi.Web
+namespace BookApi.Web;
+
+/// <summary>Represents a request DTO.</summary>
+public interface IRequestDto
 {
-  /// <summary>Represents a request DTO.</summary>
-  public interface IRequestDto
-  {
-  }
 }

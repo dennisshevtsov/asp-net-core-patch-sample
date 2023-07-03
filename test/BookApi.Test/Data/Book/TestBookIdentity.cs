@@ -2,17 +2,16 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace BookApi.Book.Data.Test
+namespace BookApi.Book.Data.Test;
+
+public sealed class TestBookIdentity : IBookIdentity
 {
-  public sealed class TestBookIdentity : IBookIdentity
+  public TestBookIdentity(Guid bookdId)
   {
-    public TestBookIdentity(Guid bookdId)
-    {
-      BookId = bookdId;
-    }
-
-    public Guid BookId { get; }
-
-    public static IBookIdentity New() => new TestBookIdentity(Guid.NewGuid());
+    BookId = bookdId;
   }
+
+  public Guid BookId { get; }
+
+  public static IBookIdentity New() => new TestBookIdentity(Guid.NewGuid());
 }
