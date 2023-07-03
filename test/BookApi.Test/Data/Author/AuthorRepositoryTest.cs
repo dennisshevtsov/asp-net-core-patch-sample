@@ -23,8 +23,8 @@ namespace BookApi.Author.Data.Test
     [TestMethod]
     public async Task GetAsync_ExistingAuthorIdPassed_AuthorReturned()
     {
-      var controlAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
-      var actualAuthorEntity  = await _authorRepository.GetAsync(controlAuthorEntity, Array.Empty<string>(), CancellationToken.None);
+      IAuthorEntity controlAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
+      IAuthorEntity? actualAuthorEntity = await _authorRepository.GetAsync(controlAuthorEntity, Array.Empty<string>(), CancellationToken.None);
 
       Assert.IsNotNull(actualAuthorEntity);
       TestAuthorEntity.AreEqual(controlAuthorEntity, actualAuthorEntity);
@@ -33,8 +33,8 @@ namespace BookApi.Author.Data.Test
     [TestMethod]
     public async Task GetAsync_UknownAuthorIdPassed_NullReturned()
     {
-      var controlAuthorIdentity = TestAuthorIdentity.New();
-      var actualAuthorEntity    = await _authorRepository.GetAsync(controlAuthorIdentity, Array.Empty<string>(), CancellationToken.None);
+      IAuthorIdentity controlAuthorIdentity = TestAuthorIdentity.New();
+      IAuthorEntity?  actualAuthorEntity    = await _authorRepository.GetAsync(controlAuthorIdentity, Array.Empty<string>(), CancellationToken.None);
 
       Assert.IsNull(actualAuthorEntity);
     }
@@ -42,8 +42,8 @@ namespace BookApi.Author.Data.Test
     [TestMethod]
     public async Task AddAsync_AuthorPassed_AuthorReturned()
     {
-      var controlAuthorEntity = TestAuthorEntity.New();
-      var actualAuthorEntity  = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
+      IAuthorEntity controlAuthorEntity = TestAuthorEntity.New();
+      IAuthorEntity actualAuthorEntity  = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
 
       Assert.IsNotNull(actualAuthorEntity);
       TestAuthorEntity.AreEqual(controlAuthorEntity, actualAuthorEntity);
@@ -52,9 +52,9 @@ namespace BookApi.Author.Data.Test
     [TestMethod]
     public async Task AddAsync_AuthorPassed_AuthorSaved()
     {
-      var controlAuthorEntity = TestAuthorEntity.New();
-      var addedAuthorEntity   = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
-      var actualAuthorEntity  = await TestAuthorEntity.GetAsync(DbContext, addedAuthorEntity);
+      IAuthorEntity controlAuthorEntity = TestAuthorEntity.New();
+      IAuthorEntity addedAuthorEntity   = await _authorRepository.AddAsync(controlAuthorEntity, CancellationToken.None);
+      IAuthorEntity? actualAuthorEntity = await TestAuthorEntity.GetAsync(DbContext, addedAuthorEntity);
 
       Assert.IsNotNull(actualAuthorEntity);
       TestAuthorEntity.AreEqual(controlAuthorEntity, actualAuthorEntity);
@@ -63,16 +63,17 @@ namespace BookApi.Author.Data.Test
     [TestMethod]
     public async Task UpdateAsync_AuthorPassed_AuthorSaved()
     {
-      var originalAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
-      var newAuthorEntity      = TestAuthorEntity.New();
-      var updatedProperties    = new[]
+      IAuthorEntity originalAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
+      IAuthorEntity newAuthorEntity      = TestAuthorEntity.New();
+
+      IEnumerable<string> updatedProperties = new[]
       {
         nameof(IAuthorEntity.Name),
       };
 
       await _authorRepository.UpdateAsync(originalAuthorEntity, newAuthorEntity, updatedProperties, CancellationToken.None);
 
-      var actualAuthorEntity = await TestAuthorEntity.GetAsync(DbContext, originalAuthorEntity);
+      IAuthorEntity? actualAuthorEntity = await TestAuthorEntity.GetAsync(DbContext, originalAuthorEntity);
 
       Assert.IsNotNull(actualAuthorEntity);
       TestAuthorEntity.AreEqual(newAuthorEntity, actualAuthorEntity);
@@ -81,7 +82,7 @@ namespace BookApi.Author.Data.Test
     [TestMethod]
     public async Task DeleteAsync_ExistingAuthorPassed_AuthorDeleted()
     {
-      var controlAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
+      IAuthorEntity controlAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
 
       await _authorRepository.DeleteAsync(controlAuthorEntity, CancellationToken.None);
 
@@ -93,12 +94,12 @@ namespace BookApi.Author.Data.Test
     [TestMethod]
     public async Task DeleteAsync_UnknownAuthorPassed_ExistingAuthorKept()
     {
-      var controlAuthorEntity   = await TestAuthorEntity.AddAsync(DbContext);
-      var unknownAuthorIdentity = TestAuthorIdentity.New();
+      IAuthorEntity controlAuthorEntity     = await TestAuthorEntity.AddAsync(DbContext);
+      IAuthorIdentity unknownAuthorIdentity = TestAuthorIdentity.New();
 
       await _authorRepository.DeleteAsync(unknownAuthorIdentity, CancellationToken.None);
 
-      var actualAuthorEntity = await TestAuthorEntity.GetAsync(DbContext, controlAuthorEntity);
+      IAuthorEntity? actualAuthorEntity = await TestAuthorEntity.GetAsync(DbContext, controlAuthorEntity);
 
       Assert.IsNotNull(actualAuthorEntity);
     }

@@ -49,10 +49,10 @@ namespace BookApi.Web.Binding
 
     private static async Task<object> GetModelValue(ModelBindingContext bindingContext)
     {
-      var document = await JsonSerializer.DeserializeAsync<JsonDocument>(
+      JsonDocument? document = await JsonSerializer.DeserializeAsync<JsonDocument>(
           bindingContext.HttpContext.Request.Body);
 
-      var model = document!.Deserialize(
+      object model = document!.Deserialize(
         bindingContext.ModelType,
         new JsonSerializerOptions
         {
@@ -61,7 +61,7 @@ namespace BookApi.Web.Binding
 
       if (model is IPatchRequestDto patchable)
       {
-        var properties =
+        ISet<string> properties =
           document!.RootElement.EnumerateObject()!
                                .Select(property => property.Name)
                                .ToHashSet(StringComparer.OrdinalIgnoreCase);

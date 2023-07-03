@@ -32,7 +32,7 @@ namespace BookApi.Author.Web
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAuthor(GetAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
+      IAuthorEntity? authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
 
       if (authorEntity == null)
       {
@@ -51,7 +51,7 @@ namespace BookApi.Author.Web
     [Consumes(typeof(PostAuthorRequestDto), "application/json")]
     public async Task<IActionResult> PostAuthor(PostAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.AddAsync(requestDto, cancellationToken);
+      IAuthorEntity authorEntity = await _authorService.AddAsync(requestDto, cancellationToken);
 
       return CreatedAtRoute(
         nameof(AuthorController.GetAuthor),
@@ -69,7 +69,7 @@ namespace BookApi.Author.Web
     [Consumes(typeof(PutAuthorRequestDto), "application/json")]
     public async Task<IActionResult> PutAuthor(PutAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
+      IAuthorEntity? authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
 
       if (authorEntity == null)
       {
@@ -91,7 +91,7 @@ namespace BookApi.Author.Web
     [Consumes(typeof(PatchAuthorRequestDto), "application/json")]
     public async Task<IActionResult> PatchAuthor(PatchAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
+      IAuthorEntity? authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
 
       if (authorEntity == null)
       {
@@ -114,7 +114,7 @@ namespace BookApi.Author.Web
     [Consumes(typeof(DeleteAuthorRequestDto), "application/json")]
     public async Task<IActionResult> DeleteAuthor(DeleteAuthorRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
+      IAuthorEntity? authorEntity = await _authorService.GetAsync(requestDto, cancellationToken);
 
       if (authorEntity == null)
       {

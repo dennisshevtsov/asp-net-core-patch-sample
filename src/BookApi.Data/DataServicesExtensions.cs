@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
       services.Configure<DatabaseOptions>(configuration);
       services.AddDbContext<DbContext, AppDbContext>((provider, builder) =>
       {
-        var options = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+        DatabaseOptions options = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
         ArgumentException.ThrowIfNullOrEmpty(options.ConnectionString);
 
         builder.UseNpgsql(options.ConnectionString);

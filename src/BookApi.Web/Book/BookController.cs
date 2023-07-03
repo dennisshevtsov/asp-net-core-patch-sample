@@ -32,7 +32,7 @@ namespace BookApi.Book.Web
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetBook(GetBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+      IBookEntity? bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
 
       if (bookEntity == null)
       {
@@ -51,7 +51,7 @@ namespace BookApi.Book.Web
     [Consumes(typeof(PostBookRequestDto), "application/json")]
     public async Task<IActionResult> PostBook(PostBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.AddAsync(requestDto, cancellationToken);
+      IBookEntity bookEntity = await _bookService.AddAsync(requestDto, cancellationToken);
 
       return CreatedAtRoute(
         nameof(BookController.GetBook),
@@ -69,7 +69,7 @@ namespace BookApi.Book.Web
     [Consumes(typeof(PutBookRequestDto), "application/json")]
     public async Task<IActionResult> PutBook(PutBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+      IBookEntity? bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
 
       if (bookEntity == null)
       {
@@ -91,7 +91,7 @@ namespace BookApi.Book.Web
     [Consumes(typeof(PatchBookRequestDto), "application/json")]
     public async Task<IActionResult> PatchBook(PatchBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.GetAsync(requestDto, requestDto.Properties, cancellationToken);
+      IBookEntity? bookEntity = await _bookService.GetAsync(requestDto, requestDto.Properties, cancellationToken);
 
       if (bookEntity == null)
       {
@@ -112,7 +112,7 @@ namespace BookApi.Book.Web
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteBook(DeleteBookRequestDto requestDto, CancellationToken cancellationToken)
     {
-      var bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
+      IBookEntity? bookEntity = await _bookService.GetAsync(requestDto, cancellationToken);
 
       if (bookEntity == null)
       {

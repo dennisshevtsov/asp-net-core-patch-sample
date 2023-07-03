@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSwaggerGen();
 builder.Services.SetUpControllers();
@@ -10,7 +10,7 @@ builder.Services.SetUpControllers();
 builder.Services.SetUpApplication();
 builder.Services.SetUpInfrastructure(builder.Configuration);
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.SetUpDatabase();
 app.UseSwagger();
