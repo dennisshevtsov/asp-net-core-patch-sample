@@ -59,7 +59,7 @@ namespace BookApi.App
     public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, CancellationToken cancellationToken)
     {
       var businessEntity    = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-      var updatedProperties = businessEntity.Update(newEntity!);
+      var updatedProperties = businessEntity.Compare(newEntity!);
 
       return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
     }
@@ -73,7 +73,7 @@ namespace BookApi.App
     public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, IEnumerable<string> properties, CancellationToken cancellationToken)
     {
       var businessEntity    = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-      var updatedProperties = businessEntity.Update(newEntity!, properties);
+      var updatedProperties = businessEntity.Compare(newEntity!, properties);
 
       return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
     }

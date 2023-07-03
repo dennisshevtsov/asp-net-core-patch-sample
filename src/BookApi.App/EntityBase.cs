@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using System.Reflection;
+
 namespace BookApi.App
 {
   /// <summary>Represents an entity base.</summary>
-  public abstract class EntityBase : IUpdatable<object>
+  public abstract class EntityBase : IComparable<object>
   {
     /// <summary>Gets an object that represents a collection of related entities.</summary>
     public IEnumerable<string> Relations() =>
@@ -18,54 +20,52 @@ namespace BookApi.App
     /// <summary>Gets an object that represents a collection of related entities.</summary>
     public IEnumerable<string> Relations(IEnumerable<string> relations)
     {
-      var avalable = Relations();
+      IEnumerable<string> avalable = Relations();
 
       return avalable.Where(relation => avalable.Contains(relation))
                      .ToHashSet(StringComparer.OrdinalIgnoreCase);
     }
 
-    /// <summary>Updates this entity.</summary>
-    /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
-    /// <returns>An object that represents a collection of updated properties.</returns>
-    public IEnumerable<string> Update(object newEntity)
+    /// <summary>Compares this entity.</summary>
+    /// <param name="otherEntity">An object that represents an entity from which this entity should be compared.</param>
+    /// <returns>An object that represents a collection of different properties.</returns>
+    public IEnumerable<string> Compare(object otherEntity)
     {
-      var updatingProperties = GetUpdatingProperties();
-      var updatedProperties = updatingProperties;
+      ISet<string> updatingProperties = GetUpdatingProperties();
+      ISet<string> updatedProperties  = updatingProperties;
 
-      return Update(newEntity, updatedProperties, updatingProperties);
+      return Update(otherEntity, updatedProperties, updatingProperties);
     }
 
-    /// <summary>Updates this entity.</summary>
-    /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
-    /// <param name="propertiesToUpdate">An object that represents a collection of properties to update.</param>
-    /// <returns>An object that represents a collection of updated properties.</returns>
-    public IEnumerable<string> Update(object newEntity, IEnumerable<string> propertiesToUpdate) =>
-      Update(newEntity, propertiesToUpdate, GetUpdatingProperties());
+    /// <summary>Compares this entity.</summary>
+    /// <param name="otherEntity">An object that represents an entity from which this entity should be compared.</param>
+    /// <param name="propertiesToCompare">An object that represents a collection of properties to compare.</param>
+    /// <returns>An object that represents a collection of different properties.</returns>
+    public IEnumerable<string> Compare(object otherEntity, IEnumerable<string> propertiesToCompare) =>
+      Update(otherEntity, propertiesToCompare, GetUpdatingProperties());
 
-    protected virtual IEnumerable<string> Update(object newEntity, IEnumerable<string> propertiesToUpdate, ISet<string> updatingProperties)
+    protected virtual IEnumerable<string> Update(object otherEntity, IEnumerable<string> propertiesToCompare, ISet<string> updatingProperties)
     {
-      var updatedProperties = new List<string>();
+      List<string> differentProperties = new();
 
-      foreach (var property in propertiesToUpdate)
+      foreach (string property in propertiesToCompare)
       {
         if (updatingProperties.Contains(property))
         {
-          var originalProperty = GetType().GetProperty(property)!;
-          var newProperty = newEntity.GetType().GetProperty(property)!;
+          PropertyInfo originalProperty = GetType().GetProperty(property)!;
+          PropertyInfo otherProperty    = otherEntity.GetType().GetProperty(property)!;
 
-          var originalValue = originalProperty.GetValue(this);
-          var newValue = newProperty.GetValue(newEntity);
+          object? originalValue = originalProperty.GetValue(this);
+          object? otherValue    = otherProperty.GetValue(otherEntity);
 
-          if (!object.Equals(originalValue, newValue))
+          if (!object.Equals(originalValue, otherValue))
           {
-            originalProperty.SetValue(this, newValue);
+            differentProperties.Add(property);
           }
-
-          updatedProperties.Add(property);
         }
       }
 
-      return updatedProperties;
+      return differentProperties;
     }
 
     /// <summary>Creates a copy of an entity.</summary>
