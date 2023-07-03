@@ -30,15 +30,11 @@ namespace BookApi.Data
     protected virtual void Update(object newEntity, string property)
     {
       var originalProperty = GetType().GetProperty(property)!;
-      var newProperty = newEntity.GetType().GetProperty(property)!;
+      var newProperty      = newEntity.GetType().GetProperty(property)!;
 
-      var originalValue = originalProperty.GetValue(this);
       var newValue = newProperty.GetValue(newEntity);
 
-      if (!object.Equals(originalValue, newValue))
-      {
-        originalProperty.SetValue(this, newValue);
-      }
+      originalProperty.SetValue(this, newValue);
     }
 
     /// <summary>Creates a copy of an entity.</summary>
