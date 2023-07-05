@@ -10,15 +10,15 @@ namespace BookApi.App;
 public abstract class EntityBase : IComparable<object>
 {
   /// <summary>Gets an object that represents a collection of related entities.</summary>
-  public virtual IEnumerable<string> Relations() => Array.Empty<string>();
+  public virtual string[] Relations() => Array.Empty<string>();
 
   /// <summary>Compares this entity.</summary>
   /// <param name="otherEntity">An object that represents an entity from which this entity should be compared.</param>
   /// <returns>An object that represents a collection of different properties.</returns>
-  public IEnumerable<string> Compare(object otherEntity)
+  public string[] Compare(object otherEntity)
   {
-    ISet<string> updatingProperties = GetUpdatingProperties();
-    ISet<string> updatedProperties  = updatingProperties;
+    string[] updatingProperties = GetUpdatingProperties();
+    string[] updatedProperties  = updatingProperties;
 
     return Update(otherEntity, updatedProperties, updatingProperties);
   }
@@ -27,15 +27,18 @@ public abstract class EntityBase : IComparable<object>
   /// <param name="otherEntity">An object that represents an entity from which this entity should be compared.</param>
   /// <param name="propertiesToCompare">An object that represents a collection of properties to compare.</param>
   /// <returns>An object that represents a collection of different properties.</returns>
-  public IEnumerable<string> Compare(object otherEntity, IEnumerable<string> propertiesToCompare) =>
+  public string[] Compare(object otherEntity, string[] propertiesToCompare) =>
     Update(otherEntity, propertiesToCompare, GetUpdatingProperties());
 
-  protected virtual IEnumerable<string> Update(object otherEntity, IEnumerable<string> propertiesToCompare, ISet<string> updatingProperties)
+  protected virtual string[] Update(object otherEntity, string[] propertiesToCompare, string[] updatingProperties)
   {
-    List<string> differentProperties = new();
+    string[] differentProperties = new string[propertiesToCompare.Length];
+    int differentPropertiesLength = 0;
 
-    foreach (string property in propertiesToCompare)
+    for (int i = 0; i < propertiesToCompare.Length; i++)
     {
+      string property = propertiesToCompare[i];
+
       if (updatingProperties.Contains(property))
       {
         PropertyInfo originalProperty = GetType().GetProperty(property)!;
@@ -46,10 +49,12 @@ public abstract class EntityBase : IComparable<object>
 
         if (!object.Equals(originalValue, otherValue))
         {
-          differentProperties.Add(property);
+          differentProperties[differentPropertiesLength++] = property;
         }
       }
     }
+
+    Array.Resize(ref differentProperties, differentPropertiesLength);
 
     return differentProperties;
   }
@@ -71,9 +76,23 @@ public abstract class EntityBase : IComparable<object>
                          .Invoke(new object[] { entity! });
   }
 
-  private ISet<string> GetUpdatingProperties() =>
-    GetType().GetProperties()
-             .Where(property => property.CanWrite)
-             .Select(property => property.Name)
-             .ToHashSet(StringComparer.OrdinalIgnoreCase);
+  private string[] GetUpdatingProperties()
+  {
+    PropertyInfo[] allProperties = GetType().GetProperties();
+    string[] updatingProperties = new string[allProperties.Length];
+
+    int updatingPropertiesLength = 0;
+
+    for (int i = 0; i < allProperties.Length; i++)
+    {
+      if (allProperties[i].CanWrite)
+      {
+        updatingProperties[updatingPropertiesLength++] = allProperties[i].Name;
+      }
+    }
+
+    Array.Resize(ref updatingProperties, updatingPropertiesLength);
+
+    return updatingProperties;
+  }
 }

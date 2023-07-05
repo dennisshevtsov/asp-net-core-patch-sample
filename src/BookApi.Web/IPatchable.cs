@@ -5,8 +5,8 @@
 namespace BookApi.Web;
 
 /// <summary>Represents a PATCH request DTO base.</summary>
-public interface IPatchRequestDto : IRequestDto
+public interface IPatchable
 {
   /// <summary>Gets an object that represents a collection of properties to update.</summary>
-  public IEnumerable<string> Properties { get; set; }
+  public string[] Properties { get; set; }
 }

@@ -10,7 +10,7 @@ using BookApi.Web;
 namespace BookApi.Author.Web;
 
 /// <summary>Represents the PATCH author request data.</summary>
-public sealed class PatchAuthorRequestDto : IRequestDto, IPatchRequestDto, IAuthorEntity
+public sealed class PatchAuthorRequestDto : IRequestDto, IPatchable, IAuthorEntity
 {
   /// <summary>Initializes a new instance of the <see cref="BookApi.Author.Web.PatchAuthorRequestDto"/> class.</summary>
   public PatchAuthorRequestDto()
@@ -29,5 +29,5 @@ public sealed class PatchAuthorRequestDto : IRequestDto, IPatchRequestDto, IAuth
 
   /// <summary>Gets an object that represents a collection of properties to update.</summary>
   [JsonIgnore]
-  public IEnumerable<string> Properties { get; set; }
+  public string[] Properties { get; set; }
 }

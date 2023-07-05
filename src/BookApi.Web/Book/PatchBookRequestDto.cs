@@ -11,7 +11,7 @@ using BookApi.Web;
 namespace BookApi.Book.Web;
 
 /// <summary>Represents data to update a book parially.</summary>
-public sealed class PatchBookRequestDto : IRequestDto, IPatchRequestDto, IBookEntity
+public sealed class PatchBookRequestDto : IRequestDto, IPatchable, IBookEntity
 {
   /// <summary>Initalizes a new instance of the <see cref="BookApi.Book.Web.PatchBookRequestDto"/> class.</summary>
   public PatchBookRequestDto()
@@ -48,5 +48,5 @@ public sealed class PatchBookRequestDto : IRequestDto, IPatchRequestDto, IBookEn
 
   /// <summary>Gets an object that represents a collection of properties to update.</summary>
   [JsonIgnore]
-  public IEnumerable<string> Properties { get; set; }
+  public string[] Properties { get; set; }
 }
