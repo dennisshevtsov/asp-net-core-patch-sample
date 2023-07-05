@@ -50,4 +50,10 @@ public sealed class BookEntity : EntityBase, IBookEntity
 
   /// <summary>Gets an object that represents a collection of authors of this book.</summary>
   public IEnumerable<IAuthorEntity> Authors { get; private set; }
+
+  /// <summary>Gets an object that represents a collection of related entities.</summary>
+  public override IEnumerable<string> Relations()
+  {
+    yield return nameof(IBookEntity.Authors);
+  }
 }
