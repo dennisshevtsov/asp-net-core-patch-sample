@@ -48,5 +48,5 @@ public sealed class PatchBookRequestDto : IRequestDto, IPatchable, IBookEntity
 
   /// <summary>Gets an object that represents a collection of properties to update.</summary>
   [JsonIgnore]
-  public IEnumerable<string> Properties { get; set; }
+  public string[] Properties { get; set; }
 }
