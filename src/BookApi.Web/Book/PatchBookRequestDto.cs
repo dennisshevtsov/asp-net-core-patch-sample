@@ -11,7 +11,7 @@ using BookApi.Web;
 namespace BookApi.Book.Web;
 
 /// <summary>Represents data to update a book parially.</summary>
-public sealed class PatchBookRequestDto : IRequestDto, IPatchRequestDto, IBookEntity
+public sealed class PatchBookRequestDto : IRequestDto, IPatchable, IBookEntity
 {
   /// <summary>Initalizes a new instance of the <see cref="BookApi.Book.Web.PatchBookRequestDto"/> class.</summary>
   public PatchBookRequestDto()

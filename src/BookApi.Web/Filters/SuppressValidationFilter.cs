@@ -19,11 +19,11 @@ public sealed class SuppressValidationFilter : IActionFilter, IOrderedFilter
     if (context.HttpContext.Request.Method == HttpMethods.Patch)
     {
       object? requestDto = context.ActionArguments.Select(argument => argument.Value)
-                                                  .FirstOrDefault(argument => argument is IPatchRequestDto);
+                                                  .FirstOrDefault(argument => argument is IPatchable);
 
       if (requestDto != null)
       {
-        ISet<string> properties = ((IPatchRequestDto)requestDto).Properties.ToHashSet();
+        ISet<string> properties = ((IPatchable)requestDto).Properties.ToHashSet();
         IList<string> errors    = context.ModelState.Select(error => error.Key)
                                                     .Where(error => !properties.Contains(error))
                                                     .ToList();

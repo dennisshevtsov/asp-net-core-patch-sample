@@ -59,7 +59,7 @@ public sealed class RequestDtoBinder : IModelBinder
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
       })!;
 
-    if (model is IPatchRequestDto patchable)
+    if (model is IPatchable patchable)
     {
       ISet<string> properties =
         document!.RootElement.EnumerateObject()!
