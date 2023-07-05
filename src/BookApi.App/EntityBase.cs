@@ -10,12 +10,7 @@ namespace BookApi.App;
 public abstract class EntityBase : IComparable<object>
 {
   /// <summary>Gets an object that represents a collection of related entities.</summary>
-  public IEnumerable<string> Relations() =>
-    GetType().GetProperties()
-             .Where(property => !property.PropertyType.IsValueType)
-             .Where(property => property.PropertyType != typeof(string))
-             .Select(property => property.Name)
-             .ToHashSet(StringComparer.OrdinalIgnoreCase);
+  public virtual IEnumerable<string> Relations() => Array.Empty<string>();
 
   /// <summary>Compares this entity.</summary>
   /// <param name="otherEntity">An object that represents an entity from which this entity should be compared.</param>
