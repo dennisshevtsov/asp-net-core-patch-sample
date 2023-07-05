@@ -11,11 +11,11 @@ public interface IComparable<TEntity>
   /// <summary>Compares this entity.</summary>
   /// <param name="otherEntity">An object that represents an entity from which this entity should be compared.</param>
   /// <returns>An object that represents a collection of different properties.</returns>
-  public IEnumerable<string> Compare(TEntity otherEntity);
+  public string[] Compare(TEntity otherEntity);
 
   /// <summary>Compares this entity.</summary>
   /// <param name="otherEntity">An object that represents an entity from which this entity should be compared.</param>
   /// <param name="propertiesToCompare">An object that represents a collection of properties to compare.</param>
   /// <returns>An object that represents a collection of different properties.</returns>
-  public IEnumerable<string> Compare(TEntity otherEntity, IEnumerable<string> propertiesToCompare);
+  public string[] Compare(TEntity otherEntity, string[] propertiesToCompare);
 }
