@@ -52,8 +52,8 @@ public sealed class BookEntity : EntityBase, IBookEntity
   public IEnumerable<IAuthorEntity> Authors { get; private set; }
 
   /// <summary>Gets an object that represents a collection of related entities.</summary>
-  public override IEnumerable<string> Relations()
+  public override string[] Relations() => new[]
   {
-    yield return nameof(IBookEntity.Authors);
-  }
+    nameof(IBookEntity.Authors),
+  };
 }
