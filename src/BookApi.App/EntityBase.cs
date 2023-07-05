@@ -17,15 +17,6 @@ public abstract class EntityBase : IComparable<object>
              .Select(property => property.Name)
              .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-  /// <summary>Gets an object that represents a collection of related entities.</summary>
-  public IEnumerable<string> Relations(IEnumerable<string> relations)
-  {
-    IEnumerable<string> avalable = Relations();
-
-    return relations.Where(relation => avalable.Contains(relation))
-                    .ToHashSet(StringComparer.OrdinalIgnoreCase);
-  }
-
   /// <summary>Compares this entity.</summary>
   /// <param name="otherEntity">An object that represents an entity from which this entity should be compared.</param>
   /// <returns>An object that represents a collection of different properties.</returns>
