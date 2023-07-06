@@ -20,11 +20,11 @@ public abstract class EntityBase : IUpdatable<object>
   /// <summary>Updates this entity.</summary>
   /// <param name="newEntity">An object that represents an entity from which this entity should be updated.</param>
   /// <param name="properties">An object that represents a collection of properties to update.</param>
-  public void Update(object newEntity, IEnumerable<string> properties)
+  public void Update(object newEntity, string[] properties)
   {
-    foreach (string property in properties)
+    for (int i = 0; i < properties.Length; i++)
     {
-        Update(newEntity, property);
+        Update(newEntity, properties[i]);
     }
   }
 
