@@ -62,11 +62,14 @@ public sealed class BookEntity : EntityBase, IBookEntity
   /// <summary>Gets a collection of relation that this entity has.</summary>
   /// <param name="relations">An object that represents a collection of relations.</param>
   /// <returns>An object that represents a collection of relation that this entity has.</returns>
-  public override IEnumerable<string> Relations(IEnumerable<string> relations)
+  public override string[] Relations(string[] relations)
   {
     if (relations.Contains(nameof(Authors)))
     {
-      return new[] { nameof(BookAuthors) };
+      return new[]
+      {
+        nameof(BookAuthors),
+      };
     }
 
     return base.Relations(relations);
