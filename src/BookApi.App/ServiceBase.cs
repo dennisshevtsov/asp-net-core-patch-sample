@@ -69,7 +69,7 @@ public abstract class ServiceBase<TBusinessEntity, TEntity, TIdentity> : IServic
   public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, string[] properties, CancellationToken cancellationToken)
   {
     TBusinessEntity businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-    IEnumerable<string> updatedProperties = businessEntity.Compare(newEntity!, properties);
+    string[] updatedProperties = businessEntity.Compare(newEntity!, properties);
 
     return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
   }
