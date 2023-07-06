@@ -66,7 +66,7 @@ public sealed class AuthorRepositoryTest : DataTestBase
     IAuthorEntity originalAuthorEntity = await TestAuthorEntity.AddAsync(DbContext);
     IAuthorEntity newAuthorEntity      = TestAuthorEntity.New();
 
-    IEnumerable<string> updatedProperties = new[]
+    string[] updatedProperties = new[]
     {
       nameof(IAuthorEntity.Name),
     };

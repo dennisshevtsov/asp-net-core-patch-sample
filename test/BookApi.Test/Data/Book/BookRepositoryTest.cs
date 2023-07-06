@@ -26,7 +26,10 @@ public sealed class BookRepositoryTest : DataTestBase
   public async Task GetAsync_ExistingBookIdPassed_BookReturned()
   {
     IBookEntity controlBookEntity = await TestBookEntity.AddAsync(DbContext);
-    IEnumerable<string> relations = new[] { nameof(IBookEntity.Authors) };
+    string[] relations = new[]
+    {
+      nameof(IBookEntity.Authors),
+    };
 
     IBookEntity? actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, relations, CancellationToken.None);
 
@@ -38,7 +41,10 @@ public sealed class BookRepositoryTest : DataTestBase
   public async Task GetAsync_UknownBookIdPassed_NullReturned()
   {
     IBookIdentity controlBookIdentity = TestBookIdentity.New();
-    IEnumerable<string> relations     = new[] { nameof(IBookEntity.Authors) };
+    string[] relations = new[]
+    {
+      nameof(IBookEntity.Authors),
+    };
 
     IBookEntity? actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, relations, CancellationToken.None);
 
@@ -81,8 +87,8 @@ public sealed class BookRepositoryTest : DataTestBase
       controlAuthorEntityCollection[3],
       controlAuthorEntityCollection[4],
     };
-    IBookEntity newBookEntity = TestBookEntity.New(800, newAuthorEntityCollection);
-    IEnumerable<string> updatedProperties = new[]
+    IBookEntity newBookEntity  = TestBookEntity.New(800, newAuthorEntityCollection);
+    string[] updatedProperties = new[]
     {
       nameof(IBookEntity.Title),
       nameof(IBookEntity.Description),
