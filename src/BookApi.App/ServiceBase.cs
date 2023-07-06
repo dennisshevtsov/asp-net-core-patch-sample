@@ -54,8 +54,11 @@ public abstract class ServiceBase<TBusinessEntity, TEntity, TIdentity> : IServic
   /// <returns>An object that represents an asynchronous operation.</returns>
   public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, CancellationToken cancellationToken)
   {
+    ArgumentNullException.ThrowIfNull(originalEntity);
+    ArgumentNullException.ThrowIfNull(newEntity);
+
     TBusinessEntity businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-    IEnumerable<string> updatedProperties = businessEntity.Compare(newEntity!);
+    string[]     updatedProperties = businessEntity.Compare(newEntity);
 
     return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
   }
@@ -68,8 +71,12 @@ public abstract class ServiceBase<TBusinessEntity, TEntity, TIdentity> : IServic
   /// <returns>An object that represents an asynchronous operation.</returns>
   public virtual Task UpdateAsync(TEntity originalEntity, TEntity newEntity, string[] properties, CancellationToken cancellationToken)
   {
+    ArgumentNullException.ThrowIfNull(originalEntity);
+    ArgumentNullException.ThrowIfNull(newEntity);
+    ArgumentNullException.ThrowIfNull(properties);
+
     TBusinessEntity businessEntity = EntityBase.Create<TEntity, TBusinessEntity>(originalEntity);
-    string[] updatedProperties = businessEntity.Compare(newEntity!, properties);
+    string[]     updatedProperties = businessEntity.Compare(newEntity, properties);
 
     return _repository.UpdateAsync(originalEntity, newEntity, updatedProperties, cancellationToken);
   }
