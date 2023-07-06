@@ -32,7 +32,7 @@ public abstract class EntityBase : IComparable<object>
 
   protected virtual string[] Update(object otherEntity, string[] propertiesToCompare, string[] updatingProperties)
   {
-    string[] differentProperties = new string[propertiesToCompare.Length];
+    string[] differentProperties  = new string[propertiesToCompare.Length];
     int differentPropertiesLength = 0;
 
     for (int i = 0; i < propertiesToCompare.Length; i++)
@@ -79,8 +79,7 @@ public abstract class EntityBase : IComparable<object>
   private string[] GetUpdatingProperties()
   {
     PropertyInfo[] allProperties = GetType().GetProperties();
-    string[] updatingProperties = new string[allProperties.Length];
-
+    string[] updatingProperties  = new string[allProperties.Length];
     int updatingPropertiesLength = 0;
 
     for (int i = 0; i < allProperties.Length; i++)
