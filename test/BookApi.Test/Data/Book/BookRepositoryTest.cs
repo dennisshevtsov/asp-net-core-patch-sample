@@ -32,7 +32,6 @@ public sealed class BookRepositoryTest : DataTestBase
       nameof(IBookEntity.Authors),
     };
 
-
     // Act
     IBookEntity? actualBookEntity  = await _bookRepository.GetAsync(controlBookEntity, relations, CancellationToken.None);
 
@@ -50,7 +49,6 @@ public sealed class BookRepositoryTest : DataTestBase
     {
       nameof(IBookEntity.Authors),
     };
-
 
     // Act
     IBookEntity? actualBookEntity = await _bookRepository.GetAsync(controlBookIdentity, relations, CancellationToken.None);
